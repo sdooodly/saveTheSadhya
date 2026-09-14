@@ -122,7 +122,18 @@ Point `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` at your Turso database and upd
 
 ## 🚢 Deployment
 
-### Vercel (recommended)
+### GitHub Pages
+
+This repository is configured to deploy automatically from `main` to GitHub Pages
+at `https://sdooodly.github.io/saveTheSadhya/`. Enable Pages in the repository
+settings with **GitHub Actions** as the source, then push to `main`.
+
+The GitHub Pages build is a static export. The RSVP form can still be used as a
+front-end experience, but the included in-memory route does not persist responses
+on a static host. Connect the form to Supabase, Formspree, or another hosted
+endpoint before relying on it for guest data.
+
+### Vercel
 
 1. Push to GitHub
 2. Import in [vercel.com](https://vercel.com)

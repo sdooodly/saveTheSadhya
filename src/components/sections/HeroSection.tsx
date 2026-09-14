@@ -24,6 +24,7 @@ const item = {
 
 export function HeroSection() {
   const { couple, event, appName } = weddingConfig;
+  const couplePhoto = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${couple.photo}`;
 
   const weddingDate = new Date(event.date);
   const formattedDate = weddingDate.toLocaleDateString("en-IN", {
@@ -65,7 +66,7 @@ export function HeroSection() {
             <motion.div variants={item} className="my-3 md:my-5 flex justify-center">
               <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border border-primary/20 shadow-sm">
                 <Image
-                  src={couple.photo}
+                  src={couplePhoto}
                   alt={`${couple.partner1} and ${couple.partner2}`}
                   width={112}
                   height={112}

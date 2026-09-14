@@ -3,6 +3,8 @@ import { Playfair_Display, DM_Sans } from "next/font/google";
 import { weddingConfig } from "@/wedding.config";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 const playfair = Playfair_Display({
   variable: "--font-serif",
   subsets: ["latin"],
@@ -19,6 +21,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: weddingConfig.meta.title,
   description: weddingConfig.meta.description,
   openGraph: {

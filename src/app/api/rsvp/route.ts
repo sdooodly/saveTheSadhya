@@ -5,6 +5,8 @@
  * when you're ready to persist data.
  */
 
+export const dynamic = "force-static";
+
 interface RSVP {
   id: string;
   name: string;
