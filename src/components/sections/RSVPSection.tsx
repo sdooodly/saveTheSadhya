@@ -53,12 +53,20 @@ export function RSVPSection() {
     setSubmitting(true);
 
     try {
-      const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-      const res = await fetch(`${basePath}/api/rsvp`, {
+      const SHEET_URL =
+        "https://script.google.com/macros/s/AKfycbyzbld9quSdcCkS1Wph_Ju8bpGz_A1XnTQ5vu43RhDKr7f2xxMG95ncii0aJLWBp8ZY/exec";
+
+      const res = await fetch(SHEET_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: form.name,
+          attending: form.attending,
+          plusOnes: form.plusOnes,
+          plusOneNames: form.plusOneNames,
+          message: form.message,
+        }),
       });
+
       if (res.ok) {
         setSubmitted(true);
         if (form.attending === "yes") {

@@ -25,10 +25,10 @@ const fadeUp = {
 
 function buildCalendarUrl() {
   const { event, couple } = weddingConfig;
-  const startUtc = "20270131T023000Z";
+  const startUtc = "20270131T060000Z";
   const endUtc = "20270131T073000Z";
   const title = encodeURIComponent(
-    `${couple.partner1} & ${couple.partner2} — ${event.title}`
+    `${couple.partner1} & ${couple.partner2}'s wedding`
   );
   const siteUrl =
     typeof window !== "undefined"
