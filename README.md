@@ -1,4 +1,4 @@
-# 🍛 Save The Sadhya
+# Save the sadhya
 
 ## Deploy
 
