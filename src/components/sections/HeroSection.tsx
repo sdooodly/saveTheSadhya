@@ -27,7 +27,7 @@ const item = {
 };
 
 export function HeroSection() {
-  const { couple, event, appName } = weddingConfig;
+  const { couple, event } = weddingConfig;
   const couplePhoto = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${couple.photo}`;
 
   const weddingDate = new Date(event.date);
@@ -52,20 +52,6 @@ export function HeroSection() {
         shimmer
       >
         <motion.div variants={container} initial="hidden" animate="show">
-          <motion.p
-            variants={item}
-            className="text-muted text-[0.6rem] md:text-[0.65rem] uppercase tracking-[0.3em] font-sans font-light"
-          >
-            {appName}
-          </motion.p>
-
-          <motion.p
-            variants={item}
-            className="font-sans font-light text-muted text-[0.55rem] md:text-xs uppercase tracking-[0.25em] mt-3 md:mt-5"
-          >
-            Together with their families
-          </motion.p>
-
           {couple.photo && (
             <motion.div variants={item} className="my-3 md:my-5 flex justify-center">
               <div className="w-20 h-20 md:w-28 md:h-28 rounded-full overflow-hidden border border-primary/20 shadow-sm">

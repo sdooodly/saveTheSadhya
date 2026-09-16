@@ -114,16 +114,6 @@ export function InvitationIntro({ children }: { children: React.ReactNode }) {
               />
             </div>
 
-            {/* "once upon a time" */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.4, duration: 0.5 }}
-              className="font-serif text-[0.65rem] md:text-xs italic text-primary/40 tracking-wide mt-2"
-            >
-              once upon a time …
-            </motion.p>
-
             {/* Small envelope button */}
             <motion.button
               initial={{ opacity: 0, y: 10 }}

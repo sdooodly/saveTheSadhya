@@ -86,7 +86,6 @@ export function RSVPSection() {
       <Confetti active={showConfetti} />
 
       <SectionHeading
-        label="Be Our Guest"
         title="RSVP"
         subtitle={`Kindly respond by ${new Date(rsvp.deadline).toLocaleDateString("en-IN", { month: "long", day: "numeric", year: "numeric" })}.`}
       />

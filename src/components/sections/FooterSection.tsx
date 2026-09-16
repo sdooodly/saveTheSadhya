@@ -5,7 +5,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { weddingConfig } from "@/wedding.config";
 
 export function FooterSection() {
-  const { couple, appName, event } = weddingConfig;
+  const { couple, event } = weddingConfig;
 
   return (
     <motion.footer
@@ -18,7 +18,11 @@ export function FooterSection() {
         {couple.partner1} & {couple.partner2}
       </p>
       <p className="text-muted text-xs font-sans font-light uppercase tracking-[0.2em] mt-2">
-        Made with ♥ · {appName}
+        {new Date(event.date).toLocaleDateString("en-IN", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        })}
       </p>
 
       {/* Venue QR */}
