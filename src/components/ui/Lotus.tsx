@@ -1,52 +1,77 @@
 "use client";
 
 /**
- * Lotus flower SVG — Kerala state flower.
- * Used as decorative divider between couple names and date.
+ * Decorative gold divider — ornamental flourish.
+ * Used between couple names and event details.
  */
 export function Lotus({
   className = "",
-  color = "#2D6A6A",
-  accentColor = "#B8860B",
+  color = "#C9A84C",
 }: {
   className?: string;
   color?: string;
-  accentColor?: string;
 }) {
   return (
     <svg
       className={className}
-      width="48"
-      height="28"
-      viewBox="0 0 48 28"
+      width="80"
+      height="16"
+      viewBox="0 0 80 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      {/* Center petal — upright */}
-      <ellipse cx="24" cy="10" rx="4" ry="10" fill={color} opacity="0.2" />
-      <ellipse cx="24" cy="10" rx="4" ry="10" fill="none" stroke={color} strokeWidth="0.6" opacity="0.4" />
+      {/* Left curl */}
+      <path
+        d="M12 8 C12 8 16 2 24 4 C28 5 30 8 30 8"
+        stroke={color}
+        strokeWidth="0.7"
+        opacity="0.5"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 12 C16 12 20 6 28 7"
+        stroke={color}
+        strokeWidth="0.5"
+        opacity="0.3"
+        fill="none"
+        strokeLinecap="round"
+      />
 
-      {/* Left petals */}
-      <ellipse cx="24" cy="10" rx="3.5" ry="9.5" fill={color} opacity="0.15" transform="rotate(-25 24 14)" />
-      <ellipse cx="24" cy="10" rx="3.5" ry="9.5" fill="none" stroke={color} strokeWidth="0.5" opacity="0.3" transform="rotate(-25 24 14)" />
+      {/* Center diamond */}
+      <path
+        d="M36 8 L40 4 L44 8 L40 12 Z"
+        fill={color}
+        opacity="0.4"
+      />
+      <path
+        d="M38 8 L40 6 L42 8 L40 10 Z"
+        fill={color}
+        opacity="0.6"
+      />
 
-      <ellipse cx="24" cy="10" rx="3" ry="8.5" fill={color} opacity="0.1" transform="rotate(-50 24 14)" />
-      <ellipse cx="24" cy="10" rx="3" ry="8.5" fill="none" stroke={color} strokeWidth="0.5" opacity="0.25" transform="rotate(-50 24 14)" />
+      {/* Right curl — mirrored */}
+      <path
+        d="M68 8 C68 8 64 2 56 4 C52 5 50 8 50 8"
+        stroke={color}
+        strokeWidth="0.7"
+        opacity="0.5"
+        fill="none"
+        strokeLinecap="round"
+      />
+      <path
+        d="M64 12 C64 12 60 6 52 7"
+        stroke={color}
+        strokeWidth="0.5"
+        opacity="0.3"
+        fill="none"
+        strokeLinecap="round"
+      />
 
-      {/* Right petals */}
-      <ellipse cx="24" cy="10" rx="3.5" ry="9.5" fill={color} opacity="0.15" transform="rotate(25 24 14)" />
-      <ellipse cx="24" cy="10" rx="3.5" ry="9.5" fill="none" stroke={color} strokeWidth="0.5" opacity="0.3" transform="rotate(25 24 14)" />
-
-      <ellipse cx="24" cy="10" rx="3" ry="8.5" fill={color} opacity="0.1" transform="rotate(50 24 14)" />
-      <ellipse cx="24" cy="10" rx="3" ry="8.5" fill="none" stroke={color} strokeWidth="0.5" opacity="0.25" transform="rotate(50 24 14)" />
-
-      {/* Center pistil */}
-      <circle cx="24" cy="12" r="2.5" fill={accentColor} opacity="0.25" />
-      <circle cx="24" cy="12" r="1" fill={accentColor} opacity="0.4" />
-
-      {/* Base water line */}
-      <path d="M10 22 C14 20 18 21 24 19 C30 21 34 20 38 22" stroke={color} strokeWidth="0.5" opacity="0.2" fill="none" />
+      {/* Thin lines extending out */}
+      <line x1="4" y1="8" x2="30" y2="8" stroke={color} strokeWidth="0.3" opacity="0.2" />
+      <line x1="50" y1="8" x2="76" y2="8" stroke={color} strokeWidth="0.3" opacity="0.2" />
     </svg>
   );
 }

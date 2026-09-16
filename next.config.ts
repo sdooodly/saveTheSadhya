@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === "true";
+const basePath = isGitHubPagesBuild ? "/saveTheSadhya" : "";
 
 const nextConfig: NextConfig = {
   output: "export",
@@ -8,7 +9,10 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  basePath: isGitHubPagesBuild ? "/saveTheSadhya" : "",
+  basePath,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
 };
 
 export default nextConfig;

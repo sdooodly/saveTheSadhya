@@ -1,5 +1,5 @@
 export const weddingConfig = {
-  appName: "Save The Sadhya",
+  appName: "Save the Sadhya",
 
   couple: {
     partner1: "Gayathri",
@@ -45,7 +45,7 @@ export const weddingConfig = {
   },
 
   meta: {
-    title: "Save The Sadhya",
+    title: "Save the Sadhya",
     description:
       "You are cordially invited to celebrate the wedding of Gayathri & Anand.",
     ogImage: "/og-image.png",

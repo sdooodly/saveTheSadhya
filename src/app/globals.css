@@ -1,12 +1,16 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #2D6A6A;
-  --color-secondary: #EDE8DF;
-  --color-accent: #B8860B;
-  --color-dark: #1E2F2F;
-  --color-cream: #F7F5F0;
-  --color-muted: #7A8078;
+  --color-primary: #0F3D3E;
+  --color-secondary: #132E2F;
+  --color-accent: #C9A84C;
+  --color-gold: #D4AF37;
+  --color-gold-light: #E8C97A;
+  --color-dark: #0A2526;
+  --color-cream: #F5ECD7;
+  --color-muted: #8A9A7B;
+  --color-emerald: #14493B;
+  --color-emerald-light: #1A5C4A;
   --color-groom-red: #B5403A;
   --color-bride-teal: #3A7D7B;
 
@@ -22,12 +26,11 @@ html {
 }
 
 body {
-  background-color: var(--color-cream);
-  color: var(--color-dark);
+  background-color: var(--color-emerald);
+  color: var(--color-cream);
   font-family: var(--font-sans);
   font-weight: 300;
 }
-
 
 ::selection {
   background-color: var(--color-accent);
@@ -48,31 +51,29 @@ body {
 }
 
 .snap-section:nth-child(odd) {
-  background-color: var(--color-cream);
+  background-color: var(--color-emerald);
 }
 
 .snap-section:nth-child(even) {
-  background-color: var(--color-secondary);
+  background-color: var(--color-dark);
 }
 
-/* ── Section dividers — subtle ornamental breaks ── */
+/* ── Section dividers — gold ornamental ── */
 
 .snap-section + .snap-section {
   position: relative;
 }
 
 .snap-section + .snap-section::before {
-  content: "· · ·";
+  content: "✦";
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 5;
-  font-family: var(--font-serif);
-  font-size: 0.75rem;
-  letter-spacing: 0.5em;
-  color: var(--color-primary);
-  opacity: 0.25;
+  font-size: 0.5rem;
+  color: var(--color-accent);
+  opacity: 0.5;
 }
 
 .snap-section + .snap-section::after {
@@ -81,17 +82,17 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: min(60%, 20rem);
+  width: min(40%, 12rem);
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-primary) 30%,
-    var(--color-accent) 50%,
-    var(--color-primary) 70%,
+    var(--color-accent) 40%,
+    var(--color-gold) 50%,
+    var(--color-accent) 60%,
     transparent 100%
   );
-  opacity: 0.12;
+  opacity: 0.3;
 }
 
 /* ── Gold foil shimmer ────────────────────────── */
@@ -99,13 +100,13 @@ body {
 .gold-foil {
   background: linear-gradient(
     135deg,
-    var(--color-dark) 0%,
-    #8B7730 20%,
-    #B8860B 35%,
-    #DAA520 50%,
-    #B8860B 65%,
-    #8B7730 80%,
-    var(--color-dark) 100%
+    #8B7730 0%,
+    #C9A84C 20%,
+    #D4AF37 35%,
+    #F0D060 50%,
+    #D4AF37 65%,
+    #C9A84C 80%,
+    #8B7730 100%
   );
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -125,9 +126,9 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--color-cream);
+  background: var(--color-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: var(--color-accent);
   border-radius: 3px;
 }

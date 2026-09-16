@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
-      <body className="min-h-screen bg-cream text-dark font-sans font-light antialiased">
+      <body className="min-h-screen bg-emerald text-cream font-sans font-light antialiased">
         {children}
       </body>
     </html>

@@ -24,7 +24,7 @@ function StickerPhoto({
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ delay, duration: 0.7, type: "spring", bounce: 0.35 }}
       className={`${rotate} flex flex-col items-center`}
-      style={{ filter: "drop-shadow(0 4px 12px rgba(30,47,47,0.12))" }}
+      style={{ filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.3))" }}
     >
       <div
         className="w-20 h-28 md:w-28 md:h-36 relative"
@@ -46,7 +46,7 @@ function StickerPhoto({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: delay + 0.4, duration: 0.4 }}
-        className="text-primary/50 text-[0.6rem] md:text-xs font-sans font-light tracking-wide -mt-2"
+        className="text-accent/70 text-[0.6rem] md:text-xs font-sans font-light tracking-wide -mt-2"
       >
         {name}
       </motion.span>
@@ -78,14 +78,14 @@ export function InvitationIntro({ children }: { children: React.ReactNode }) {
             key="intro"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[70] flex flex-col items-center justify-center px-6 bg-cream"
+            className="fixed inset-0 z-[70] flex flex-col items-center justify-center px-6 bg-emerald"
           >
             {/* Heading */}
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-muted text-xs md:text-sm uppercase tracking-[0.25em] font-sans font-light"
+              className="text-cream/60 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
             >
               Together with their families
             </motion.p>
@@ -98,7 +98,7 @@ export function InvitationIntro({ children }: { children: React.ReactNode }) {
               className="gold-foil font-serif italic text-3xl md:text-5xl mt-2 tracking-tight font-medium text-center leading-tight"
             >
               {couple.partner1}
-              <span className="block font-serif text-base md:text-xl text-primary/30 italic my-0.5">
+              <span className="block font-serif text-base md:text-xl text-accent/40 italic my-0.5">
                 &amp;
               </span>
               {couple.partner2}
@@ -109,12 +109,12 @@ export function InvitationIntro({ children }: { children: React.ReactNode }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.5 }}
-              className="text-muted text-xs md:text-sm uppercase tracking-[0.2em] font-sans font-light mt-2"
+              className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
             >
               Invite you to their wedding
             </motion.p>
 
-            {/* Childhood photos with name labels */}
+            {/* Childhood photos */}
             <div className="flex items-start gap-3 md:gap-5 mt-6">
               <StickerPhoto
                 src={bridePhoto}
@@ -151,14 +151,14 @@ export function InvitationIntro({ children }: { children: React.ReactNode }) {
               >
                 <rect
                   x="2" y="14" width="96" height="52" rx="3"
-                  fill="#EDE8DF" stroke="#2D6A6A" strokeWidth="1.2"
+                  fill="#1A5C4A" stroke="#C9A84C" strokeWidth="0.8"
                 />
                 <path
                   d="M2 14 L50 44 L98 14" fill="none"
-                  stroke="#2D6A6A" strokeWidth="1.2" strokeLinejoin="round"
+                  stroke="#C9A84C" strokeWidth="0.8" strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-muted text-xs font-sans font-light group-hover:text-primary/60 transition-colors tracking-wide">
+              <span className="text-accent/60 text-xs font-sans font-light group-hover:text-accent transition-colors tracking-wide">
                 Open invite ↗
               </span>
             </motion.button>

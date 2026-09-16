@@ -62,10 +62,10 @@ export function NavigationDots() {
           <motion.span
             animate={{
               scale: active === i ? 1 : 0.6,
-              backgroundColor: active === i ? "#2D6A6A" : "#7A8078",
+              backgroundColor: active === i ? "#C9A84C" : "#8A9A7B",
             }}
             transition={{ duration: 0.3 }}
-            className="block w-2.5 h-2.5 rounded-full border border-primary/30"
+            className="block w-2.5 h-2.5 rounded-full border border-accent/30"
           />
         </button>
       ))}
