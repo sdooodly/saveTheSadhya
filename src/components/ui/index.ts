@@ -6,3 +6,4 @@ export { NavigationDots } from "./NavigationDots";
 export { InvitationIntro } from "./InvitationIntro";
 export { Lotus } from "./Lotus";
 export { GoldShimmerBorder } from "./GoldShimmerBorder";
+export { ChildhoodMemoryPopup } from "./ChildhoodMemoryPopup";

@@ -3,7 +3,11 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { weddingConfig } from "@/wedding.config";
-import { WesAndersonFrame, BananaLeaf, Lotus } from "@/components/ui";
+import {
+  WesAndersonFrame,
+  BananaLeaf,
+  Lotus,
+} from "@/components/ui";
 
 const container = {
   hidden: { opacity: 0 },

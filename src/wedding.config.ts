@@ -5,6 +5,10 @@ export const weddingConfig = {
     partner1: "Gayathri",
     partner2: "Anand",
     photo: "/couple.jpg",
+    childhoodPhotos: {
+      bride: "/gaya.png",
+      groom: "/ana.png",
+    },
   },
 
   event: {
