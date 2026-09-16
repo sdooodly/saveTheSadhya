@@ -82,8 +82,8 @@ export function RSVPSection() {
   }
 
   const inputBase =
-    "w-full px-4 py-3 bg-dark/50 border border-accent/20 rounded-sm font-sans text-sm font-light text-cream " +
-    "placeholder:text-cream/30 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/10 " +
+    "w-full px-4 py-3 bg-cream/5 border border-accent/25 rounded-sm font-sans text-sm font-light text-cream " +
+    "placeholder:text-cream/40 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/10 " +
     "transition-colors";
 
   const buttonBase =
@@ -105,7 +105,7 @@ export function RSVPSection() {
           <h2 className="font-serif italic text-3xl md:text-4xl text-accent tracking-tight font-medium">
             RSVP
           </h2>
-          <p className="mt-2 text-cream/50 font-sans font-light text-sm">
+          <p className="mt-2 text-cream/60 font-sans font-light text-sm">
             Kindly respond by{" "}
             {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
               month: "long",
@@ -128,7 +128,7 @@ export function RSVPSection() {
               <h3 className="font-serif italic text-2xl text-cream mb-2">
                 Thank You, {form.name}!
               </h3>
-              <p className="text-cream/50 text-sm font-light">
+              <p className="text-cream/60 text-sm font-light">
                 {form.attending === "yes"
                   ? "We can't wait to celebrate with you!"
                   : "We'll miss you! Thank you for letting us know."}
@@ -147,7 +147,7 @@ export function RSVPSection() {
               <div>
                 <label
                   htmlFor="rsvp-name"
-                  className="block text-cream/50 text-xs tracking-[0.15em] font-sans font-light mb-2"
+                  className="block text-cream/60 text-xs tracking-[0.15em] font-sans font-light mb-2"
                 >
                   Your name
                 </label>
@@ -164,7 +164,7 @@ export function RSVPSection() {
 
               {/* Attendance */}
               <fieldset>
-                <legend className="block text-cream/50 text-xs tracking-[0.15em] font-sans font-light mb-3">
+                <legend className="block text-cream/60 text-xs tracking-[0.15em] font-sans font-light mb-3">
                   Will you attend?
                 </legend>
                 <div className="flex gap-3">
@@ -196,7 +196,7 @@ export function RSVPSection() {
                     className="space-y-4 overflow-hidden"
                   >
                     <div>
-                      <span className="block text-cream/50 text-xs tracking-[0.15em] font-sans font-light mb-3">
+                      <span className="block text-cream/60 text-xs tracking-[0.15em] font-sans font-light mb-3">
                         Additional guests
                       </span>
                       <div className="flex items-center gap-3 mb-3">
@@ -247,7 +247,7 @@ export function RSVPSection() {
                   >
                     <label
                       htmlFor="rsvp-message"
-                      className="block text-cream/50 text-xs tracking-[0.15em] font-sans font-light mb-2"
+                      className="block text-cream/60 text-xs tracking-[0.15em] font-sans font-light mb-2"
                     >
                       A note for the couple
                     </label>

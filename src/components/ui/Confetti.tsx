@@ -18,11 +18,11 @@ interface Petal {
 const PETAL_COLORS = [
   "#DAA520", // gold
   "#B8860B", // dark gold / accent
-  "#3A7D7B", // bride teal
-  "#2D6A6A", // primary teal
+  "#3A7D7B", // teal
+  "#2D5A5A", // deep teal
   "#B5403A", // groom red
   "#D4A373", // warm sandalwood
-  "#E8C97A", // kasavu gold (mundu border)
+  "#E4C87A", // kasavu gold (mundu border)
   "#C9B99A", // champagne
 ];
 

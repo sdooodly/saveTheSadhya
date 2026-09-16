@@ -1,16 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #0F3D3E;
-  --color-secondary: #132E2F;
-  --color-accent: #C9A84C;
+  /* ── Royal Teal + Gold palette ─────────────── */
+  /*    Teal = blue-green with visible warmth     */
+  /*    Think peacock, Kerala backwaters, silk     */
+  --color-primary: #0F3B3B;
+  --color-secondary: #0C2F2F;
+  --color-accent: #CDA24E;
   --color-gold: #D4AF37;
-  --color-gold-light: #E8C97A;
-  --color-dark: #0A2526;
-  --color-cream: #F5ECD7;
-  --color-muted: #8A9A7B;
-  --color-emerald: #14493B;
-  --color-emerald-light: #1A5C4A;
+  --color-gold-light: #E4C87A;
+  --color-dark: #081F1F;
+  --color-cream: #F5ECDB;
+  --color-muted: #7DA8A0;
+  --color-teal: #0D3636;
+  --color-teal-light: #15494A;
+  --color-teal-deep: #0A2828;
   --color-groom-red: #B5403A;
   --color-bride-teal: #3A7D7B;
 
@@ -26,7 +30,7 @@ html {
 }
 
 body {
-  background-color: var(--color-emerald);
+  background-color: var(--color-teal);
   color: var(--color-cream);
   font-family: var(--font-sans);
   font-weight: 300;
@@ -51,11 +55,11 @@ body {
 }
 
 .snap-section:nth-child(odd) {
-  background-color: var(--color-emerald);
+  background-color: var(--color-teal);
 }
 
 .snap-section:nth-child(even) {
-  background-color: var(--color-dark);
+  background-color: var(--color-teal-deep);
 }
 
 /* ── Section dividers — gold ornamental ── */

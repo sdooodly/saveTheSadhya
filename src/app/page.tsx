@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import {
   HeroSection,
   RSVPSection,
@@ -8,6 +9,7 @@ import {
 import {
   NavigationDots,
   InvitationIntro,
+  BackgroundMusic,
 } from "@/components/ui";
 
 function SnapSection({
@@ -33,19 +35,30 @@ function SnapSection({
 }
 
 export default function Home() {
-  return (
-    <InvitationIntro>
-      <NavigationDots />
-      <main>
-        <SnapSection id="invitation" scrollable>
-          <HeroSection />
-        </SnapSection>
+  const [musicReady, setMusicReady] = useState(false);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-        <SnapSection id="rsvp" scrollable>
-          <RSVPSection />
-          <FooterSection />
-        </SnapSection>
-      </main>
-    </InvitationIntro>
+  const handleEnter = useCallback(() => {
+    setMusicReady(true);
+  }, []);
+
+  return (
+    <>
+      <BackgroundMusic src={`${basePath}/AlexTurner.mp3`} play={musicReady} />
+
+      <InvitationIntro onEnter={handleEnter}>
+        <NavigationDots />
+        <main>
+          <SnapSection id="invitation" scrollable>
+            <HeroSection />
+          </SnapSection>
+
+          <SnapSection id="rsvp" scrollable>
+            <RSVPSection />
+            <FooterSection />
+          </SnapSection>
+        </main>
+      </InvitationIntro>
+    </>
   );
 }

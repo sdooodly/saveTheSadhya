@@ -65,7 +65,7 @@ export function HeroSection() {
         {/* Welcome */}
         <motion.p
           variants={fadeUp}
-          className="text-cream/50 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
+          className="text-cream/60 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
         >
           Request the pleasure of your company
         </motion.p>
@@ -73,22 +73,29 @@ export function HeroSection() {
         {/* Couple photo */}
         {couple.photo && (
           <motion.div variants={fadeUp} className="mt-7 flex justify-center">
-            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-accent/30 shadow-[0_4px_30px_rgba(201,168,76,0.15)]">
-              <Image
-                src={couplePhoto}
-                alt={`${couple.partner1} and ${couple.partner2}`}
-                width={176}
-                height={176}
-                className="object-cover w-full h-full"
-                priority
-              />
+            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-accent/50 shadow-[0_0_20px_rgba(205,162,78,0.2),0_0_50px_rgba(205,162,78,0.1),0_8px_32px_rgba(0,0,0,0.3)]">
+              <motion.div
+                initial={{ opacity: 0, scale: 1.15 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                className="w-full h-full"
+              >
+                <Image
+                  src={couplePhoto}
+                  alt={`${couple.partner1} and ${couple.partner2}`}
+                  width={240}
+                  height={240}
+                  className="object-cover w-full h-full scale-[1.35] object-top"
+                  priority
+                />
+              </motion.div>
             </div>
           </motion.div>
         )}
 
         <motion.p
           variants={fadeUp}
-          className="text-cream/40 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
+          className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
         >
           at the wedding celebration of
         </motion.p>
@@ -103,7 +110,7 @@ export function HeroSection() {
 
         <motion.span
           variants={fadeUp}
-          className="block font-serif text-base md:text-lg text-accent/40 italic my-1"
+          className="block font-serif text-base md:text-lg text-accent/50 italic my-1"
         >
           &amp;
         </motion.span>
@@ -125,30 +132,32 @@ export function HeroSection() {
           <p className="font-sans font-light text-cream text-sm md:text-base tracking-[0.08em]">
             {formattedDate}
           </p>
-          <p className="font-sans font-light text-cream/50 text-xs md:text-sm mt-1.5 tracking-wider">
+          <p className="font-sans font-light text-cream/60 text-xs md:text-sm mt-1.5 tracking-wider">
             Muhurtham · {event.muhurthamTime}
           </p>
         </motion.div>
 
         {/* Venue */}
         <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-1.5">
-          <MapPin size={16} className="text-accent/50" />
           <a
             href={event.mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-serif text-lg md:text-xl text-accent hover:text-gold-light transition-colors
-                       inline-flex items-center gap-1.5"
+            className="flex flex-col items-center gap-1.5 group cursor-pointer"
           >
-            {event.venue}
-            <ExternalLink size={12} className="shrink-0 opacity-40" />
+            <MapPin size={16} className="text-accent/50 group-hover:text-accent transition-colors" />
+            <span className="font-serif text-lg md:text-xl text-accent group-hover:text-gold-light transition-colors
+                       inline-flex items-center gap-1.5">
+              {event.venue}
+              <ExternalLink size={12} className="shrink-0 opacity-40" />
+            </span>
+            <span className="text-cream/60 text-xs md:text-sm font-light group-hover:text-cream/80 transition-colors">{event.address}</span>
           </a>
-          <p className="text-cream/50 text-xs md:text-sm font-light">{event.address}</p>
           <a
             href={calendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-accent/60 text-xs md:text-sm font-sans
+            className="inline-flex items-center gap-1.5 text-accent/70 text-xs md:text-sm font-sans
                        tracking-wider hover:text-accent transition-colors mt-2"
           >
             <CalendarPlus size={12} className="shrink-0" />
@@ -158,7 +167,7 @@ export function HeroSection() {
 
         {/* Dress code */}
         <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-cream/50 text-xs md:text-sm font-sans font-light tracking-wide">
+          <p className="text-cream/60 text-xs md:text-sm font-sans font-light tracking-wide">
             Dress code
           </p>
           <div className="flex gap-6 md:gap-8">
@@ -168,7 +177,7 @@ export function HeroSection() {
                 <span className="w-3.5 h-3.5 rounded-full bg-[#8B2E2A] border border-accent/20" />
                 <span className="w-3.5 h-3.5 rounded-full bg-[#D4604A] border border-accent/20" />
               </div>
-              <p className="text-cream/60 text-xs md:text-sm font-light">Groom</p>
+              <p className="text-cream/70 text-xs md:text-sm font-light">Groom</p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1.5 mb-1.5">
@@ -176,7 +185,7 @@ export function HeroSection() {
                 <span className="w-3.5 h-3.5 rounded-full bg-[#2E5C8A] border border-accent/20" />
                 <span className="w-3.5 h-3.5 rounded-full bg-[#4A8C6F] border border-accent/20" />
               </div>
-              <p className="text-cream/60 text-xs md:text-sm font-light">Bride</p>
+              <p className="text-cream/70 text-xs md:text-sm font-light">Bride</p>
             </div>
           </div>
         </motion.div>
@@ -184,21 +193,19 @@ export function HeroSection() {
         {/* Scroll indicator */}
         <motion.div
           variants={fadeUp}
-          className="mt-12 flex flex-col items-center gap-1.5"
+          className="mt-12 flex flex-col items-center gap-2"
         >
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          <motion.button
+            onClick={() => document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" })}
+            className="flex flex-col items-center group cursor-pointer focus:outline-none"
+            aria-label="Scroll to RSVP section"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <svg width="14" height="20" viewBox="0 0 16 24" fill="none" className="text-accent/25">
-              <rect x="1" y="1" width="14" height="22" rx="7" stroke="currentColor" strokeWidth="1" />
-              <motion.circle
-                cx="8" cy="7" r="1.5" fill="currentColor"
-                animate={{ cy: [7, 12, 7] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              />
+            <svg width="20" height="12" viewBox="0 0 20 12" fill="none" className="text-accent/50 group-hover:text-accent transition-colors">
+              <path d="M2 2 L10 9 L18 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-          </motion.div>
+          </motion.button>
         </motion.div>
       </motion.div>
     </section>

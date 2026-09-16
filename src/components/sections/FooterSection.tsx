@@ -16,7 +16,7 @@ export function FooterSection() {
       <p className="font-serif italic text-xl text-accent">
         {couple.partner1} & {couple.partner2}
       </p>
-      <p className="text-cream/40 text-xs font-sans font-light tracking-[0.15em] mt-2">
+      <p className="text-cream/50 text-xs font-sans font-light tracking-[0.15em] mt-2">
         {new Date(event.date).toLocaleDateString("en-IN", {
           month: "long",
           day: "numeric",
