@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Plus, Minus, CheckCircle } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { SectionHeading, WesAndersonFrame, Confetti } from "@/components/ui";
+import { Confetti } from "@/components/ui";
 
 interface RSVPFormData {
   name: string;
@@ -74,36 +74,49 @@ export function RSVPSection() {
   }
 
   const inputBase =
-    "w-full px-4 py-3 bg-cream border border-primary/30 rounded-sm font-sans text-sm font-light text-dark " +
-    "placeholder:text-muted/60 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 " +
+    "w-full px-4 py-3 bg-cream border border-primary/20 rounded-sm font-sans text-sm font-light text-dark " +
+    "placeholder:text-muted/50 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/10 " +
     "transition-colors";
 
   const buttonBase =
     "px-6 py-3 rounded-sm font-sans text-sm font-semibold uppercase tracking-wider transition-all";
 
   return (
-    <section className="px-3 py-4 md:px-4 md:py-8">
+    <section className="w-full px-5 py-12 md:px-8 md:py-16 flex justify-center">
       <Confetti active={showConfetti} />
 
-      <SectionHeading
-        title="RSVP"
-        subtitle={`Kindly respond by ${new Date(rsvp.deadline).toLocaleDateString("en-IN", { month: "long", day: "numeric", year: "numeric" })}.`}
-      />
+      <div className="max-w-md w-full">
+        {/* Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <h2 className="font-serif italic text-3xl md:text-4xl text-dark tracking-tight font-medium">
+            RSVP
+          </h2>
+          <p className="mt-2 text-muted font-sans font-light text-sm">
+            Kindly respond by{" "}
+            {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </p>
+        </motion.div>
 
-      <WesAndersonFrame
-        variant="primary"
-        className="max-w-xl mx-auto bg-cream/90 backdrop-blur-sm"
-        padding="p-6 md:p-10"
-      >
+        {/* Form / Success */}
         <AnimatePresence mode="wait">
           {submitted ? (
             <motion.div
               key="success"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-center py-8"
+              className="text-center py-10"
             >
-              <CheckCircle className="mx-auto text-accent mb-4" size={48} />
+              <CheckCircle className="mx-auto text-accent mb-4" size={40} />
               <h3 className="font-serif italic text-2xl text-dark mb-2">
                 Thank You, {form.name}!
               </h3>
@@ -120,19 +133,32 @@ export function RSVPSection() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onSubmit={handleSubmit}
-              className="space-y-5"
+              className="space-y-6"
             >
               {/* Name */}
               <div>
-                <label htmlFor="rsvp-name" className="retro-label mb-2">
+                <label
+                  htmlFor="rsvp-name"
+                  className="block text-muted text-xs uppercase tracking-[0.2em] font-sans font-light mb-2"
+                >
                   Your Name
                 </label>
-                <input id="rsvp-name" type="text" required className={inputBase} placeholder="Full name" value={form.name} onChange={(e) => update("name", e.target.value)} />
+                <input
+                  id="rsvp-name"
+                  type="text"
+                  required
+                  className={inputBase}
+                  placeholder="Full name"
+                  value={form.name}
+                  onChange={(e) => update("name", e.target.value)}
+                />
               </div>
 
               {/* Attendance */}
               <fieldset>
-                <legend className="retro-label mb-3">Will You Attend?</legend>
+                <legend className="block text-muted text-xs uppercase tracking-[0.2em] font-sans font-light mb-3">
+                  Will You Attend?
+                </legend>
                 <div className="flex gap-3">
                   {(["yes", "no"] as const).map((option) => (
                     <button
@@ -142,7 +168,7 @@ export function RSVPSection() {
                       className={`${buttonBase} flex-1 border ${
                         form.attending === option
                           ? "bg-primary text-cream border-primary"
-                          : "bg-transparent text-dark border-primary/30 hover:border-primary"
+                          : "bg-transparent text-dark border-primary/20 hover:border-primary/40"
                       }`}
                     >
                       {option === "yes" ? "Joyfully Accept" : "Regretfully Decline"}
@@ -151,7 +177,7 @@ export function RSVPSection() {
                 </div>
               </fieldset>
 
-              {/* Additional guests — only when accepting */}
+              {/* Additional guests */}
               <AnimatePresence>
                 {form.attending === "yes" && (
                   <motion.div
@@ -159,17 +185,42 @@ export function RSVPSection() {
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-5 overflow-hidden"
+                    className="space-y-4 overflow-hidden"
                   >
                     <div>
-                      <span className="retro-label mb-3 block">Additional Guests</span>
+                      <span className="block text-muted text-xs uppercase tracking-[0.2em] font-sans font-light mb-3">
+                        Additional Guests
+                      </span>
                       <div className="flex items-center gap-3 mb-3">
-                        <button type="button" onClick={() => handlePlusOneChange(form.plusOnes - 1)} className="w-10 h-10 flex items-center justify-center border border-primary/30 rounded-sm text-primary hover:bg-primary/10 transition-colors" aria-label="Remove guest"><Minus size={16} /></button>
-                        <span className="font-serif text-xl text-dark w-8 text-center">{form.plusOnes}</span>
-                        <button type="button" onClick={() => handlePlusOneChange(form.plusOnes + 1)} className="w-10 h-10 flex items-center justify-center border border-primary/30 rounded-sm text-primary hover:bg-primary/10 transition-colors" aria-label="Add guest"><Plus size={16} /></button>
+                        <button
+                          type="button"
+                          onClick={() => handlePlusOneChange(form.plusOnes - 1)}
+                          className="w-11 h-11 flex items-center justify-center border border-primary/20 rounded-sm text-primary hover:bg-primary/5 transition-colors"
+                          aria-label="Remove guest"
+                        >
+                          <Minus size={14} />
+                        </button>
+                        <span className="font-serif text-lg text-dark w-6 text-center">
+                          {form.plusOnes}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handlePlusOneChange(form.plusOnes + 1)}
+                          className="w-11 h-11 flex items-center justify-center border border-primary/20 rounded-sm text-primary hover:bg-primary/5 transition-colors"
+                          aria-label="Add guest"
+                        >
+                          <Plus size={14} />
+                        </button>
                       </div>
                       {form.plusOneNames.map((name, i) => (
-                        <input key={i} type="text" className={`${inputBase} mt-2`} placeholder={`Guest ${i + 1} name`} value={name} onChange={(e) => updatePlusOneName(i, e.target.value)} />
+                        <input
+                          key={i}
+                          type="text"
+                          className={`${inputBase} mt-2`}
+                          placeholder={`Guest ${i + 1} name`}
+                          value={name}
+                          onChange={(e) => updatePlusOneName(i, e.target.value)}
+                        />
                       ))}
                     </div>
                   </motion.div>
@@ -186,8 +237,20 @@ export function RSVPSection() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <label htmlFor="rsvp-message" className="retro-label mb-2">A Note for the Couple</label>
-                    <textarea id="rsvp-message" rows={3} className={`${inputBase} resize-none`} placeholder="We'll miss you, but leave a note..." value={form.message} onChange={(e) => update("message", e.target.value)} />
+                    <label
+                      htmlFor="rsvp-message"
+                      className="block text-muted text-xs uppercase tracking-[0.2em] font-sans font-light mb-2"
+                    >
+                      A Note for the Couple
+                    </label>
+                    <textarea
+                      id="rsvp-message"
+                      rows={3}
+                      className={`${inputBase} resize-none`}
+                      placeholder="We'll miss you, but leave a note..."
+                      value={form.message}
+                      onChange={(e) => update("message", e.target.value)}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -196,15 +259,15 @@ export function RSVPSection() {
               <button
                 type="submit"
                 disabled={!form.attending || submitting}
-                className={`${buttonBase} w-full flex items-center justify-center gap-2 bg-primary text-cream hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed`}
+                className={`${buttonBase} w-full flex items-center justify-center gap-2 bg-primary text-cream hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed`}
               >
-                <Send size={16} />
+                <Send size={14} />
                 {submitting ? "Sending…" : "Send RSVP"}
               </button>
             </motion.form>
           )}
         </AnimatePresence>
-      </WesAndersonFrame>
+      </div>
     </section>
   );
 }

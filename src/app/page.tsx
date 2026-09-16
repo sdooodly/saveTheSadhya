@@ -2,7 +2,6 @@
 
 import {
   HeroSection,
-  EventDetailsSection,
   RSVPSection,
   FooterSection,
 } from "@/components/sections";
@@ -38,12 +37,8 @@ export default function Home() {
     <InvitationIntro>
       <NavigationDots />
       <main>
-        <SnapSection id="hero">
+        <SnapSection id="invitation" scrollable>
           <HeroSection />
-        </SnapSection>
-
-        <SnapSection id="details">
-          <EventDetailsSection />
         </SnapSection>
 
         <SnapSection id="rsvp" scrollable>

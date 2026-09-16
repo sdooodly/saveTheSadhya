@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const SECTIONS = [
-  { id: "hero", label: "Welcome" },
-  { id: "details", label: "Details" },
+  { id: "invitation", label: "Invitation" },
   { id: "rsvp", label: "RSVP" },
 ];
 

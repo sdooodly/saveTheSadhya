@@ -94,20 +94,6 @@ body {
   opacity: 0.12;
 }
 
-/* ── Retro label ──────────────────────────────── */
-
-.retro-label {
-  display: inline-block;
-  padding: 0.25rem 1rem;
-  border: 1px solid var(--color-primary);
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-primary);
-}
-
 /* ── Gold foil shimmer ────────────────────────── */
 
 .gold-foil {
