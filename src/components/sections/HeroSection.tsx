@@ -128,6 +128,53 @@ export function HeroSection() {
           </motion.p>
         </motion.div>
       </WesAndersonFrame>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.5, duration: 0.8 }}
+        className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1.5"
+      >
+        <span className="text-muted/50 text-[0.5rem] uppercase tracking-[0.3em] font-sans font-light">
+          Scroll
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <svg
+            width="16"
+            height="24"
+            viewBox="0 0 16 24"
+            fill="none"
+            className="text-primary/25"
+          >
+            {/* Mouse/scroll shape */}
+            <rect
+              x="1"
+              y="1"
+              width="14"
+              height="22"
+              rx="7"
+              stroke="currentColor"
+              strokeWidth="1"
+            />
+            <motion.circle
+              cx="8"
+              cy="7"
+              r="1.5"
+              fill="currentColor"
+              animate={{ cy: [7, 12, 7] }}
+              transition={{
+                duration: 1.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </svg>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

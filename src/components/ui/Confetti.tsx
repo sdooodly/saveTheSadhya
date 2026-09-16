@@ -11,25 +11,31 @@ interface Petal {
   scale: number;
   delay: number;
   color: string;
+  type: "petal" | "dot";
 }
 
+/* Kerala wedding palette — gold, teal, warm accents */
 const PETAL_COLORS = [
-  "#E8C4C4", // blush
-  "#D4A89A", // dusty rose
+  "#DAA520", // gold
+  "#B8860B", // dark gold / accent
+  "#3A7D7B", // bride teal
+  "#2D6A6A", // primary teal
+  "#B5403A", // groom red
+  "#D4A373", // warm sandalwood
+  "#E8C97A", // kasavu gold (mundu border)
   "#C9B99A", // champagne
-  "#B8C4B8", // sage
-  "#D4C5A9", // wheat
 ];
 
 function createPetals(count: number): Petal[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
-    drift: (Math.random() - 0.5) * 30,
-    rotation: Math.random() * 360,
-    scale: 0.5 + Math.random() * 0.5,
-    delay: Math.random() * 0.6,
+    drift: (Math.random() - 0.5) * 40,
+    rotation: Math.random() * 540,
+    scale: 0.4 + Math.random() * 0.6,
+    delay: Math.random() * 0.8,
     color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)],
+    type: Math.random() > 0.3 ? "petal" : "dot",
   }));
 }
 
@@ -38,8 +44,8 @@ export function Confetti({ active }: { active: boolean }) {
 
   useEffect(() => {
     if (active) {
-      setPetals(createPetals(24));
-      const timer = setTimeout(() => setPetals([]), 4000);
+      setPetals(createPetals(32));
+      const timer = setTimeout(() => setPetals([]), 4500);
       return () => clearTimeout(timer);
     }
   }, [active]);
@@ -52,37 +58,41 @@ export function Confetti({ active }: { active: boolean }) {
             key={p.id}
             initial={{
               left: `${p.x}%`,
-              top: "-3%",
+              top: "-4%",
               rotate: 0,
               scale: 0,
-              opacity: 0.8,
+              opacity: 0.9,
             }}
             animate={{
-              top: "105%",
+              top: "108%",
               left: `${p.x + p.drift}%`,
               rotate: p.rotation,
               scale: p.scale,
-              opacity: [0.8, 0.7, 0.5, 0],
+              opacity: [0.9, 0.8, 0.5, 0],
             }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: 3.5 + Math.random(),
+              duration: 3 + Math.random() * 1.5,
               delay: p.delay,
               ease: "easeOut",
             }}
             className="absolute"
           >
-            {/* Simple oval petal */}
-            <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
-              <ellipse
-                cx="7"
-                cy="10"
-                rx="5"
-                ry="9"
-                fill={p.color}
-                opacity="0.7"
-              />
-            </svg>
+            {p.type === "petal" ? (
+              /* Leaf-shaped petal — nod to banana leaf / flower petals */
+              <svg width="16" height="22" viewBox="0 0 16 22" fill="none">
+                <path
+                  d="M8 0 C12 4, 15 10, 8 22 C1 10, 4 4, 8 0Z"
+                  fill={p.color}
+                  opacity="0.65"
+                />
+              </svg>
+            ) : (
+              /* Small dot — like rice grains */
+              <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
+                <circle cx="3" cy="3" r="2.5" fill={p.color} opacity="0.5" />
+              </svg>
+            )}
           </motion.div>
         ))}
       </AnimatePresence>

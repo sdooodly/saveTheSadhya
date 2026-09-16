@@ -17,24 +17,32 @@ function MemoryPhoto({
   src,
   alt,
   fallbackPhoto,
+  rotate,
 }: {
   src: string;
   alt: string;
   fallbackPhoto: string;
+  rotate: string;
 }) {
   return (
-    <div className="w-[4.5rem] md:w-24 bg-cream p-1.5 pb-5 shadow-[0_5px_14px_rgba(30,47,47,0.18)]">
-      <Image
-        src={src}
-        alt={alt}
-        width={96}
-        height={120}
-        className="aspect-[4/5] w-full object-cover"
-        onError={(event) => {
-          event.currentTarget.src = fallbackPhoto;
-        }}
-      />
-    </div>
+    <motion.div
+      className={`${rotate} bg-white p-1.5 pb-6 shadow-[0_4px_20px_rgba(30,47,47,0.15)] rounded-[2px]`}
+      whileHover={{ scale: 1.05, rotate: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
+      <div className="w-20 md:w-28 aspect-[4/5] overflow-hidden rounded-[1px] bg-secondary">
+        <Image
+          src={src}
+          alt={alt}
+          width={112}
+          height={140}
+          className="w-full h-full object-cover"
+          onError={(event) => {
+            event.currentTarget.src = fallbackPhoto;
+          }}
+        />
+      </div>
+    </motion.div>
   );
 }
 
@@ -49,34 +57,46 @@ export function ChildhoodMemoryPopup({
 }: ChildhoodMemoryPopupProps) {
   return (
     <motion.aside
-      initial={{ opacity: 0, y: 20, scale: 0.82, rotate: -4 }}
-      animate={revealed ? { opacity: 1, y: 0, scale: 1, rotate: -3 } : { opacity: 0, y: 36, scale: 0.7, rotate: -1 }}
-      transition={{ delay: placement === "hero" ? 2.6 : 0, duration: 0.8, type: "spring", bounce: 0.35 }}
-      className={`pointer-events-none absolute z-20 origin-bottom-right ${
+      initial={{ opacity: 0, y: 24, scale: 0.85 }}
+      animate={
+        revealed
+          ? { opacity: 1, y: 0, scale: 1 }
+          : { opacity: 0, y: 36, scale: 0.7 }
+      }
+      transition={{
+        delay: placement === "hero" ? 2.6 : 0.1,
+        duration: 0.9,
+        type: "spring",
+        bounce: 0.3,
+      }}
+      className={`pointer-events-auto z-20 ${
         placement === "hero"
-          ? "right-2 top-3 md:right-10 md:top-8"
-          : "bottom-[4.25rem] left-1/2 -translate-x-1/2"
+          ? "absolute right-2 top-3 md:right-10 md:top-8 origin-bottom-right"
+          : "relative mb-4"
       }`}
       aria-label="A childhood memory of the couple"
     >
-      <div className="relative flex items-end gap-1.5 md:gap-2">
-        <div className="rotate-[-7deg]">
+      {/* Glass backdrop */}
+      <div className="relative rounded-xl bg-white/10 backdrop-blur-md border border-white/20 shadow-[0_8px_32px_rgba(30,47,47,0.12)] p-4 md:p-5">
+        <div className="flex items-end gap-3 md:gap-4 justify-center">
           <MemoryPhoto
             src={bridePhoto}
             alt={`${brideName} as a child`}
             fallbackPhoto={fallbackPhoto}
+            rotate="rotate-[-5deg]"
           />
-        </div>
-        <div className="mb-1 rotate-[6deg]">
           <MemoryPhoto
             src={groomPhoto}
             alt={`${groomName} as a child`}
             fallbackPhoto={fallbackPhoto}
+            rotate="rotate-[4deg] translate-y-1"
           />
         </div>
-        <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap font-serif text-[0.65rem] italic text-primary/70">
-          once upon a time
-        </span>
+
+        {/* Caption */}
+        <p className="text-center mt-3 font-serif text-[0.7rem] md:text-xs italic text-primary/60 tracking-wide">
+          once upon a time …
+        </p>
       </div>
     </motion.aside>
   );

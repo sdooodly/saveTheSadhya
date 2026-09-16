@@ -65,6 +65,45 @@ body {
   background-color: var(--color-secondary);
 }
 
+/* ── Section dividers — subtle ornamental breaks ── */
+
+.snap-section + .snap-section {
+  position: relative;
+}
+
+.snap-section + .snap-section::before {
+  content: "· · ·";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 5;
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.5em;
+  color: var(--color-primary);
+  opacity: 0.25;
+}
+
+.snap-section + .snap-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(60%, 20rem);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-primary) 30%,
+    var(--color-accent) 50%,
+    var(--color-primary) 70%,
+    transparent 100%
+  );
+  opacity: 0.12;
+}
+
 /* ── Retro label ──────────────────────────────── */
 
 .retro-label {
