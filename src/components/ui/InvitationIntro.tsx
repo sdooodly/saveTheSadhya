@@ -146,7 +146,8 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
         transition={{ duration: phase === "out" ? 0.6 : 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Back of the envelope */}
-        <div className="absolute inset-0 rounded-[3px] bg-[#5A1520] border border-gold" />
+        {/* no gold edge along the top: it would show through the card as it slides out */}
+        <div className="absolute inset-0 rounded-b-[3px] bg-[#5A1520] border-x border-b border-gold" />
 
         {/* The card inside */}
         <motion.div
@@ -179,7 +180,8 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
           <path d="M100 0 L52 58 L100 100 Z" fill="#6E1B27" />
           <path d="M0 100 L50 50 L100 100 Z" fill="#7A1F2B" />
           <path d="M0 100 L50 50 L100 100" fill="none" stroke="#C2A876" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
-          <rect x="0" y="0" width="100" height="100" fill="none" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          {/* gold edge on the sides and bottom only — the top is the open mouth */}
+          <path d="M0 0 L0 100 L100 100 L100 0" fill="none" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         </svg>
 
         {/* Flap with a gold seal */}

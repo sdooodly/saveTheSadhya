@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { MapPin, ExternalLink, CalendarPlus } from "lucide-react";
+import { MapPin, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { PhotoBooth } from "@/components/ui";
+import { PhotoBooth, VenueMap } from "@/components/ui";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -131,81 +131,29 @@ export function HeroSection() {
           </p>
         </motion.div>
 
-        {/* Venue: arch-shaped map beside the details */}
-        <motion.div variants={fadeUp} className="mt-4 flex items-center justify-center gap-4 text-left">
-          <a
-            href={event.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open ${event.venue} in Google Maps`}
-            className="group shrink-0 rounded-t-full rounded-b-md border border-gold bg-paper p-[3px]
-                       shadow-[0_3px_12px_rgba(15,72,72,0.12)] transition-transform hover:-translate-y-0.5"
-          >
-            <div className="relative w-20 h-24 md:w-24 md:h-28 overflow-hidden rounded-t-full rounded-b-[4px]">
-              {/* Oversized and centred so only the pin area shows, not Google's controls */}
-              <iframe
-                src={event.mapEmbedUrl}
-                title={`Map showing ${event.venue}`}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                tabIndex={-1}
-                className="absolute left-1/2 top-1/2 w-[320px] h-[360px] -translate-x-1/2 -translate-y-1/2
-                           border-0 pointer-events-none [filter:saturate(0.55)_sepia(0.12)_hue-rotate(-8deg)]"
-              />
-            </div>
-          </a>
-
-          <div className="flex flex-col items-start gap-0.5">
-            <a
-              href={event.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 font-serif text-[1.4rem] leading-tight md:text-xl text-ink hover:text-cream transition-colors"
-            >
-              <MapPin size={14} className="shrink-0 text-accent" />
-              {event.venue}
-            </a>
-            <span className="text-cream text-lg md:text-base pl-5">{event.address}</span>
-            <a
-              href={event.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 pl-5 text-ink text-lg md:text-sm underline decoration-gold underline-offset-4 hover:text-cream transition-colors"
-            >
-              Directions
-              <ExternalLink size={11} className="shrink-0 opacity-60" />
-            </a>
+        {/* Venue: one line, with a small map link (opens a popup) and calendar link */}
+        <motion.div variants={fadeUp} className="mt-4 flex flex-col items-center">
+          <p className="inline-flex items-center gap-1.5 font-serif text-[1.4rem] leading-tight md:text-xl text-ink">
+            <MapPin size={15} className="shrink-0 text-accent" />
+            {event.venue}
+          </p>
+          <p className="text-cream text-lg md:text-base leading-tight">{event.address}</p>
+          <div className="mt-2 flex items-center justify-center gap-5 text-lg md:text-base">
+            <VenueMap />
             <a
               href={calendarUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-accent text-lg md:text-sm hover:text-gold-light transition-colors mt-1"
+              className="inline-flex items-center gap-1.5 text-accent hover:text-gold-light transition-colors"
             >
-              <CalendarPlus size={14} className="shrink-0" />
+              <CalendarPlus size={15} className="shrink-0" />
               Add to calendar
             </a>
           </div>
         </motion.div>
 
-        {/* Dress code */}
-        <motion.div variants={fadeUp} className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 md:gap-6">
-          <p className="script-line text-[2.2rem] md:text-4xl w-full md:w-auto">Dress code</p>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#B5403A] border border-accent/20" />
-            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#8B2E2A] border border-accent/20" />
-            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#D4604A] border border-accent/20" />
-            <span className="text-cream text-lg md:text-sm ml-1">Groom</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#3A7D7B] border border-accent/20" />
-            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#2E5C8A] border border-accent/20" />
-            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#4A8C6F] border border-accent/20" />
-            <span className="text-cream text-lg md:text-sm ml-1">Bride</span>
-          </div>
-        </motion.div>
-
         {/* Scroll indicator */}
-        <motion.div variants={fadeUp} className="mt-4 flex flex-col items-center">
+        <motion.div variants={fadeUp} className="mt-6 flex flex-col items-center">
           <motion.button
             onClick={() => document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" })}
             className="flex flex-col items-center group cursor-pointer focus:outline-none p-1"

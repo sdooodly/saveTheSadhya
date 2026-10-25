@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Plus, Minus, CheckCircle } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { Confetti } from "@/components/ui";
+import { Confetti, DressCode } from "@/components/ui";
 
 interface RSVPFormData {
   name: string;
@@ -134,6 +134,7 @@ export function RSVPSection() {
                   ? "We can't wait to celebrate with you!"
                   : "We'll miss you! Thank you for letting us know."}
               </p>
+              {form.attending === "yes" && <DressCode className="mt-8" />}
             </motion.div>
           ) : (
             <motion.form
