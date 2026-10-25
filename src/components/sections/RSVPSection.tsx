@@ -82,7 +82,7 @@ export function RSVPSection() {
   }
 
   const inputBase =
-    "w-full px-4 py-3 bg-cream/5 border border-accent/25 rounded-sm font-sans text-sm font-light text-cream " +
+    "w-full px-4 py-3 bg-white/80 border border-accent/25 rounded-sm font-sans text-sm font-light text-cream " +
     "placeholder:text-cream/40 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/10 " +
     "transition-colors";
 
@@ -175,7 +175,7 @@ export function RSVPSection() {
                       onClick={() => update("attending", option)}
                       className={`${buttonBase} flex-1 border ${
                         form.attending === option
-                          ? "bg-accent text-dark border-accent"
+                          ? "bg-ink text-paper border-ink"
                           : "bg-transparent text-cream border-accent/20 hover:border-accent/40"
                       }`}
                     >
@@ -267,7 +267,7 @@ export function RSVPSection() {
               <button
                 type="submit"
                 disabled={!form.attending || submitting}
-                className={`${buttonBase} w-full flex items-center justify-center gap-2 bg-accent text-dark hover:bg-accent/90 disabled:opacity-40 disabled:cursor-not-allowed`}
+                className={`${buttonBase} w-full flex items-center justify-center gap-2 bg-ink text-paper hover:bg-leaf disabled:opacity-40 disabled:cursor-not-allowed`}
               >
                 <Send size={14} />
                 {submitting ? "Sending…" : "Send RSVP"}

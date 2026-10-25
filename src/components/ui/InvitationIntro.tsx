@@ -68,7 +68,7 @@ function StickerPhoto({
           >
             <path
               d={ring.d}
-              stroke="#CDA24E"
+              stroke="#C2A876"
               strokeWidth={ring.w}
               fill="none"
               opacity={ring.opacity}
@@ -82,7 +82,7 @@ function StickerPhoto({
         <div
           className="absolute inset-[8%] rounded-full overflow-hidden"
           style={{
-            boxShadow: "0 0 20px rgba(205,162,78,0.15), 0 4px 16px rgba(0,0,0,0.3)",
+            boxShadow: "0 0 18px rgba(194,168,118,0.25), 0 4px 14px rgba(15,72,72,0.18)",
           }}
         >
           <Image
@@ -99,7 +99,7 @@ function StickerPhoto({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: delay + 0.4, duration: 0.4 }}
-        className="text-accent/80 text-xs md:text-sm font-sans font-light tracking-wide mt-2"
+        className="text-leaf text-xs md:text-sm font-sans font-light tracking-wide mt-2"
       >
         {name}
       </motion.span>
@@ -138,14 +138,35 @@ export function InvitationIntro({
             key="intro"
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[70] flex flex-col items-center justify-center px-6 bg-teal"
+            className="fixed inset-0 z-[70] flex flex-col items-center justify-center px-6 bg-paper overflow-hidden"
           >
+            {/* Monstera vine from the invite */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
+
+            {/* Ganesha from the invite */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+              className="relative mb-4"
+            >
+              <Image
+                src={`${basePath}/ganesha.png`}
+                alt=""
+                width={64}
+                height={74}
+                className="w-12 h-auto md:w-16"
+                priority
+              />
+            </motion.div>
+
             {/* Heading */}
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-cream/70 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
+              className="relative text-cream/70 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
             >
               Together with their families
             </motion.p>
@@ -155,10 +176,10 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="gold-foil font-serif italic text-3xl md:text-5xl mt-2 tracking-tight font-medium text-center leading-tight"
+              className="relative gold-foil font-serif italic text-3xl md:text-5xl mt-2 tracking-tight font-medium text-center leading-tight"
             >
               {couple.partner1}
-              <span className="block font-serif text-base md:text-xl text-accent/50 italic my-0.5">
+              <span className="block font-serif text-base md:text-xl text-olive italic my-0.5">
                 &amp;
               </span>
               {couple.partner2}
@@ -169,13 +190,13 @@ export function InvitationIntro({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.5 }}
-              className="text-cream/60 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
+              className="relative text-cream/60 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
             >
               Invite you to their wedding
             </motion.p>
 
             {/* Childhood photos */}
-            <div className="flex items-start gap-3 md:gap-5 mt-6">
+            <div className="relative flex items-start gap-3 md:gap-5 mt-6">
               <StickerPhoto
                 src={bridePhoto}
                 alt={`${couple.partner1} as a child`}
@@ -200,7 +221,7 @@ export function InvitationIntro({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.0, duration: 0.6 }}
               onClick={handleEnter}
-              className="group mt-8 focus:outline-none flex flex-col items-center gap-2"
+              className="relative group mt-8 focus:outline-none flex flex-col items-center gap-2"
               aria-label="Enter invitation"
             >
               <svg
@@ -213,14 +234,14 @@ export function InvitationIntro({
               >
                 <rect
                   x="2" y="14" width="96" height="52" rx="3"
-                  fill="#15494A" stroke="#CDA24E" strokeWidth="0.8"
+                  fill="#0F4848" stroke="#C2A876" strokeWidth="1.2"
                 />
                 <path
                   d="M2 14 L50 44 L98 14" fill="none"
-                  stroke="#CDA24E" strokeWidth="0.8" strokeLinejoin="round"
+                  stroke="#C2A876" strokeWidth="1.2" strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-accent/70 text-xs font-sans font-light group-hover:text-accent transition-colors tracking-wide">
+              <span className="text-leaf text-xs font-sans font-light group-hover:text-ink transition-colors tracking-wide">
                 Open invite ↗
               </span>
             </motion.button>

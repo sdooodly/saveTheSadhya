@@ -46,9 +46,13 @@ export default function Home() {
     <>
       <BackgroundMusic src={`${basePath}/AlexTurner.mp3`} play={musicReady} />
 
+      {/* Monstera vine from the invite, behind all content */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
+
       <InvitationIntro onEnter={handleEnter}>
         <NavigationDots />
-        <main>
+        <main className="relative z-[1]">
           <SnapSection id="invitation" scrollable>
             <HeroSection />
           </SnapSection>

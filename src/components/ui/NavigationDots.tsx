@@ -52,7 +52,7 @@ export function NavigationDots() {
           {/* Label tooltip */}
           <span
             className="absolute right-6 px-2 py-1 text-[0.6rem] font-sans uppercase tracking-wider
-                       text-cream bg-dark/80 rounded-sm opacity-0 group-hover:opacity-100
+                       text-paper bg-ink/90 rounded-sm opacity-0 group-hover:opacity-100
                        transition-opacity whitespace-nowrap pointer-events-none"
           >
             {section.label}
@@ -62,7 +62,7 @@ export function NavigationDots() {
           <motion.span
             animate={{
               scale: active === i ? 1 : 0.6,
-              backgroundColor: active === i ? "#CDA24E" : "#7DA8A0",
+              backgroundColor: active === i ? "#0F4848" : "#8FB3A3",
             }}
             transition={{ duration: 0.3 }}
             className="block w-2.5 h-2.5 rounded-full border border-accent/30"

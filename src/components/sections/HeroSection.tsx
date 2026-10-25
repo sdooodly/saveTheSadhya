@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, ExternalLink, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { Lotus } from "@/components/ui";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -43,7 +42,6 @@ function buildCalendarUrl() {
 
 export function HeroSection() {
   const { couple, event } = weddingConfig;
-  const couplePhoto = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${couple.photo}`;
   const calendarUrl = buildCalendarUrl();
 
   const weddingDate = new Date(event.date);
@@ -70,32 +68,9 @@ export function HeroSection() {
           Request the pleasure of your company
         </motion.p>
 
-        {/* Couple photo */}
-        {couple.photo && (
-          <motion.div variants={fadeUp} className="mt-7 flex justify-center">
-            <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-2 border-accent/50 shadow-[0_0_20px_rgba(205,162,78,0.2),0_0_50px_rgba(205,162,78,0.1),0_8px_32px_rgba(0,0,0,0.3)]">
-              <motion.div
-                initial={{ opacity: 0, scale: 1.15 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-                className="w-full h-full"
-              >
-                <Image
-                  src={couplePhoto}
-                  alt={`${couple.partner1} and ${couple.partner2}`}
-                  width={240}
-                  height={240}
-                  className="object-cover w-full h-full scale-[1.35] object-top"
-                  priority
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-
         <motion.p
           variants={fadeUp}
-          className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
+          className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-6"
         >
           at the wedding celebration of
         </motion.p>
@@ -110,7 +85,7 @@ export function HeroSection() {
 
         <motion.span
           variants={fadeUp}
-          className="block font-serif text-base md:text-lg text-accent/50 italic my-1"
+          className="block font-serif text-base md:text-lg text-olive italic my-1"
         >
           &amp;
         </motion.span>
@@ -122,9 +97,17 @@ export function HeroSection() {
           {couple.partner2}
         </motion.h1>
 
-        {/* Lotus divider */}
-        <motion.div variants={fadeUp} className="flex justify-center mt-6 mb-8">
-          <Lotus className="w-10 h-6 md:w-12 md:h-7" />
+        {/* Gold rule + monstera leaf divider, as on the invite */}
+        <motion.div variants={fadeUp} className="flex items-center justify-center gap-3 mt-6 mb-8" aria-hidden="true">
+          <span className="h-px w-16 md:w-24 bg-gold" />
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/monstera-leaf.png`}
+            alt=""
+            width={28}
+            height={32}
+            className="w-6 h-auto md:w-7"
+          />
+          <span className="h-px w-16 md:w-24 bg-gold" />
         </motion.div>
 
         {/* Date */}

@@ -16,11 +16,11 @@ interface Petal {
 
 /* Kerala wedding palette — gold, teal, warm accents */
 const PETAL_COLORS = [
-  "#DAA520", // gold
-  "#B8860B", // dark gold / accent
+  "#C2A876", // invite gold
+  "#9E7F45", // antique gold
   "#3A7D7B", // teal
-  "#2D5A5A", // deep teal
-  "#B5403A", // groom red
+  "#0F4848", // invite ink teal
+  "#5E9C7E", // fresh monstera leaf
   "#D4A373", // warm sandalwood
   "#E4C87A", // kasavu gold (mundu border)
   "#C9B99A", // champagne
