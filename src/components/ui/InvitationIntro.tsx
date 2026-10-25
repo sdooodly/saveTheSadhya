@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { weddingConfig } from "@/wedding.config";
 
@@ -107,6 +107,103 @@ function StickerPhoto({
   );
 }
 
+/*
+ * Envelope opening: the flap lifts, a little card slides out, then grows
+ * into the invitation. Timings (ms) for each phase.
+ */
+const ENVELOPE_TIMING = { rise: 650, out: 1550, done: 2250 };
+
+function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: () => void }) {
+  const { couple } = weddingConfig;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  const [phase, setPhase] = useState<"flap" | "rise" | "out">("flap");
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setPhase("rise"), ENVELOPE_TIMING.rise);
+    const t2 = setTimeout(() => {
+      setPhase("out");
+      onReveal(); // invitation mounts underneath while the envelope fades away
+    }, ENVELOPE_TIMING.out);
+    const t3 = setTimeout(onDone, ENVELOPE_TIMING.done);
+    return () => [t1, t2, t3].forEach(clearTimeout);
+  }, [onReveal, onDone]);
+
+  const opened = phase !== "flap";
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[75] flex items-center justify-center bg-paper overflow-hidden"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: phase === "out" ? [1, 1, 0] : 1 }}
+      transition={{ duration: phase === "out" ? 0.7 : 0.25, times: phase === "out" ? [0, 0.55, 1] : undefined }}
+      aria-hidden="true"
+    >
+      <div className="kasavu-frame" />
+      <motion.div
+        className="relative w-[min(78vw,340px)] aspect-[3/2] [perspective:1000px]"
+        initial={{ scale: 0.55, y: 60 }}
+        animate={phase === "out" ? { scale: 1.06, y: 140, opacity: 0 } : { scale: 1, y: 40 }}
+        transition={{ duration: phase === "out" ? 0.6 : 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Back of the envelope */}
+        <div className="absolute inset-0 rounded-[3px] bg-[#0B3D3D] border border-gold" />
+
+        {/* The card inside */}
+        <motion.div
+          className="absolute left-[6%] right-[6%] top-[5%] bottom-[5%] z-10 flex flex-col items-center justify-center
+                     bg-paper border border-gold shadow-[0_6px_20px_rgba(15,72,72,0.18)]"
+          initial={{ y: 0 }}
+          animate={
+            phase === "flap"
+              ? { y: 0 }
+              : phase === "rise"
+                ? { y: "-62%" }
+                : { y: "-110%", scale: 1.5, opacity: 0 }
+          }
+          transition={{ duration: phase === "out" ? 0.7 : 0.85, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Image src={`${basePath}/monstera-leaf.png`} alt="" width={22} height={25} className="w-5 h-auto" />
+          <p className="script-name text-4xl md:text-5xl mt-1 leading-none">
+            {couple.partner1[0]}
+            <span className="font-serif italic text-olive text-xl mx-1 [-webkit-text-stroke:0]">&amp;</span>
+            {couple.partner2[0]}
+          </p>
+          <p className="text-[0.65rem] tracking-[0.3em] text-cream/70 mt-1">31 · 01 · 2027</p>
+        </motion.div>
+
+        {/* Front pocket (covers the lower card) */}
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 z-20 w-full h-full">
+          <path d="M0 0 L48 58 L0 100 Z" fill="#105050" />
+          <path d="M100 0 L52 58 L100 100 Z" fill="#105050" />
+          <path d="M0 100 L50 50 L100 100 Z" fill="#0F4848" />
+          <path d="M0 100 L50 50 L100 100" fill="none" stroke="#C2A876" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+          <rect x="0" y="0" width="100" height="100" fill="none" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        </svg>
+
+        {/* Flap with a gold seal */}
+        <motion.div
+          className="absolute inset-x-0 top-0 h-[58%] origin-top"
+          style={{ zIndex: opened ? 5 : 30, transformStyle: "preserve-3d" }}
+          initial={{ rotateX: 0 }}
+          animate={{ rotateX: opened ? 180 : 0 }}
+          transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
+        >
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
+            <path d="M0 0 L50 100 L100 0 Z" fill="#0D4444" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          </svg>
+          <span
+            className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 w-9 h-9 rounded-full
+                       bg-[#B8995E] border border-[#E4D2A6] shadow-[0_2px_6px_rgba(0,0,0,0.25)]
+                       flex items-center justify-center [backface-visibility:hidden]"
+          >
+            <Image src={`${basePath}/monstera-leaf.png`} alt="" width={16} height={18} className="w-3.5 h-auto opacity-90 [filter:brightness(1.6)_sepia(0.6)]" />
+          </span>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function InvitationIntro({
   children,
   onEnter,
@@ -121,16 +218,35 @@ export function InvitationIntro({
   const bridePhoto = `${basePath}${couple.childhoodPhotos.bride}`;
   const groomPhoto = `${basePath}${couple.childhoodPhotos.groom}`;
 
+  const [opening, setOpening] = useState(false);
+
+  // Start the music on the tap itself (browsers only allow audio after a gesture),
+  // then play the envelope animation before showing the invitation.
   const handleEnter = useCallback(() => {
-    setEntered(true);
     onEnter?.();
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) setEntered(true);
+    else setOpening(true);
   }, [onEnter]);
 
-  if (entered) return <>{children}</>;
+  const reveal = useCallback(() => setEntered(true), []);
+  const finishOpening = useCallback(() => setOpening(false), []);
+
+  const envelope = opening && <EnvelopeOpening onReveal={reveal} onDone={finishOpening} />;
+
+  if (entered)
+    return (
+      <>
+        {children}
+        {envelope}
+      </>
+    );
 
   return (
     <>
       <div className="hidden">{children}</div>
+
+      {envelope}
 
       <AnimatePresence>
         {!entered && (
@@ -145,6 +261,7 @@ export function InvitationIntro({
             <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${basePath}/leaves/corner-leaf.webp`} alt="" aria-hidden="true" className="corner-leaf" />
+            <div className="kasavu-frame" aria-hidden="true" />
 
             {/* Ganesha from the invite */}
             <motion.div
@@ -223,6 +340,7 @@ export function InvitationIntro({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.0, duration: 0.6 }}
               onClick={handleEnter}
+              disabled={opening}
               className="relative group mt-8 focus:outline-none flex flex-col items-center gap-2"
               aria-label="Enter invitation"
             >

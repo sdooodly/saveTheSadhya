@@ -43,7 +43,7 @@ export const weddingConfig = {
     title: "Save the Sadhya",
     description:
       "You are cordially invited to celebrate the wedding of Gayathri & Anand.",
-    ogImage: "/og-image.png",
+    ogImage: "og-image.jpg", // link-preview card (WhatsApp etc.), 1200×630 in /public
   },
 } as const;
 

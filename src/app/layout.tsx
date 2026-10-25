@@ -3,7 +3,8 @@ import localFont from "next/font/local";
 import { weddingConfig } from "@/wedding.config";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// Trailing slash so relative paths (like the preview image) resolve under the site's sub-path.
+const siteUrl = `${(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "")}/`;
 
 // Same typefaces as the printed invite, self-hosted (SIL Open Font License).
 const garamond = localFont({
@@ -28,9 +29,25 @@ export const metadata: Metadata = {
   title: weddingConfig.meta.title,
   description: weddingConfig.meta.description,
   openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: weddingConfig.meta.title,
     title: weddingConfig.meta.title,
     description: weddingConfig.meta.description,
-    images: [weddingConfig.meta.ogImage],
+    images: [
+      {
+        url: new URL(weddingConfig.meta.ogImage, siteUrl).toString(),
+        width: 1200,
+        height: 630,
+        alt: weddingConfig.meta.description,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: weddingConfig.meta.title,
+    description: weddingConfig.meta.description,
+    images: [new URL(weddingConfig.meta.ogImage, siteUrl).toString()],
   },
 };
 

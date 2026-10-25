@@ -83,21 +83,30 @@ export function HeroSection() {
           at the wedding celebration of
         </motion.p>
 
-        {/* Couple names */}
-        <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl mt-1">
-          {couple.partner1}
-        </motion.h1>
+        {/* Couple names on a mint watercolour wash */}
+        <div className="relative isolate">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/mint-wash.webp`}
+            alt=""
+            aria-hidden="true"
+            className="mint-wash"
+          />
+          <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl mt-1">
+            {couple.partner1}
+          </motion.h1>
 
-        <motion.span
-          variants={fadeUp}
-          className="block font-serif text-xl md:text-2xl text-olive italic -my-1"
-        >
-          &amp;
-        </motion.span>
+          <motion.span
+            variants={fadeUp}
+            className="block font-serif text-xl md:text-2xl text-olive italic -my-1"
+          >
+            &amp;
+          </motion.span>
 
-        <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl">
-          {couple.partner2}
-        </motion.h1>
+          <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl">
+            {couple.partner2}
+          </motion.h1>
+        </div>
 
         {/* Gold rule + monstera leaf divider, as on the invite */}
         <motion.div variants={fadeUp} className="flex items-center justify-center gap-3 mt-3 mb-3" aria-hidden="true">

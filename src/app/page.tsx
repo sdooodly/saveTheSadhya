@@ -51,6 +51,7 @@ export default function Home() {
       <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={`${basePath}/leaves/corner-leaf.webp`} alt="" aria-hidden="true" className="corner-leaf" />
+      <div className="kasavu-frame" aria-hidden="true" />
 
       <InvitationIntro onEnter={handleEnter}>
         <NavigationDots />
