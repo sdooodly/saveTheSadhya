@@ -26,10 +26,13 @@ export const weddingConfig = {
   event: {
     title: "The Wedding & Sadhya",
     date: "2027-01-31",
+    startsAt: "2027-01-31T12:12:00+05:30", // muhurtham, used by the countdown
     muhurthamTime: "12:12 p.m. to 12:33 p.m.",
     venue: "RDR Auditorium",
     address: "Thiruvananthapuram",
-    mapUrl: "https://www.google.com/maps/search/RDR+Auditorium+Thiruvananthapuram+Kerala",
+    mapEmbedUrl:
+      "https://www.google.com/maps?q=RDR+Auditorium,+Edapazhanji,+Thiruvananthapuram,+Kerala&output=embed",
+    mapUrl: "https://www.google.com/maps/search/RDR+Auditorium+Edapazhanji+Thiruvananthapuram",
   },
 
   rsvp: {

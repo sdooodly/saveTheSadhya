@@ -143,6 +143,8 @@ export function InvitationIntro({
             {/* Monstera vine from the invite */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${basePath}/leaves/corner-leaf.webp`} alt="" aria-hidden="true" className="corner-leaf" />
 
             {/* Ganesha from the invite */}
             <motion.div

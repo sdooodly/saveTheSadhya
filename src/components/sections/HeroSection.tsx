@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, ExternalLink, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { PhotoBooth } from "@/components/ui";
+import { Countdown, PhotoBooth } from "@/components/ui";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -127,6 +127,11 @@ export function HeroSection() {
           </p>
         </motion.div>
 
+        {/* Countdown to the muhurtham */}
+        <motion.div variants={fadeUp} className="mt-8">
+          <Countdown />
+        </motion.div>
+
         {/* Venue */}
         <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-1.5">
           <a
@@ -152,6 +157,32 @@ export function HeroSection() {
           >
             <CalendarPlus size={12} className="shrink-0" />
             Add to calendar
+          </a>
+
+          {/* Map card */}
+          <a
+            href={event.mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-5 block w-full max-w-sm rounded-md border border-gold bg-paper p-1.5
+                       shadow-[0_4px_18px_rgba(15,72,72,0.10)] transition-shadow hover:shadow-[0_6px_24px_rgba(15,72,72,0.16)]"
+            aria-label={`Open ${event.venue} in Google Maps`}
+          >
+            <div className="relative h-44 md:h-52 overflow-hidden rounded-sm">
+              <iframe
+                src={event.mapEmbedUrl}
+                title={`Map showing ${event.venue}`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 w-full h-full border-0 pointer-events-none
+                           [filter:saturate(0.55)_sepia(0.12)_hue-rotate(-8deg)]"
+              />
+            </div>
+            <span className="flex items-center justify-center gap-1.5 pt-1.5 pb-0.5 text-sm text-leaf group-hover:text-ink transition-colors">
+              <MapPin size={13} className="shrink-0" />
+              Open in Google Maps
+              <ExternalLink size={11} className="shrink-0 opacity-60" />
+            </span>
           </a>
         </motion.div>
 

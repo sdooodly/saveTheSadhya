@@ -3,96 +3,76 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Petal {
+/**
+ * Falling monstera leaves — shown when a guest RSVPs "yes".
+ * Leaves are watercolour cut-outs from the invite artwork (public/leaves).
+ * (Kept the `Confetti` name so existing imports keep working.)
+ */
+
+const LEAVES = ["/leaves/fall-1.png", "/leaves/fall-2.png", "/leaves/fall-3.png", "/leaves/fall-4.png"];
+
+interface Leaf {
   id: number;
-  x: number;
-  drift: number;
-  rotation: number;
-  scale: number;
-  delay: number;
-  color: string;
-  type: "petal" | "dot";
+  src: string;
+  x: number; // start, % of width
+  sway: number; // side-to-side swing, px
+  drift: number; // overall sideways drift, %
+  spin: number; // total rotation, deg
+  size: number; // px
+  delay: number; // s
+  duration: number; // s
 }
 
-/* Kerala wedding palette — gold, teal, warm accents */
-const PETAL_COLORS = [
-  "#C2A876", // invite gold
-  "#9E7F45", // antique gold
-  "#3A7D7B", // teal
-  "#0F4848", // invite ink teal
-  "#5E9C7E", // fresh monstera leaf
-  "#D4A373", // warm sandalwood
-  "#E4C87A", // kasavu gold (mundu border)
-  "#C9B99A", // champagne
-];
-
-function createPetals(count: number): Petal[] {
+function createLeaves(count: number): Leaf[] {
   return Array.from({ length: count }, (_, i) => ({
     id: i,
+    src: LEAVES[i % LEAVES.length],
     x: Math.random() * 100,
-    drift: (Math.random() - 0.5) * 40,
-    rotation: Math.random() * 540,
-    scale: 0.4 + Math.random() * 0.6,
-    delay: Math.random() * 0.8,
-    color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)],
-    type: Math.random() > 0.3 ? "petal" : "dot",
+    sway: 30 + Math.random() * 50,
+    drift: (Math.random() - 0.5) * 30,
+    spin: (Math.random() - 0.5) * 360,
+    size: 22 + Math.random() * 30,
+    delay: Math.random() * 1.6,
+    duration: 4.5 + Math.random() * 2.5,
   }));
 }
 
 export function Confetti({ active }: { active: boolean }) {
-  const [petals, setPetals] = useState<Petal[]>([]);
+  const [leaves, setLeaves] = useState<Leaf[]>([]);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   useEffect(() => {
-    if (active) {
-      setPetals(createPetals(32));
-      const timer = setTimeout(() => setPetals([]), 4500);
-      return () => clearTimeout(timer);
-    }
+    if (!active) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const start = setTimeout(() => setLeaves(createLeaves(reduce ? 8 : 26)), 0);
+    const end = setTimeout(() => setLeaves([]), 8500);
+    return () => {
+      clearTimeout(start);
+      clearTimeout(end);
+    };
   }, [active]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden" aria-hidden="true">
       <AnimatePresence>
-        {petals.map((p) => (
+        {leaves.map((l) => (
           <motion.div
-            key={p.id}
-            initial={{
-              left: `${p.x}%`,
-              top: "-4%",
-              rotate: 0,
-              scale: 0,
-              opacity: 0.9,
-            }}
+            key={l.id}
+            className="absolute"
+            style={{ left: `${l.x}%`, top: "-8%", width: l.size }}
+            initial={{ opacity: 0, rotate: 0 }}
             animate={{
               top: "108%",
-              left: `${p.x + p.drift}%`,
-              rotate: p.rotation,
-              scale: p.scale,
-              opacity: [0.9, 0.8, 0.5, 0],
+              left: `${l.x + l.drift}%`,
+              x: [0, l.sway, -l.sway * 0.7, l.sway * 0.5, 0],
+              rotate: [0, l.spin * 0.4, l.spin * 0.7, l.spin],
+              opacity: [0, 1, 1, 0.9, 0],
             }}
             exit={{ opacity: 0 }}
-            transition={{
-              duration: 3 + Math.random() * 1.5,
-              delay: p.delay,
-              ease: "easeOut",
-            }}
-            className="absolute"
+            transition={{ duration: l.duration, delay: l.delay, ease: "easeIn" }}
           >
-            {p.type === "petal" ? (
-              /* Leaf-shaped petal — nod to banana leaf / flower petals */
-              <svg width="16" height="22" viewBox="0 0 16 22" fill="none">
-                <path
-                  d="M8 0 C12 4, 15 10, 8 22 C1 10, 4 4, 8 0Z"
-                  fill={p.color}
-                  opacity="0.65"
-                />
-              </svg>
-            ) : (
-              /* Small dot — like rice grains */
-              <svg width="6" height="6" viewBox="0 0 6 6" fill="none">
-                <circle cx="3" cy="3" r="2.5" fill={p.color} opacity="0.5" />
-              </svg>
-            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${basePath}${l.src}`} alt="" draggable={false} className="w-full h-auto" />
           </motion.div>
         ))}
       </AnimatePresence>
