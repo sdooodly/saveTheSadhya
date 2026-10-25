@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, ExternalLink, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
+import { PhotoBooth } from "@/components/ui";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -68,9 +69,14 @@ export function HeroSection() {
           Request the pleasure of your company
         </motion.p>
 
+        {/* Live photo booth */}
+        <motion.div variants={fadeUp} className="mt-8 flex justify-center">
+          <PhotoBooth />
+        </motion.div>
+
         <motion.p
           variants={fadeUp}
-          className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-6"
+          className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-8"
         >
           at the wedding celebration of
         </motion.p>

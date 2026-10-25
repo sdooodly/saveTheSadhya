@@ -24,7 +24,7 @@ function SnapSection({
   return (
     <div className="snap-section w-full" id={id}>
       <div
-        className={`flex-1 flex flex-col justify-center items-center w-full min-h-0 ${
+        className={`flex-1 flex flex-col [justify-content:safe_center] items-center w-full min-h-0 ${
           scrollable ? "overflow-y-auto" : ""
         }`}
       >
