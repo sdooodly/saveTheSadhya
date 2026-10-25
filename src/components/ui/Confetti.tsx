@@ -5,11 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * Falling monstera leaves — shown when a guest RSVPs "yes".
- * Leaves are watercolour cut-outs from the invite artwork (public/leaves).
+ * Leaves are watercolour monstera leaves (public/leaves).
  * (Kept the `Confetti` name so existing imports keep working.)
  */
 
-const LEAVES = ["/leaves/fall-1.png", "/leaves/fall-2.png", "/leaves/fall-3.png", "/leaves/fall-4.png"];
+// Whole monstera leaves: four drawn, two cut from the invite painting.
+const LEAVES = [
+  "/leaves/fall-1.png",
+  "/leaves/fall-2.png",
+  "/leaves/fall-3.png",
+  "/leaves/fall-4.png",
+  "/leaves/fall-5.png",
+  "/leaves/fall-6.png",
+];
 
 interface Leaf {
   id: number;
