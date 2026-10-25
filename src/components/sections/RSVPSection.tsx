@@ -105,7 +105,7 @@ export function RSVPSection() {
           <h2 className="script-name text-6xl md:text-7xl">
             RSVP
           </h2>
-          <p className="mt-2 text-cream/60 font-sans font-light text-sm">
+          <p className="mt-1 script-line text-3xl md:text-4xl">
             Kindly respond by{" "}
             {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
     timeZone: "Asia/Kolkata",

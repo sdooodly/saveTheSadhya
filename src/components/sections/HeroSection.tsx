@@ -66,7 +66,7 @@ export function HeroSection() {
         {/* Welcome */}
         <motion.p
           variants={fadeUp}
-          className="text-cream/80 text-sm md:text-base tracking-wide font-sans"
+          className="script-line text-3xl md:text-4xl"
         >
           Request the pleasure of your company
         </motion.p>
@@ -78,7 +78,7 @@ export function HeroSection() {
 
         <motion.p
           variants={fadeUp}
-          className="text-cream/80 text-sm md:text-base tracking-wide font-sans mt-3"
+          className="script-line text-3xl md:text-4xl mt-2"
         >
           at the wedding celebration of
         </motion.p>
@@ -189,7 +189,7 @@ export function HeroSection() {
 
         {/* Dress code */}
         <motion.div variants={fadeUp} className="mt-4 flex items-center justify-center gap-4 md:gap-6">
-          <p className="text-cream/80 text-sm md:text-base font-sans">Dress code</p>
+          <p className="script-line text-3xl md:text-4xl">Dress code</p>
           <div className="flex items-center gap-1.5">
             <span className="w-3 h-3 rounded-full bg-[#B5403A] border border-accent/20" />
             <span className="w-3 h-3 rounded-full bg-[#8B2E2A] border border-accent/20" />

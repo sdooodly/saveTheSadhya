@@ -172,6 +172,14 @@ body {
 }
 
 /* Script names, as on the invite (a hair of stroke matches the card's weight) */
+/* Short phrases in the same script, slightly lighter */
+.script-line {
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: color-mix(in srgb, var(--color-ink) 85%, transparent);
+  line-height: 1;
+}
+
 .script-name {
   font-family: var(--font-script);
   font-weight: 400;
@@ -180,27 +188,27 @@ body {
   line-height: 0.95;
 }
 
-/* ── Monstera leaf peeking in from the bottom-left ─ */
+/* ── Monstera leaves fanning out from the bottom-left corner ─ */
 
 .corner-leaf {
   position: fixed;
   left: 0;
   bottom: 0;
-  width: clamp(150px, 20vw, 300px);
+  width: clamp(190px, 24vw, 340px);
   height: auto;
   pointer-events: none;
   user-select: none;
   z-index: 0;
-  opacity: 0.85;
-  transform: translate(-30%, 24%) rotate(28deg);
-  transform-origin: 30% 30%;
+  opacity: 0.9;
+  transform: translate(-10%, 10%);
+  transform-origin: 0% 100%;
 }
 
 @media (max-width: 767px) {
   .corner-leaf {
-    width: 130px;
-    opacity: 0.4;
-    transform: translate(-42%, 30%) rotate(28deg);
+    width: 150px;
+    opacity: 0.5;
+    transform: translate(-16%, 14%);
   }
 }
 
@@ -228,7 +236,7 @@ body::before {
 
 @keyframes leaf-sway {
   0%, 100% { rotate: 0deg; }
-  50% { rotate: -3deg; }
+  50% { rotate: 2.5deg; }
 }
 
 .monstera-vine {
@@ -274,7 +282,7 @@ body::before {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(150%, 620px);
+  width: min(165%, 640px);
   height: auto;
   transform: translate(-50%, -50%);
   pointer-events: none;

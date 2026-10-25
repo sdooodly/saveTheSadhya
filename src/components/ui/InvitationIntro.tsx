@@ -99,7 +99,7 @@ function StickerPhoto({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: delay + 0.4, duration: 0.4 }}
-        className="text-leaf text-sm md:text-base font-sans italic mt-2"
+        className="script-line text-2xl md:text-3xl mt-1"
       >
         {name}
       </motion.span>
@@ -163,10 +163,12 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
           transition={{ duration: phase === "out" ? 0.7 : 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
           <Image src={`${basePath}/monstera-leaf.png`} alt="" width={22} height={25} className="w-5 h-auto" />
-          <p className="script-name text-4xl md:text-5xl mt-1 leading-none">
-            {couple.partner1[0]}
-            <span className="font-serif italic text-olive text-xl mx-1 [-webkit-text-stroke:0]">&amp;</span>
-            {couple.partner2[0]}
+          <p className="script-name text-4xl md:text-5xl mt-1 leading-none text-center">
+            {couple.partner1}
+            <span className="block font-serif italic text-olive text-base md:text-lg [-webkit-text-stroke:0]">
+              &amp;
+            </span>
+            {couple.partner2}
           </p>
           <p className="text-[0.65rem] tracking-[0.3em] text-cream/70 mt-1">31 · 01 · 2027</p>
         </motion.div>
@@ -260,7 +262,7 @@ export function InvitationIntro({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${basePath}/leaves/corner-leaf.webp`} alt="" aria-hidden="true" className="corner-leaf" />
+            <img src={`${basePath}/leaves/corner-cluster.webp`} alt="" aria-hidden="true" className="corner-leaf" />
             <div className="kasavu-frame" aria-hidden="true" />
 
             {/* Ganesha from the invite */}
@@ -285,7 +287,7 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative text-cream/80 text-base md:text-lg tracking-wide font-sans"
+              className="relative script-line text-4xl md:text-5xl"
             >
               Together with their families
             </motion.p>
@@ -309,7 +311,7 @@ export function InvitationIntro({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.5 }}
-              className="relative text-cream/80 text-base md:text-lg tracking-wide font-sans mt-3"
+              className="relative script-line text-4xl md:text-5xl mt-3"
             >
               Invite you to their wedding
             </motion.p>

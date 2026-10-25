@@ -186,8 +186,8 @@ function BoothStrip({
             </div>
           ))}
         </div>
-        <p className="script-name text-3xl text-center mt-2 leading-none">
-          {couple.partner1[0]} &amp; {couple.partner2[0]}
+        <p className="script-name text-2xl text-center mt-2 leading-none whitespace-nowrap">
+          {couple.partner1} &amp; {couple.partner2}
         </p>
         <p className="text-center text-[0.65rem] tracking-[0.25em] text-cream/70 mt-1">{stripDate}</p>
       </motion.div>
