@@ -276,17 +276,17 @@ body::before {
   }
 }
 
-/* ── Mint watercolour wash behind the names ─ */
+/* ── Watercolour splash behind the names (soft, so the names stay crisp) ─ */
 
 .mint-wash {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(165%, 640px);
+  width: min(175%, 680px);
   height: auto;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -48%);
   pointer-events: none;
   user-select: none;
   z-index: -1;
-  opacity: 0.85;
+  opacity: 0.5;
 }
