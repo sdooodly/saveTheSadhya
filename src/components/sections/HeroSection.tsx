@@ -66,7 +66,7 @@ export function HeroSection() {
         {/* Welcome */}
         <motion.p
           variants={fadeUp}
-          className="script-line text-3xl md:text-4xl"
+          className="script-line text-[2.2rem] md:text-4xl"
         >
           Request the pleasure of your company
         </motion.p>
@@ -78,7 +78,7 @@ export function HeroSection() {
 
         <motion.p
           variants={fadeUp}
-          className="script-line text-3xl md:text-4xl mt-2"
+          className="script-line text-[2.2rem] md:text-4xl mt-2"
         >
           at the wedding celebration of
         </motion.p>
@@ -92,7 +92,7 @@ export function HeroSection() {
             aria-hidden="true"
             className="mint-wash"
           />
-          <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl mt-1">
+          <motion.h1 variants={fadeUp} className="script-name text-[4.4rem] md:text-7xl mt-1">
             {couple.partner1}
           </motion.h1>
 
@@ -103,7 +103,7 @@ export function HeroSection() {
             &amp;
           </motion.span>
 
-          <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl">
+          <motion.h1 variants={fadeUp} className="script-name text-[4.4rem] md:text-7xl">
             {couple.partner2}
           </motion.h1>
         </div>
@@ -123,10 +123,10 @@ export function HeroSection() {
 
         {/* Date */}
         <motion.div variants={fadeUp}>
-          <p className="font-serif font-medium text-ink text-xl md:text-2xl">
+          <p className="font-serif font-medium text-ink text-[1.65rem] leading-tight md:text-2xl">
             {formattedDate}
           </p>
-          <p className="font-sans text-cream/90 text-base md:text-lg mt-0.5">
+          <p className="font-sans text-cream text-xl md:text-lg mt-0.5">
             Muhurtham: {event.muhurthamTime}
           </p>
         </motion.div>
@@ -160,17 +160,17 @@ export function HeroSection() {
               href={event.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 font-serif text-lg md:text-xl text-ink hover:text-leaf transition-colors"
+              className="group inline-flex items-center gap-1.5 font-serif text-[1.4rem] leading-tight md:text-xl text-ink hover:text-cream transition-colors"
             >
               <MapPin size={14} className="shrink-0 text-accent" />
               {event.venue}
             </a>
-            <span className="text-cream/80 text-sm md:text-base pl-5">{event.address}</span>
+            <span className="text-cream text-lg md:text-base pl-5">{event.address}</span>
             <a
               href={event.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 pl-5 text-leaf text-sm hover:text-ink transition-colors"
+              className="inline-flex items-center gap-1 pl-5 text-ink text-lg md:text-sm underline decoration-gold underline-offset-4 hover:text-cream transition-colors"
             >
               Directions
               <ExternalLink size={11} className="shrink-0 opacity-60" />
@@ -179,7 +179,7 @@ export function HeroSection() {
               href={calendarUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-accent text-sm hover:text-gold-light transition-colors mt-1"
+              className="inline-flex items-center gap-1.5 text-accent text-lg md:text-sm hover:text-gold-light transition-colors mt-1"
             >
               <CalendarPlus size={14} className="shrink-0" />
               Add to calendar
@@ -188,19 +188,19 @@ export function HeroSection() {
         </motion.div>
 
         {/* Dress code */}
-        <motion.div variants={fadeUp} className="mt-4 flex items-center justify-center gap-4 md:gap-6">
-          <p className="script-line text-3xl md:text-4xl">Dress code</p>
+        <motion.div variants={fadeUp} className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 md:gap-6">
+          <p className="script-line text-[2.2rem] md:text-4xl w-full md:w-auto">Dress code</p>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-[#B5403A] border border-accent/20" />
-            <span className="w-3 h-3 rounded-full bg-[#8B2E2A] border border-accent/20" />
-            <span className="w-3 h-3 rounded-full bg-[#D4604A] border border-accent/20" />
-            <span className="text-cream/80 text-sm ml-1">Groom</span>
+            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#B5403A] border border-accent/20" />
+            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#8B2E2A] border border-accent/20" />
+            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#D4604A] border border-accent/20" />
+            <span className="text-cream text-lg md:text-sm ml-1">Groom</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-3 h-3 rounded-full bg-[#3A7D7B] border border-accent/20" />
-            <span className="w-3 h-3 rounded-full bg-[#2E5C8A] border border-accent/20" />
-            <span className="w-3 h-3 rounded-full bg-[#4A8C6F] border border-accent/20" />
-            <span className="text-cream/80 text-sm ml-1">Bride</span>
+            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#3A7D7B] border border-accent/20" />
+            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#2E5C8A] border border-accent/20" />
+            <span className="w-3.5 h-3.5 md:w-3 md:h-3 rounded-full bg-[#4A8C6F] border border-accent/20" />
+            <span className="text-cream text-lg md:text-sm ml-1">Bride</span>
           </div>
         </motion.div>
 

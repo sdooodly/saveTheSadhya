@@ -6,19 +6,20 @@
   /*    sage leaves and a soft antique-gold rule.      */
   --color-paper: #FCFBF7;      /* page background */
   --color-paper-alt: #F1F6F2;  /* pale mint watercolour wash */
-  --color-ink: #0F4848;        /* names & headings (invite teal) */
+  --color-ink: #7A1F2B;        /* names & headings: Kerala maroon */
+  --color-teal-ink: #0F4848;   /* invite teal, kept for artwork accents */
   --color-leaf: #2F6B5C;       /* mid monstera green */
   --color-olive: #546343;      /* ampersand on the invite */
   --color-sage: #8FB3A3;       /* light leaf */
 
   /* Legacy token names, remapped onto the light theme */
-  --color-primary: #0F4848;
+  --color-primary: #7A1F2B;
   --color-secondary: #2F6B5C;
   --color-accent: #9E7F45;     /* antique gold, dark enough for text */
   --color-gold: #C2A876;       /* gold rule on the invite */
   --color-gold-light: #7E6434; /* hover: deeper gold on light bg */
-  --color-dark: #0B3535;
-  --color-cream: #0F4848;      /* body text = invite ink */
+  --color-dark: #3E1219;
+  --color-cream: #4A1820;      /* body text: deep maroon-brown, high contrast */
   --color-muted: #8FB3A3;
   --color-teal: #FCFBF7;       /* was dark teal bg → ivory */
   --color-teal-light: #FFFFFF;
@@ -176,7 +177,8 @@ body {
 .script-line {
   font-family: var(--font-script);
   font-weight: 400;
-  color: color-mix(in srgb, var(--color-ink) 85%, transparent);
+  color: var(--color-ink);
+  -webkit-text-stroke: 0.35px currentColor;
   line-height: 1;
 }
 

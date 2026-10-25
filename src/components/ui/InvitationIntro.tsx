@@ -146,7 +146,7 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
         transition={{ duration: phase === "out" ? 0.6 : 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* Back of the envelope */}
-        <div className="absolute inset-0 rounded-[3px] bg-[#0B3D3D] border border-gold" />
+        <div className="absolute inset-0 rounded-[3px] bg-[#5A1520] border border-gold" />
 
         {/* The card inside */}
         <motion.div
@@ -170,14 +170,14 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
             </span>
             {couple.partner2}
           </p>
-          <p className="text-[0.65rem] tracking-[0.3em] text-cream/70 mt-1">31 · 01 · 2027</p>
+          <p className="text-xs tracking-[0.3em] text-cream mt-1">31 · 01 · 2027</p>
         </motion.div>
 
         {/* Front pocket (covers the lower card) */}
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 z-20 w-full h-full">
-          <path d="M0 0 L48 58 L0 100 Z" fill="#105050" />
-          <path d="M100 0 L52 58 L100 100 Z" fill="#105050" />
-          <path d="M0 100 L50 50 L100 100 Z" fill="#0F4848" />
+          <path d="M0 0 L48 58 L0 100 Z" fill="#6E1B27" />
+          <path d="M100 0 L52 58 L100 100 Z" fill="#6E1B27" />
+          <path d="M0 100 L50 50 L100 100 Z" fill="#7A1F2B" />
           <path d="M0 100 L50 50 L100 100" fill="none" stroke="#C2A876" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
           <rect x="0" y="0" width="100" height="100" fill="none" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         </svg>
@@ -191,7 +191,7 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
           transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
         >
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
-            <path d="M0 0 L50 100 L100 0 Z" fill="#0D4444" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+            <path d="M0 0 L50 100 L100 0 Z" fill="#681A25" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
           </svg>
           <span
             className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 w-9 h-9 rounded-full
@@ -347,8 +347,8 @@ export function InvitationIntro({
               aria-label="Enter invitation"
             >
               <svg
-                width="52"
-                height="36"
+                width="64"
+                height="44"
                 viewBox="0 0 100 68"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -356,14 +356,14 @@ export function InvitationIntro({
               >
                 <rect
                   x="2" y="14" width="96" height="52" rx="3"
-                  fill="#0F4848" stroke="#C2A876" strokeWidth="1.2"
+                  fill="#7A1F2B" stroke="#C2A876" strokeWidth="1.2"
                 />
                 <path
                   d="M2 14 L50 44 L98 14" fill="none"
                   stroke="#C2A876" strokeWidth="1.2" strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-leaf text-xs font-sans font-light group-hover:text-ink transition-colors tracking-wide">
+              <span className="text-ink text-lg md:text-base font-sans group-hover:text-cream transition-colors tracking-wide">
                 Open invite ↗
               </span>
             </motion.button>
