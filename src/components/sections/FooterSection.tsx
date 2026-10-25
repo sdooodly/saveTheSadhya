@@ -13,7 +13,7 @@ export function FooterSection() {
       viewport={{ once: true }}
       className="py-10 px-4 text-center"
     >
-      <p className="font-serif italic text-xl text-accent">
+      <p className="script-name text-4xl">
         {couple.partner1} & {couple.partner2}
       </p>
       <p className="text-cream/50 text-xs font-sans font-light tracking-[0.15em] mt-2">

@@ -26,10 +26,10 @@ export const weddingConfig = {
   event: {
     title: "The Wedding & Sadhya",
     date: "2027-01-31",
-    muhurthamTime: "11:30 AM – 1:00 PM",
+    muhurthamTime: "12:12 p.m. to 12:33 p.m.",
     venue: "RDR Auditorium",
-    address: "Trivandrum, Kerala",
-    mapUrl: "https://www.google.com/maps/search/RDR+Auditorium+Trivandrum+Kerala",
+    address: "Thiruvananthapuram",
+    mapUrl: "https://www.google.com/maps/search/RDR+Auditorium+Thiruvananthapuram+Kerala",
   },
 
   rsvp: {

@@ -102,7 +102,7 @@ export function RSVPSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <h2 className="font-serif italic text-3xl md:text-4xl text-accent tracking-tight font-medium">
+          <h2 className="script-name text-6xl md:text-7xl">
             RSVP
           </h2>
           <p className="mt-2 text-cream/60 font-sans font-light text-sm">

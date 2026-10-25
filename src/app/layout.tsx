@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import { weddingConfig } from "@/wedding.config";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-const playfair = Playfair_Display({
-  variable: "--font-serif",
-  subsets: ["latin"],
+// Same typefaces as the printed invite, self-hosted (SIL Open Font License).
+const garamond = localFont({
+  variable: "--font-garamond",
   display: "swap",
-  style: ["normal", "italic"],
-  weight: ["400", "500", "600", "700"],
+  src: [
+    { path: "../fonts/eb-garamond-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/eb-garamond-latin-400-italic.woff2", weight: "400", style: "italic" },
+    { path: "../fonts/eb-garamond-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/eb-garamond-latin-500-italic.woff2", weight: "500", style: "italic" },
+  ],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-sans",
-  subsets: ["latin"],
+const italianno = localFont({
+  variable: "--font-italianno",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  src: [{ path: "../fonts/italianno-latin-400-normal.woff2", weight: "400", style: "normal" }],
 });
 
 export const metadata: Metadata = {
@@ -33,8 +36,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
-      <body className="min-h-screen bg-teal text-cream font-sans font-light antialiased">
+    <html lang="en" className={`${garamond.variable} ${italianno.variable}`}>
+      <body className="min-h-screen bg-teal text-cream font-sans antialiased">
         {children}
       </body>
     </html>

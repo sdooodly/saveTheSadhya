@@ -26,8 +26,10 @@
   --color-groom-red: #B5403A;
   --color-bride-teal: #3A7D7B;
 
-  --font-serif: 'Playfair Display', 'DM Serif Display', Georgia, serif;
-  --font-sans: 'DM Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Typefaces from the invite: EB Garamond for text, Italianno for names */
+  --font-serif: var(--font-garamond), 'EB Garamond', Garamond, Georgia, serif;
+  --font-sans: var(--font-garamond), 'EB Garamond', Garamond, Georgia, serif;
+  --font-script: var(--font-italianno), 'Italianno', cursive;
 }
 
 /* ── Base ─────────────────────────────────────── */
@@ -41,7 +43,7 @@ body {
   background-color: var(--color-teal);
   color: var(--color-cream);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 ::selection {
@@ -167,4 +169,13 @@ body {
     opacity: 0.35;
     transform: translateX(62%);
   }
+}
+
+/* Script names, as on the invite (a hair of stroke matches the card's weight) */
+.script-name {
+  font-family: var(--font-script);
+  font-weight: 400;
+  color: var(--color-ink);
+  -webkit-text-stroke: 0.4px currentColor;
+  line-height: 0.95;
 }

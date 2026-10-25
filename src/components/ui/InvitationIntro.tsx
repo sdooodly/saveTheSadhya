@@ -99,7 +99,7 @@ function StickerPhoto({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: delay + 0.4, duration: 0.4 }}
-        className="text-leaf text-xs md:text-sm font-sans font-light tracking-wide mt-2"
+        className="text-leaf text-sm md:text-base font-sans italic mt-2"
       >
         {name}
       </motion.span>
@@ -166,7 +166,7 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative text-cream/70 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
+              className="relative text-cream/80 text-base md:text-lg tracking-wide font-sans"
             >
               Together with their families
             </motion.p>
@@ -176,10 +176,10 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="relative gold-foil font-serif italic text-3xl md:text-5xl mt-2 tracking-tight font-medium text-center leading-tight"
+              className="relative script-name text-6xl md:text-8xl mt-3 text-center"
             >
               {couple.partner1}
-              <span className="block font-serif text-base md:text-xl text-olive italic my-0.5">
+              <span className="block font-serif text-2xl md:text-3xl text-olive italic -my-1">
                 &amp;
               </span>
               {couple.partner2}
@@ -190,7 +190,7 @@ export function InvitationIntro({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.5 }}
-              className="relative text-cream/60 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-2"
+              className="relative text-cream/80 text-base md:text-lg tracking-wide font-sans mt-3"
             >
               Invite you to their wedding
             </motion.p>

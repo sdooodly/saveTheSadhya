@@ -25,8 +25,9 @@ const fadeUp = {
 
 function buildCalendarUrl() {
   const { event, couple } = weddingConfig;
-  const startUtc = "20270131T060000Z";
-  const endUtc = "20270131T073000Z";
+  // Muhurtham 12:12–12:33 IST
+  const startUtc = "20270131T064200Z";
+  const endUtc = "20270131T070300Z";
   const title = encodeURIComponent(
     `${couple.partner1} & ${couple.partner2}'s wedding`
   );
@@ -64,7 +65,7 @@ export function HeroSection() {
         {/* Welcome */}
         <motion.p
           variants={fadeUp}
-          className="text-cream/60 text-xs md:text-sm tracking-[0.2em] font-sans font-light"
+          className="text-cream/80 text-base md:text-lg tracking-wide font-sans"
         >
           Request the pleasure of your company
         </motion.p>
@@ -76,7 +77,7 @@ export function HeroSection() {
 
         <motion.p
           variants={fadeUp}
-          className="text-cream/50 text-xs md:text-sm tracking-[0.15em] font-sans font-light mt-8"
+          className="text-cream/80 text-base md:text-lg tracking-wide font-sans mt-6"
         >
           at the wedding celebration of
         </motion.p>
@@ -84,21 +85,21 @@ export function HeroSection() {
         {/* Couple names */}
         <motion.h1
           variants={fadeUp}
-          className="gold-foil font-serif italic text-4xl md:text-6xl mt-4 tracking-tight leading-[1.1] font-medium"
+          className="script-name text-7xl md:text-8xl mt-3"
         >
           {couple.partner1}
         </motion.h1>
 
         <motion.span
           variants={fadeUp}
-          className="block font-serif text-base md:text-lg text-olive italic my-1"
+          className="block font-serif text-2xl md:text-3xl text-olive italic -my-1"
         >
           &amp;
         </motion.span>
 
         <motion.h1
           variants={fadeUp}
-          className="gold-foil font-serif italic text-4xl md:text-6xl tracking-tight leading-[1.1] font-medium"
+          className="script-name text-7xl md:text-8xl"
         >
           {couple.partner2}
         </motion.h1>
@@ -118,11 +119,11 @@ export function HeroSection() {
 
         {/* Date */}
         <motion.div variants={fadeUp}>
-          <p className="font-sans font-light text-cream text-sm md:text-base tracking-[0.08em]">
+          <p className="font-serif font-medium text-ink text-2xl md:text-3xl">
             {formattedDate}
           </p>
-          <p className="font-sans font-light text-cream/60 text-xs md:text-sm mt-1.5 tracking-wider">
-            Muhurtham · {event.muhurthamTime}
+          <p className="font-sans text-cream/90 text-lg md:text-xl mt-2">
+            Muhurtham: {event.muhurthamTime}
           </p>
         </motion.div>
 
@@ -135,18 +136,18 @@ export function HeroSection() {
             className="flex flex-col items-center gap-1.5 group cursor-pointer"
           >
             <MapPin size={16} className="text-accent/50 group-hover:text-accent transition-colors" />
-            <span className="font-serif text-lg md:text-xl text-accent group-hover:text-gold-light transition-colors
+            <span className="font-serif text-xl md:text-2xl text-ink group-hover:text-leaf transition-colors
                        inline-flex items-center gap-1.5">
               {event.venue}
               <ExternalLink size={12} className="shrink-0 opacity-40" />
             </span>
-            <span className="text-cream/60 text-xs md:text-sm font-light group-hover:text-cream/80 transition-colors">{event.address}</span>
+            <span className="text-cream/80 text-base md:text-lg group-hover:text-cream transition-colors">{event.address}</span>
           </a>
           <a
             href={calendarUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-accent/70 text-xs md:text-sm font-sans
+            className="inline-flex items-center gap-1.5 text-accent text-sm md:text-base font-sans
                        tracking-wider hover:text-accent transition-colors mt-2"
           >
             <CalendarPlus size={12} className="shrink-0" />
@@ -156,7 +157,7 @@ export function HeroSection() {
 
         {/* Dress code */}
         <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-cream/60 text-xs md:text-sm font-sans font-light tracking-wide">
+          <p className="text-cream/80 text-base md:text-lg font-sans">
             Dress code
           </p>
           <div className="flex gap-6 md:gap-8">
@@ -166,7 +167,7 @@ export function HeroSection() {
                 <span className="w-3.5 h-3.5 rounded-full bg-[#8B2E2A] border border-accent/20" />
                 <span className="w-3.5 h-3.5 rounded-full bg-[#D4604A] border border-accent/20" />
               </div>
-              <p className="text-cream/70 text-xs md:text-sm font-light">Groom</p>
+              <p className="text-cream/80 text-sm md:text-base">Groom</p>
             </div>
             <div className="text-center">
               <div className="flex items-center justify-center gap-1.5 mb-1.5">
@@ -174,7 +175,7 @@ export function HeroSection() {
                 <span className="w-3.5 h-3.5 rounded-full bg-[#2E5C8A] border border-accent/20" />
                 <span className="w-3.5 h-3.5 rounded-full bg-[#4A8C6F] border border-accent/20" />
               </div>
-              <p className="text-cream/70 text-xs md:text-sm font-light">Bride</p>
+              <p className="text-cream/80 text-sm md:text-base">Bride</p>
             </div>
           </div>
         </motion.div>
