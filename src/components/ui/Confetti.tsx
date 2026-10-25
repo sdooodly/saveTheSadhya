@@ -11,12 +11,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Whole monstera leaves: four drawn, two cut from the invite painting.
 const LEAVES = [
-  "/leaves/fall-1.png",
-  "/leaves/fall-2.png",
-  "/leaves/fall-3.png",
-  "/leaves/fall-4.png",
-  "/leaves/fall-5.png",
-  "/leaves/fall-6.png",
+  "/leaves/monstera-1.png",
+  "/leaves/monstera-2.png",
+  "/leaves/monstera-3.png",
+  "/leaves/monstera-4.png",
+  "/leaves/monstera-5.png",
+  "/leaves/monstera-6.png",
 ];
 
 interface Leaf {
