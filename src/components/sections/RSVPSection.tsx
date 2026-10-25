@@ -108,6 +108,7 @@ export function RSVPSection() {
           <p className="mt-2 text-cream/60 font-sans font-light text-sm">
             Kindly respond by{" "}
             {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
               month: "long",
               day: "numeric",
               year: "numeric",

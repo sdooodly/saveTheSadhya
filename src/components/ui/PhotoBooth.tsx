@@ -30,12 +30,12 @@ export function PhotoBooth({ className = "" }: { className?: string }) {
     <motion.div
       animate={{ rotate: tilt }}
       transition={{ type: "spring", stiffness: 260, damping: 18 }}
-      className={`relative bg-paper border border-gold px-[5px] pt-[5px] pb-4
-                  shadow-[0_4px_18px_rgba(15,72,72,0.12)] ${className}`}
+      className={`relative bg-paper border border-gold px-[3px] pt-[3px] pb-2.5
+                  shadow-[0_2px_10px_rgba(15,72,72,0.14)] ${className}`}
       role="img"
       aria-label="Photo booth pictures of the couple"
     >
-      <div className="relative w-28 h-36 md:w-32 md:h-40 overflow-hidden">
+      <div className="relative w-14 h-[4.5rem] md:w-16 md:h-20 overflow-hidden">
         {/* All pictures stay mounted so switching never flickers or reloads */}
         {photos.map((src, i) => (
           // eslint-disable-next-line @next/next/no-img-element

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, ExternalLink, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { Countdown, PhotoBooth } from "@/components/ui";
+import { PhotoBooth } from "@/components/ui";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -48,6 +48,7 @@ export function HeroSection() {
 
   const weddingDate = new Date(event.date);
   const formattedDate = weddingDate.toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -55,7 +56,7 @@ export function HeroSection() {
   });
 
   return (
-    <section className="w-full px-5 py-12 md:px-8 md:py-20 flex justify-center">
+    <section className="w-full px-5 py-6 md:px-8 md:py-8 flex justify-center">
       <motion.div
         variants={stagger}
         initial="hidden"
@@ -65,160 +66,140 @@ export function HeroSection() {
         {/* Welcome */}
         <motion.p
           variants={fadeUp}
-          className="text-cream/80 text-base md:text-lg tracking-wide font-sans"
+          className="text-cream/80 text-sm md:text-base tracking-wide font-sans"
         >
           Request the pleasure of your company
         </motion.p>
 
         {/* Live photo booth */}
-        <motion.div variants={fadeUp} className="mt-8 flex justify-center">
+        <motion.div variants={fadeUp} className="mt-3 flex justify-center">
           <PhotoBooth />
         </motion.div>
 
         <motion.p
           variants={fadeUp}
-          className="text-cream/80 text-base md:text-lg tracking-wide font-sans mt-6"
+          className="text-cream/80 text-sm md:text-base tracking-wide font-sans mt-3"
         >
           at the wedding celebration of
         </motion.p>
 
         {/* Couple names */}
-        <motion.h1
-          variants={fadeUp}
-          className="script-name text-7xl md:text-8xl mt-3"
-        >
+        <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl mt-1">
           {couple.partner1}
         </motion.h1>
 
         <motion.span
           variants={fadeUp}
-          className="block font-serif text-2xl md:text-3xl text-olive italic -my-1"
+          className="block font-serif text-xl md:text-2xl text-olive italic -my-1"
         >
           &amp;
         </motion.span>
 
-        <motion.h1
-          variants={fadeUp}
-          className="script-name text-7xl md:text-8xl"
-        >
+        <motion.h1 variants={fadeUp} className="script-name text-6xl md:text-7xl">
           {couple.partner2}
         </motion.h1>
 
         {/* Gold rule + monstera leaf divider, as on the invite */}
-        <motion.div variants={fadeUp} className="flex items-center justify-center gap-3 mt-6 mb-8" aria-hidden="true">
+        <motion.div variants={fadeUp} className="flex items-center justify-center gap-3 mt-3 mb-3" aria-hidden="true">
           <span className="h-px w-16 md:w-24 bg-gold" />
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/monstera-leaf.png`}
             alt=""
             width={28}
             height={32}
-            className="w-6 h-auto md:w-7"
+            className="w-5 h-auto md:w-6"
           />
           <span className="h-px w-16 md:w-24 bg-gold" />
         </motion.div>
 
         {/* Date */}
         <motion.div variants={fadeUp}>
-          <p className="font-serif font-medium text-ink text-2xl md:text-3xl">
+          <p className="font-serif font-medium text-ink text-xl md:text-2xl">
             {formattedDate}
           </p>
-          <p className="font-sans text-cream/90 text-lg md:text-xl mt-2">
+          <p className="font-sans text-cream/90 text-base md:text-lg mt-0.5">
             Muhurtham: {event.muhurthamTime}
           </p>
         </motion.div>
 
-        {/* Countdown to the muhurtham */}
-        <motion.div variants={fadeUp} className="mt-8">
-          <Countdown />
-        </motion.div>
-
-        {/* Venue */}
-        <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-1.5">
+        {/* Venue: arch-shaped map beside the details */}
+        <motion.div variants={fadeUp} className="mt-4 flex items-center justify-center gap-4 text-left">
           <a
             href={event.mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center gap-1.5 group cursor-pointer"
-          >
-            <MapPin size={16} className="text-accent/50 group-hover:text-accent transition-colors" />
-            <span className="font-serif text-xl md:text-2xl text-ink group-hover:text-leaf transition-colors
-                       inline-flex items-center gap-1.5">
-              {event.venue}
-              <ExternalLink size={12} className="shrink-0 opacity-40" />
-            </span>
-            <span className="text-cream/80 text-base md:text-lg group-hover:text-cream transition-colors">{event.address}</span>
-          </a>
-          <a
-            href={calendarUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-accent text-sm md:text-base font-sans
-                       tracking-wider hover:text-accent transition-colors mt-2"
-          >
-            <CalendarPlus size={12} className="shrink-0" />
-            Add to calendar
-          </a>
-
-          {/* Map card */}
-          <a
-            href={event.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group mt-5 block w-full max-w-sm rounded-md border border-gold bg-paper p-1.5
-                       shadow-[0_4px_18px_rgba(15,72,72,0.10)] transition-shadow hover:shadow-[0_6px_24px_rgba(15,72,72,0.16)]"
             aria-label={`Open ${event.venue} in Google Maps`}
+            className="group shrink-0 rounded-t-full rounded-b-md border border-gold bg-paper p-[3px]
+                       shadow-[0_3px_12px_rgba(15,72,72,0.12)] transition-transform hover:-translate-y-0.5"
           >
-            <div className="relative h-44 md:h-52 overflow-hidden rounded-sm">
+            <div className="relative w-20 h-24 md:w-24 md:h-28 overflow-hidden rounded-t-full rounded-b-[4px]">
+              {/* Oversized and centred so only the pin area shows, not Google's controls */}
               <iframe
                 src={event.mapEmbedUrl}
                 title={`Map showing ${event.venue}`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 w-full h-full border-0 pointer-events-none
-                           [filter:saturate(0.55)_sepia(0.12)_hue-rotate(-8deg)]"
+                tabIndex={-1}
+                className="absolute left-1/2 top-1/2 w-[320px] h-[360px] -translate-x-1/2 -translate-y-1/2
+                           border-0 pointer-events-none [filter:saturate(0.55)_sepia(0.12)_hue-rotate(-8deg)]"
               />
             </div>
-            <span className="flex items-center justify-center gap-1.5 pt-1.5 pb-0.5 text-sm text-leaf group-hover:text-ink transition-colors">
-              <MapPin size={13} className="shrink-0" />
-              Open in Google Maps
-              <ExternalLink size={11} className="shrink-0 opacity-60" />
-            </span>
           </a>
+
+          <div className="flex flex-col items-start gap-0.5">
+            <a
+              href={event.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 font-serif text-lg md:text-xl text-ink hover:text-leaf transition-colors"
+            >
+              <MapPin size={14} className="shrink-0 text-accent" />
+              {event.venue}
+            </a>
+            <span className="text-cream/80 text-sm md:text-base pl-5">{event.address}</span>
+            <a
+              href={event.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 pl-5 text-leaf text-sm hover:text-ink transition-colors"
+            >
+              Directions
+              <ExternalLink size={11} className="shrink-0 opacity-60" />
+            </a>
+            <a
+              href={calendarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-accent text-sm hover:text-gold-light transition-colors mt-1"
+            >
+              <CalendarPlus size={14} className="shrink-0" />
+              Add to calendar
+            </a>
+          </div>
         </motion.div>
 
         {/* Dress code */}
-        <motion.div variants={fadeUp} className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-cream/80 text-base md:text-lg font-sans">
-            Dress code
-          </p>
-          <div className="flex gap-6 md:gap-8">
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1.5 mb-1.5">
-                <span className="w-3.5 h-3.5 rounded-full bg-[#B5403A] border border-accent/20" />
-                <span className="w-3.5 h-3.5 rounded-full bg-[#8B2E2A] border border-accent/20" />
-                <span className="w-3.5 h-3.5 rounded-full bg-[#D4604A] border border-accent/20" />
-              </div>
-              <p className="text-cream/80 text-sm md:text-base">Groom</p>
-            </div>
-            <div className="text-center">
-              <div className="flex items-center justify-center gap-1.5 mb-1.5">
-                <span className="w-3.5 h-3.5 rounded-full bg-[#3A7D7B] border border-accent/20" />
-                <span className="w-3.5 h-3.5 rounded-full bg-[#2E5C8A] border border-accent/20" />
-                <span className="w-3.5 h-3.5 rounded-full bg-[#4A8C6F] border border-accent/20" />
-              </div>
-              <p className="text-cream/80 text-sm md:text-base">Bride</p>
-            </div>
+        <motion.div variants={fadeUp} className="mt-4 flex items-center justify-center gap-4 md:gap-6">
+          <p className="text-cream/80 text-sm md:text-base font-sans">Dress code</p>
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-full bg-[#B5403A] border border-accent/20" />
+            <span className="w-3 h-3 rounded-full bg-[#8B2E2A] border border-accent/20" />
+            <span className="w-3 h-3 rounded-full bg-[#D4604A] border border-accent/20" />
+            <span className="text-cream/80 text-sm ml-1">Groom</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-full bg-[#3A7D7B] border border-accent/20" />
+            <span className="w-3 h-3 rounded-full bg-[#2E5C8A] border border-accent/20" />
+            <span className="w-3 h-3 rounded-full bg-[#4A8C6F] border border-accent/20" />
+            <span className="text-cream/80 text-sm ml-1">Bride</span>
           </div>
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div
-          variants={fadeUp}
-          className="mt-12 flex flex-col items-center gap-2"
-        >
+        <motion.div variants={fadeUp} className="mt-4 flex flex-col items-center">
           <motion.button
             onClick={() => document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" })}
-            className="flex flex-col items-center group cursor-pointer focus:outline-none"
+            className="flex flex-col items-center group cursor-pointer focus:outline-none p-1"
             aria-label="Scroll to RSVP section"
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

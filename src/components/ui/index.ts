@@ -1,4 +1,3 @@
-export { Countdown } from "./Countdown";
 export { PhotoBooth } from "./PhotoBooth";
 export { BackgroundMusic } from "./BackgroundMusic";
 export { Confetti } from "./Confetti";

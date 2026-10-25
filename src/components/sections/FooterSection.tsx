@@ -18,6 +18,7 @@ export function FooterSection() {
       </p>
       <p className="text-cream/50 text-xs font-sans font-light tracking-[0.15em] mt-2">
         {new Date(event.date).toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
           month: "long",
           day: "numeric",
           year: "numeric",
