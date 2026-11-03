@@ -24,8 +24,6 @@
   --color-teal: #F2E6CF;       /* body background (old token name) */
   --color-teal-light: #FBF5E8;
   --color-teal-deep: #EADCC0;
-  --color-groom-red: #B5403A;
-  --color-bride-teal: #3A7D7B;
 
   /* Typefaces from the invite: EB Garamond for text, Italianno for names */
   --font-serif: var(--font-garamond), 'EB Garamond', Garamond, Georgia, serif;

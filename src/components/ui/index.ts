@@ -1,4 +1,3 @@
-export { DressCode } from "./DressCode";
 export { PhotoBooth } from "./PhotoBooth";
 export { BackgroundMusic } from "./BackgroundMusic";
 export { Confetti } from "./Confetti";
