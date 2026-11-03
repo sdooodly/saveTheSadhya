@@ -24,8 +24,6 @@ export const weddingConfig = {
     muhurthamTime: "12:12 p.m. to 12:33 p.m.",
     venue: "RDR Auditorium",
     address: "Thiruvananthapuram",
-    mapEmbedUrl:
-      "https://www.google.com/maps?q=RDR+Auditorium,+Edapazhanji,+Thiruvananthapuram,+Kerala&z=15&output=embed",
     mapUrl: "https://www.google.com/maps/search/RDR+Auditorium+Edapazhanji+Thiruvananthapuram",
   },
 
@@ -38,7 +36,7 @@ export const weddingConfig = {
     title: "Save the Sadhya",
     description:
       "You are cordially invited to celebrate the wedding of Gayathri & Anand.",
-    ogImage: "og-image.jpg", // link-preview card (WhatsApp etc.), 1200×630 in /public
+    ogImage: "og-invite.jpg", // link-preview card (WhatsApp etc.), 1200×630 in /public
   },
 } as const;
 

@@ -1,5 +1,4 @@
 export { DressCode } from "./DressCode";
-export { VenueMap } from "./VenueMap";
 export { PhotoBooth } from "./PhotoBooth";
 export { BackgroundMusic } from "./BackgroundMusic";
 export { Confetti } from "./Confetti";

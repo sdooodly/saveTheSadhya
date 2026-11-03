@@ -17,7 +17,7 @@ function Tint() {
   return (
     <>
       <span className="absolute inset-0 bg-[#2F6B5C]/15 mix-blend-soft-light pointer-events-none" />
-      <span className="absolute inset-0 bg-[#FCFBF7]/10 mix-blend-screen pointer-events-none" />
+      <span className="absolute inset-0 bg-[#F2E6CF]/10 mix-blend-screen pointer-events-none" />
     </>
   );
 }
@@ -61,7 +61,7 @@ export function PhotoBooth({ className = "" }: { className?: string }) {
         whileTap={{ scale: 0.95 }}
         transition={{ type: "spring", stiffness: 260, damping: 18 }}
         className={`relative block bg-paper border border-gold px-[3px] pt-[3px] pb-2.5 cursor-pointer
-                    shadow-[0_2px_10px_rgba(15,72,72,0.14)] focus:outline-none
+                    shadow-[0_2px_10px_rgba(74,40,10,0.14)] focus:outline-none
                     focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${className}`}
         aria-label="Open the photo booth strip"
         aria-haspopup="dialog"
@@ -169,7 +169,7 @@ function BoothStrip({
         animate={reduceMotion ? { opacity: 1 } : { y: 0, rotate: -2, clipPath: "inset(0 0 0% 0)" }}
         exit={{ opacity: 0, y: 30, transition: { duration: 0.2 } }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        className="bg-paper border border-gold p-2.5 pb-3 shadow-[0_10px_40px_rgba(15,72,72,0.22)]
+        className="bg-paper border border-gold p-2.5 pb-3 shadow-[0_10px_40px_rgba(74,40,10,0.22)]
                    w-[min(52vw,210px)] max-h-full flex flex-col"
       >
         <div className="flex flex-col gap-2 min-h-0">

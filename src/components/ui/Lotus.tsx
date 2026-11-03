@@ -6,7 +6,7 @@
  */
 export function Lotus({
   className = "",
-  color = "#C2A876",
+  color = "#A8823A",
 }: {
   className?: string;
   color?: string;

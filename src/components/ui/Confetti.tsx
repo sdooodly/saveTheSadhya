@@ -9,14 +9,12 @@ import { motion, AnimatePresence } from "framer-motion";
  * (Kept the `Confetti` name so existing imports keep working.)
  */
 
-// Whole monstera leaves: four drawn, two cut from the invite painting.
+// Four complete, drawn monstera leaves (painted cut-outs looked torn on ivory).
 const LEAVES = [
   "/leaves/monstera-1.png",
   "/leaves/monstera-2.png",
   "/leaves/monstera-3.png",
   "/leaves/monstera-4.png",
-  "/leaves/monstera-5.png",
-  "/leaves/monstera-6.png",
 ];
 
 interface Leaf {

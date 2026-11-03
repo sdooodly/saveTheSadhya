@@ -87,7 +87,7 @@ export function RSVPSection() {
     "transition-colors";
 
   const buttonBase =
-    "px-6 py-3 rounded-sm font-sans text-lg md:text-base font-semibold tracking-wide transition-all";
+    "px-3 md:px-6 py-3 rounded-sm font-sans text-lg md:text-base font-medium tracking-wide whitespace-nowrap transition-all";
 
   return (
     <section className="w-full px-5 py-12 md:px-8 md:py-16 flex justify-center">

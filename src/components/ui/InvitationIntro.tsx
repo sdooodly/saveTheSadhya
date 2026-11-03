@@ -68,7 +68,7 @@ function StickerPhoto({
           >
             <path
               d={ring.d}
-              stroke="#C2A876"
+              stroke="#A8823A"
               strokeWidth={ring.w}
               fill="none"
               opacity={ring.opacity}
@@ -82,7 +82,7 @@ function StickerPhoto({
         <div
           className="absolute inset-[8%] rounded-full overflow-hidden"
           style={{
-            boxShadow: "0 0 18px rgba(194,168,118,0.25), 0 4px 14px rgba(15,72,72,0.18)",
+            boxShadow: "0 0 18px rgba(168,130,58,0.25), 0 4px 14px rgba(74,40,10,0.18)",
           }}
         >
           <Image
@@ -147,12 +147,12 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
       >
         {/* Back of the envelope */}
         {/* no gold edge along the top: it would show through the card as it slides out */}
-        <div className="absolute inset-0 rounded-b-[3px] bg-[#5A1520] border-x border-b border-gold" />
+        <div className="absolute inset-0 rounded-b-[3px] bg-[#5C0C05] border-x border-b border-gold" />
 
         {/* The card inside */}
         <motion.div
           className="absolute left-[6%] right-[6%] top-[5%] bottom-[5%] z-10 flex flex-col items-center justify-center
-                     bg-paper border border-gold shadow-[0_6px_20px_rgba(15,72,72,0.18)]"
+                     bg-paper border border-gold shadow-[0_6px_20px_rgba(74,40,10,0.18)]"
           initial={{ y: 0 }}
           animate={
             phase === "flap"
@@ -176,12 +176,12 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
 
         {/* Front pocket (covers the lower card) */}
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 z-20 w-full h-full">
-          <path d="M0 0 L48 58 L0 100 Z" fill="#6E1B27" />
-          <path d="M100 0 L52 58 L100 100 Z" fill="#6E1B27" />
-          <path d="M0 100 L50 50 L100 100 Z" fill="#7A1F2B" />
-          <path d="M0 100 L50 50 L100 100" fill="none" stroke="#C2A876" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
+          <path d="M0 0 L48 58 L0 100 Z" fill="#6E0E06" />
+          <path d="M100 0 L52 58 L100 100 Z" fill="#6E0E06" />
+          <path d="M0 100 L50 50 L100 100 Z" fill="#7A1006" />
+          <path d="M0 100 L50 50 L100 100" fill="none" stroke="#A8823A" strokeWidth="0.6" vectorEffect="non-scaling-stroke" />
           {/* gold edge on the sides and bottom only — the top is the open mouth */}
-          <path d="M0 0 L0 100 L100 100 L100 0" fill="none" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+          <path d="M0 0 L0 100 L100 100 L100 0" fill="none" stroke="#A8823A" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         </svg>
 
         {/* Flap with a gold seal */}
@@ -193,11 +193,11 @@ function EnvelopeOpening({ onReveal, onDone }: { onReveal: () => void; onDone: (
           transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1] }}
         >
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
-            <path d="M0 0 L50 100 L100 0 Z" fill="#681A25" stroke="#C2A876" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+            <path d="M0 0 L50 100 L100 0 Z" fill="#690E06" stroke="#A8823A" strokeWidth="1" vectorEffect="non-scaling-stroke" />
           </svg>
           <span
             className="absolute left-1/2 bottom-0 -translate-x-1/2 translate-y-1/2 w-9 h-9 rounded-full
-                       bg-[#B8995E] border border-[#E4D2A6] shadow-[0_2px_6px_rgba(0,0,0,0.25)]
+                       bg-[#A8823A] border border-[#D9C08A] shadow-[0_2px_6px_rgba(0,0,0,0.25)]
                        flex items-center justify-center [backface-visibility:hidden]"
           >
             <Image src={`${basePath}/monstera-leaf.png`} alt="" width={16} height={18} className="w-3.5 h-auto opacity-90 [filter:brightness(1.6)_sepia(0.6)]" />
@@ -264,7 +264,7 @@ export function InvitationIntro({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`${basePath}/monstera-vine.webp`} alt="" aria-hidden="true" className="monstera-vine" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${basePath}/leaves/corner-cluster.webp`} alt="" aria-hidden="true" className="corner-leaf" />
+            <img src={`${basePath}/leaves/corner-pair.webp`} alt="" aria-hidden="true" className="corner-leaf" />
             <div className="kasavu-frame" aria-hidden="true" />
 
             {/* Ganesha from the invite */}
@@ -358,11 +358,11 @@ export function InvitationIntro({
               >
                 <rect
                   x="2" y="14" width="96" height="52" rx="3"
-                  fill="#7A1F2B" stroke="#C2A876" strokeWidth="1.2"
+                  fill="#7A1006" stroke="#A8823A" strokeWidth="1.2"
                 />
                 <path
                   d="M2 14 L50 44 L98 14" fill="none"
-                  stroke="#C2A876" strokeWidth="1.2" strokeLinejoin="round"
+                  stroke="#A8823A" strokeWidth="1.2" strokeLinejoin="round"
                 />
               </svg>
               <span className="text-ink text-lg md:text-base font-sans group-hover:text-cream transition-colors tracking-wide">

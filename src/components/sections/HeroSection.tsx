@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { PhotoBooth, VenueMap } from "@/components/ui";
+import { PhotoBooth } from "@/components/ui";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -125,7 +125,7 @@ export function HeroSection() {
 
         {/* Date */}
         <motion.div variants={fadeUp}>
-          <p className="font-serif font-medium text-ink text-[1.65rem] leading-tight md:text-2xl">
+          <p className="font-serif text-ink text-[1.75rem] leading-tight md:text-3xl">
             {formattedDate}
           </p>
           <p className="font-sans text-cream text-xl md:text-lg mt-0.5">
@@ -133,15 +133,21 @@ export function HeroSection() {
           </p>
         </motion.div>
 
-        {/* Venue: one line, with a small map link (opens a popup) and calendar link */}
+        {/* Venue: the name itself opens Google Maps */}
         <motion.div variants={fadeUp} className="mt-4 flex flex-col items-center">
-          <p className="inline-flex items-center gap-1.5 font-serif text-[1.4rem] leading-tight md:text-xl text-ink">
-            <MapPin size={15} className="shrink-0 text-accent" />
+          <a
+            href={event.mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${event.venue}, ${event.address}: open in Google Maps`}
+            className="group inline-flex items-center gap-1.5 font-serif text-[1.45rem] leading-tight md:text-2xl text-ink
+                       underline decoration-gold decoration-1 underline-offset-[6px] hover:decoration-ink transition-colors"
+          >
+            <MapPin size={17} className="shrink-0 text-gold" aria-hidden="true" />
             {event.venue}
-          </p>
-          <p className="text-cream text-lg md:text-base leading-tight">{event.address}</p>
-          <div className="mt-2 flex items-center justify-center gap-5 text-lg md:text-base">
-            <VenueMap />
+          </a>
+          <p className="mt-1 text-cream text-lg md:text-lg leading-tight">{event.address}</p>
+          <div className="mt-2 flex items-center justify-center text-lg md:text-base">
             <a
               href={calendarUrl}
               target="_blank"

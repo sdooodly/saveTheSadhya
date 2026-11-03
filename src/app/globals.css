@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* ── Monstera palette (from the wedding invite) ── */
-  /*    Ivory paper, deep monstera teal ink,          */
-  /*    sage leaves and a soft antique-gold rule.      */
-  --color-paper: #FCFBF7;      /* page background */
-  --color-paper-alt: #F1F6F2;  /* pale mint watercolour wash */
-  --color-ink: #7A1F2B;        /* names & headings: Kerala maroon */
-  --color-teal-ink: #0F4848;   /* invite teal, kept for artwork accents */
+  /* ── Wedding palette (from claude/colour-profile.md) ──────────── */
+  /*    Warm ivory paper, oxblood ink, antique gold; the teal and    */
+  /*    sage watercolours from the invite stay in the background.    */
+  --color-paper: #F2E6CF;      /* warm ivory: page background */
+  --color-paper-alt: #EADCC0;  /* slightly deeper ivory for alternate sections */
+  --color-ink: #7A1006;        /* oxblood: names, headings, links (8.9:1 on ivory) */
+  --color-teal-ink: #0F4848;   /* invite teal, artwork accents only */
   --color-leaf: #2F6B5C;       /* mid monstera green */
   --color-olive: #546343;      /* ampersand on the invite */
   --color-sage: #8FB3A3;       /* light leaf */
 
-  /* Legacy token names, remapped onto the light theme */
-  --color-primary: #7A1F2B;
+  /* Legacy token names, mapped onto the palette */
+  --color-primary: #7A1006;
   --color-secondary: #2F6B5C;
-  --color-accent: #9E7F45;     /* antique gold, dark enough for text */
-  --color-gold: #C2A876;       /* gold rule on the invite */
-  --color-gold-light: #7E6434; /* hover: deeper gold on light bg */
-  --color-dark: #3E1219;
-  --color-cream: #4A1820;      /* body text: deep maroon-brown, high contrast */
+  --color-accent: #7A5A1E;     /* deep antique gold for gold TEXT (5.1:1) */
+  --color-gold: #A8823A;       /* antique gold: rules, borders, icons */
+  --color-gold-light: #5E4414; /* hover on gold text */
+  --color-dark: #4A0A04;
+  --color-cream: #3D1A10;      /* body text: deep warm brown (12.7:1) */
   --color-muted: #8FB3A3;
-  --color-teal: #FCFBF7;       /* was dark teal bg → ivory */
-  --color-teal-light: #FFFFFF;
-  --color-teal-deep: #F1F6F2;  /* alternate section → mint wash */
+  --color-teal: #F2E6CF;       /* body background (old token name) */
+  --color-teal-light: #FBF5E8;
+  --color-teal-deep: #EADCC0;
   --color-groom-red: #B5403A;
   --color-bride-teal: #3A7D7B;
 
@@ -175,10 +175,11 @@ body {
 /* Script names, as on the invite (a hair of stroke matches the card's weight) */
 /* Short phrases in the same script, slightly lighter */
 .script-line {
+  text-wrap: balance; /* even line breaks on narrow phones */
   font-family: var(--font-script);
   font-weight: 400;
   color: var(--color-ink);
-  -webkit-text-stroke: 0.35px currentColor;
+  -webkit-text-stroke: 0.4px currentColor;
   line-height: 1;
 }
 
@@ -190,27 +191,27 @@ body {
   line-height: 0.95;
 }
 
-/* ── Monstera leaves fanning out from the bottom-left corner ─ */
+/* ── Two monstera leaves growing from the bottom-left corner ─ */
 
 .corner-leaf {
   position: fixed;
   left: 0;
   bottom: 0;
-  width: clamp(190px, 24vw, 340px);
+  width: clamp(170px, 17vw, 260px);
   height: auto;
   pointer-events: none;
   user-select: none;
   z-index: 0;
   opacity: 0.9;
-  transform: translate(-10%, 10%);
+  transform: translate(-4%, 4%);
   transform-origin: 0% 100%;
 }
 
 @media (max-width: 767px) {
   .corner-leaf {
-    width: 150px;
-    opacity: 0.5;
-    transform: translate(-16%, 14%);
+    width: 140px;
+    opacity: 0.8;
+    transform: translate(-8%, 6%);
   }
 }
 
