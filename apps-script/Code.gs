@@ -18,7 +18,8 @@
 
 // Rows go to this tab; it's created with headers on first use.
 const SHEET_NAME = "RSVPs";
-// Only needed if this script is NOT opened from the sheet itself.
+// The RSVP spreadsheet's ID — the long code in its link: docs.google.com/spreadsheets/d/<ID>/edit
+// Leave empty only if this script was opened from the sheet (Extensions → Apps Script).
 const SPREADSHEET_ID = "";
 
 const MAX_GUESTS = 3;
@@ -148,6 +149,21 @@ function digest_(text) {
 
 function reply_(result) {
   return ContentService.createTextOutput(JSON.stringify({ result: result })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Troubleshooting: select "checkSetup" in the editor toolbar and press ▶ Run.
+ * The Execution log shows which spreadsheet and tab RSVPs are written to.
+ */
+function checkSetup() {
+  const book = SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  if (!book) {
+    console.log("No spreadsheet found. Paste the sheet's ID into SPREADSHEET_ID at the top of this file.");
+    return;
+  }
+  const sheet = sheet_();
+  console.log("RSVPs are written to: \"" + book.getName() + "\" → tab \"" + sheet.getName() + "\" (" + Math.max(sheet.getLastRow() - 1, 0) + " rows so far)");
+  console.log(book.getUrl() + "#gid=" + sheet.getSheetId());
 }
 
 /**
