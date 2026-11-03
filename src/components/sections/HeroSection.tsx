@@ -71,10 +71,12 @@ export function HeroSection() {
           Request the pleasure of your company
         </motion.p>
 
-        {/* Live photo booth */}
-        <motion.div variants={fadeUp} className="mt-3 flex justify-center">
-          <PhotoBooth />
-        </motion.div>
+        {/* Live photo booth (only when photos are set in wedding.config.ts) */}
+        {weddingConfig.photoBooth.photos.length > 0 && (
+          <motion.div variants={fadeUp} className="mt-3 flex justify-center">
+            <PhotoBooth />
+          </motion.div>
+        )}
 
         <motion.p
           variants={fadeUp}

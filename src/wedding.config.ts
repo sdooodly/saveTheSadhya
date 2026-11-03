@@ -11,15 +11,10 @@ export const weddingConfig = {
     },
   },
 
-  // Live photo-booth "GIF" on the main page.
-  // Swap these placeholders for real pictures in /public/booth (e.g. "/booth/1.jpg").
+  // Live photo-booth "GIF" on the main page — hidden while this list is empty.
+  // To show it, add pictures to /public/booth and list them here, e.g. "/booth/1.jpg".
   photoBooth: {
-    photos: [
-      "/booth/booth-1.svg",
-      "/booth/booth-2.svg",
-      "/booth/booth-3.svg",
-      "/booth/booth-4.svg",
-    ],
+    photos: [] as string[],
     secondsPerPhoto: 0.6,
   },
 
