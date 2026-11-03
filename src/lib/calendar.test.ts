@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { googleCalendarUrl, icsEscape, icsFile, isAppleMobile, toUtcStamp, type CalendarEvent } from "./calendar";
+import { googleCalendarUrl, icsEscape, icsFile, toUtcStamp, type CalendarEvent } from "./calendar";
 import { weddingCalendarEvent } from "./event";
 import { weddingConfig } from "@/wedding.config";
 
@@ -106,20 +106,5 @@ describe(".ics file", () => {
   });
   it("escapes commas, semicolons, backslashes and newlines", () => {
     expect(icsEscape("a,b;c\\d\ne")).toBe("a\\,b\\;c\\\\d\\ne");
-  });
-});
-
-describe("isAppleMobile", () => {
-  it("detects iPhone and iPad", () => {
-    expect(isAppleMobile("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)")).toBe(true);
-    expect(isAppleMobile("Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X)")).toBe(true);
-  });
-  it("detects iPadOS that reports itself as a Mac", () => {
-    expect(isAppleMobile("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", 5)).toBe(true);
-  });
-  it("leaves Android and desktop on Google Calendar", () => {
-    expect(isAppleMobile("Mozilla/5.0 (Linux; Android 14; Nothing Phone (2))")).toBe(false);
-    expect(isAppleMobile("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)", 0)).toBe(false);
-    expect(isAppleMobile("Mozilla/5.0 (Windows NT 10.0; Win64; x64)")).toBe(false);
   });
 });

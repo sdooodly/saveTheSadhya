@@ -81,12 +81,16 @@ with sync_playwright() as p:
     href = venue.get_attribute("href"); target = venue.get_attribute("target")
     check("venue opens Google Maps in a new tab", href.startswith("https://www.google.com/maps/") and "RDR+Auditorium" in href and target == "_blank", href)
 
-    cal = pg.get_by_role("link").filter(has_text="Add to calendar")
+    pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
+    check("calendar: menu offers Google, Apple, Outlook", all(pg.get_by_role("link", name=n).count() == 1 for n in ["Google Calendar", "Apple Calendar"]) and pg.get_by_role("link").filter(has_text="Outlook / other").count() == 1)
+    cal = pg.get_by_role("link", name="Google Calendar")
     q = urllib.parse.parse_qs(urllib.parse.urlparse(cal.get_attribute("href")).query)
     check("calendar: Google template link", cal.get_attribute("href").startswith("https://calendar.google.com/calendar/render?"))
     check("calendar: muhurtham in UTC", q["dates"][0] == "20270131T064200Z/20270131T070300Z", q.get("dates"))
     check("calendar: links to the invitation, not the profile", SITE in q["details"][0] and "savethesadhya.com" not in q["details"][0], q["details"][0])
     check("calendar: precise location", q["location"][0].startswith("RDR Auditorium, Edapazhanji, Thiruvananthapuram"), q["location"][0])
+    pg.keyboard.press("Escape"); pg.wait_for_timeout(300)
+    check("calendar: menu closes with Escape", pg.get_by_role("link", name="Google Calendar").count() == 0)
     check("main: no console errors (incl. hydration)", not pg.errors, pg.errors[:3])
     check("main: no missing files", not pg.bad, pg.bad[:5])
 
@@ -170,15 +174,37 @@ with sync_playwright() as p:
         check(f"dates correct in {tz}", ok); ctx.close()
 
     # 11. iPhone → .ics, Android → Google
-    ctx, pg = new_page(b, ua=IPHONE); open_invite(pg)
-    with pg.expect_request("**/wedding.ics") as req:
-        pg.get_by_role("link").filter(has_text="Add to calendar").click()
-    check("iPhone: calendar opens the .ics file", req.value.url.endswith("/saveTheSadhya/wedding.ics"), req.value.url)
+    # Phone: Google opens in the SAME tab (no blank tab left behind when the Calendar app takes over)
+    ctx, pg = new_page(b, ua=ANDROID)
+    ctx.route("https://calendar.google.com/**", lambda r: r.fulfill(status=200, content_type="text/html", body="<p>google calendar stub</p>"))
+    open_invite(pg)
+    pages_before = len(ctx.pages)
+    pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
+    pg.get_by_role("link", name="Google Calendar").click(); pg.wait_for_timeout(1200)
+    check("phone: Google Calendar opens in the same tab (no blank tab)", pg.url.startswith("https://calendar.google.com/calendar/render?") and len(ctx.pages) == pages_before, f"{pg.url[:60]} pages={len(ctx.pages)}")
     ctx.close()
-    ctx, pg = new_page(b, ua=ANDROID); open_invite(pg)
-    with ctx.expect_event("request", lambda r: "calendar.google.com" in r.url) as req, ctx.expect_page():
-        pg.get_by_role("link").filter(has_text="Add to calendar").click()
-    check("Android: calendar opens Google Calendar in a new tab", req.value.url.startswith("https://calendar.google.com/calendar/render?"), req.value.url)
+
+    # iPhone: Apple Calendar gets the .ics
+    ctx, pg = new_page(b, ua=IPHONE); open_invite(pg)
+    pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
+    check("iPhone: tapping 'Add to calendar' only opens the menu", "/saveTheSadhya/" in pg.url and pg.get_by_role("link", name="Apple Calendar").count() == 1)
+    with pg.expect_download() as dl:
+        pg.get_by_role("link", name="Apple Calendar").click()
+    check("Apple Calendar: gets the .ics file", dl.value.url.endswith("/saveTheSadhya/wedding.ics") and dl.value.suggested_filename.endswith(".ics"), dl.value.url)
+    ctx.close()
+
+    # Laptop: no surprise download; Google opens in a new tab
+    ctx, pg = new_page(b, mobile=False)
+    ctx.route("https://calendar.google.com/**", lambda r: r.fulfill(status=200, content_type="text/html", body="<p>stub</p>"))
+    downloads = []
+    pg.on("download", lambda d: downloads.append(d.url))
+    open_invite(pg)
+    pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(800)
+    check("laptop: 'Add to calendar' does not download anything by itself", not downloads, downloads)
+    with ctx.expect_page() as newp:
+        pg.get_by_role("link", name="Google Calendar").click()
+    newp.value.wait_for_load_state()
+    check("laptop: Google Calendar opens in a new tab, invite stays open", newp.value.url.startswith("https://calendar.google.com/calendar/render?") and "/saveTheSadhya/" in pg.url, newp.value.url[:60])
     ctx.close()
 
     # 12. Static files

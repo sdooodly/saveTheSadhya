@@ -1,3 +1,4 @@
+export { AddToCalendar } from "./AddToCalendar";
 export { PhotoBooth } from "./PhotoBooth";
 export { BackgroundMusic } from "./BackgroundMusic";
 export { Confetti } from "./Confetti";

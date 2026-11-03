@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { MapPin, CalendarPlus } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { PhotoBooth } from "@/components/ui";
-import { googleCalendarUrl, isAppleMobile } from "@/lib/calendar";
+import { AddToCalendar, PhotoBooth } from "@/components/ui";
 import { formatLongDate } from "@/lib/dates";
-import { ICS_PATH, weddingCalendarEvent } from "@/lib/event";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -25,19 +23,6 @@ const fadeUp = {
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
 };
-
-const CALENDAR_EVENT = weddingCalendarEvent();
-const GOOGLE_CALENDAR_URL = googleCalendarUrl(CALENDAR_EVENT);
-
-/** iPhone/iPad guests get the .ics file (opens Apple Calendar); everyone else, Google Calendar. */
-function openCalendar(e: React.MouseEvent<HTMLAnchorElement>) {
-  if (isAppleMobile(navigator.userAgent, navigator.maxTouchPoints)) {
-    e.preventDefault();
-    // A file download (Apple Calendar opens it), not a Next.js page — hence a full URL.
-    const ics = new URL(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${ICS_PATH}`, window.location.origin);
-    window.location.assign(ics.toString());
-  }
-}
 
 export function HeroSection() {
   const { couple, event } = weddingConfig;
@@ -121,16 +106,7 @@ export function HeroSection() {
           </a>
           <p className="mt-1 text-cream text-lg leading-tight">{event.address}</p>
           <div className="mt-2 flex items-center justify-center text-lg md:text-base">
-            <a
-              href={GOOGLE_CALENDAR_URL}
-              onClick={openCalendar}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-accent hover:text-gold-light transition-colors"
-            >
-              <CalendarPlus size={15} className="shrink-0" />
-              Add to calendar
-            </a>
+            <AddToCalendar />
           </div>
         </motion.div>
 

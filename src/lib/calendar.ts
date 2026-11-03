@@ -1,6 +1,6 @@
 /**
- * "Add to calendar": a Google Calendar link for most guests and an .ics file
- * (opened by Apple Calendar) for iPhone and iPad guests.
+ * "Add to calendar": a Google Calendar link, and an .ics file for Apple
+ * Calendar, Outlook and everything else. The guest chooses which.
  */
 
 export interface CalendarEvent {
@@ -81,10 +81,4 @@ export function icsFile(e: CalendarEvent, uid: string, now: Date = new Date()): 
     "END:VCALENDAR",
   ];
   return lines.map(fold).join("\r\n") + "\r\n";
-}
-
-/** iPhone / iPad (including iPadOS, which reports itself as a Mac with touch). */
-export function isAppleMobile(userAgent: string, maxTouchPoints = 0): boolean {
-  if (/iPhone|iPad|iPod/i.test(userAgent)) return true;
-  return /Macintosh/i.test(userAgent) && maxTouchPoints > 1;
 }
