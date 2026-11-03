@@ -39,7 +39,7 @@ export const weddingConfig = {
   },
 
   meta: {
-    title: "Save the Sadhya",
+    title: "Gayathri & Anand’s wedding", // browser tab + WhatsApp preview title
     description:
       "You are cordially invited to celebrate the wedding of Gayathri & Anand.",
     ogImage: "og-invite.jpg", // link-preview card (WhatsApp etc.), 1200×630 in /public

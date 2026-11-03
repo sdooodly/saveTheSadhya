@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: weddingConfig.meta.title,
+    siteName: weddingConfig.appName,
     title: weddingConfig.meta.title,
     description: weddingConfig.meta.description,
     images: [
