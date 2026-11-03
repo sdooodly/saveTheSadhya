@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Plus, Minus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
@@ -10,6 +10,7 @@ import {
   buildPayload,
   emptyForm,
   firstName,
+  looksLikeBot,
   setGuestCount,
   submitRsvp,
   validateRsvp,
@@ -25,6 +26,9 @@ export function RSVPSection() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  // Bot traps: a hidden field people never see, and a minimum time on the page.
+  const honeypot = useRef<HTMLInputElement>(null);
+  const [mountedAt] = useState(() => Date.now());
 
   const { rsvp } = weddingConfig;
 
@@ -48,6 +52,12 @@ export function RSVPSection() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (submitting) return;
+
+    if (looksLikeBot(honeypot.current?.value ?? "", Date.now() - mountedAt)) {
+      // Pretend it worked so the bot moves on; nothing is sent.
+      setSubmitted(true);
+      return;
+    }
 
     const problem = validateRsvp(form);
     if (problem) {
@@ -141,6 +151,20 @@ export function RSVPSection() {
               onSubmit={handleSubmit}
               className="space-y-6"
             >
+              {/* Hidden from people and screen readers; form-filling bots fill it in */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+                <label htmlFor="rsvp-extra">Leave this empty</label>
+                <input
+                  id="rsvp-extra"
+                  ref={honeypot}
+                  type="text"
+                  name="extra_field"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  defaultValue=""
+                />
+              </div>
+
               {/* Name */}
               <div>
                 <label

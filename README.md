@@ -44,3 +44,18 @@ npm run deploy       # lint + tests + build, then publishes out/ to the gh-pages
 
 GitHub Pages serves the `gh-pages` branch. Production builds automatically use
 the `/saveTheSadhya` path; no environment variables are needed.
+
+## RSVP sheet (Google Apps Script)
+
+`apps-script/Code.gs` is the script behind the RSVP sheet. It validates every
+submission, stops spreadsheet formula injection, caps floods, ignores double
+taps and never returns guest data. To update it: open the sheet → Extensions →
+Apps Script → paste → Deploy → Manage deployments → Edit → Version: New version
+→ Deploy (editing keeps the same URL; a *new* deployment would change it).
+
+## Security notes
+
+- Nothing secret lives in this repo; the RSVP endpoint URL is public by nature
+  (every visitor's browser calls it), so protection lives in the Apps Script.
+- Keep the Google Sheet private (not "anyone with the link").
+- Keep 2-step verification on for the GitHub and Google accounts.

@@ -4,6 +4,7 @@ import {
   cleanText,
   emptyForm,
   firstName,
+  looksLikeBot,
   setGuestCount,
   submitRsvp,
   validateRsvp,
@@ -101,5 +102,17 @@ describe("submitRsvp", () => {
         new Promise((_resolve, reject) => init.signal?.addEventListener("abort", () => reject(new Error("aborted"))))
     );
     expect(await submitRsvp("https://example.test/exec", payload, hanging as unknown as typeof fetch, 30)).toBe("failed");
+  });
+});
+
+describe("looksLikeBot", () => {
+  it("flags a filled hidden field", () => {
+    expect(looksLikeBot("http://spam.example", 60_000)).toBe(true);
+  });
+  it("flags an instant submit", () => {
+    expect(looksLikeBot("", 400)).toBe(true);
+  });
+  it("lets a real guest through", () => {
+    expect(looksLikeBot("", 45_000)).toBe(false);
   });
 });

@@ -68,6 +68,13 @@ export function firstName(name: string): string {
   return cleanText(name).split(" ")[0] ?? "";
 }
 
+/** People need a few seconds to read, type and tap; a filled hidden field means a bot. */
+export const MIN_FILL_MS = 3000;
+
+export function looksLikeBot(honeypotValue: string, msOnPage: number): boolean {
+  return honeypotValue.trim() !== "" || msOnPage < MIN_FILL_MS;
+}
+
 export type SubmitResult = "sent" | "failed";
 
 /**

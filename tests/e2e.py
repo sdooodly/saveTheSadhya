@@ -144,6 +144,16 @@ with sync_playwright() as p:
     check("decline: kind message, no leaves", "We’ll miss you." in pg.inner_text("#rsvp") and pg.locator("img[src*='/leaves/monstera-']").count() == 0)
     ctx.close()
 
+    # 8b. Bot trap: hidden field filled → looks sent, nothing posted
+    ctx, pg = new_page(b)
+    open_invite(pg); pg.evaluate("document.getElementById('rsvp').scrollIntoView()"); pg.wait_for_timeout(1200)
+    check("bot trap: hidden field invisible to people", pg.evaluate("(()=>{const r=document.getElementById('rsvp-extra').getBoundingClientRect();return r.right<0||r.width<=1})()"))
+    pg.evaluate("document.getElementById('rsvp-extra').value='http://spam.example'")
+    pg.get_by_placeholder("Full name").fill("Spam Bot"); pg.get_by_role("button", name="Joyfully accept").click()
+    pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(1500)
+    check("bot trap: nothing sent when hidden field is filled", not pg.posts and "Thank you" in pg.inner_text("#rsvp"))
+    ctx.close()
+
     # 9. Offline: must NOT pretend it worked
     ctx, pg = new_page(b, sheet="offline")
     open_invite(pg); pg.evaluate("document.getElementById('rsvp').scrollIntoView()"); pg.wait_for_timeout(1200)
@@ -178,6 +188,8 @@ with sync_playwright() as p:
     check(".ics served, valid and complete", r.status == 200 and ics.startswith("BEGIN:VCALENDAR\r\n") and "DTSTART:20270131T064200Z" in ics and "END:VCALENDAR" in ics)
     for path in ["og-invite.jpg", "ganesha.png", "monstera-leaf.png", "monstera-vine.webp", "mint-wash.webp", "leaves/corner-pair.webp", "AlexTurner.mp3", "gaya-child.png", "anand-child.png", ".nojekyll", "404.html"]:
         check(f"file exists: {path}", pg.request.get(BASE + path).status == 200)
+    for gone in ["couple.jpg", "heroPic.jpg", "gaya.png", "ana.png"]:
+        check(f"unused photo not published: {gone}", pg.request.get(BASE + gone).status == 404)
     pg.goto(BASE + "404.html"); pg.wait_for_timeout(800)
     link = pg.get_by_role("link", name="Open the invitation")
     check("404 page offers a way back", link.count() == 1 and link.get_attribute("href") in ("/saveTheSadhya/", "/saveTheSadhya"), link.get_attribute("href") if link.count() else None)
