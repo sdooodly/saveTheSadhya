@@ -81,10 +81,16 @@ export function RSVPSection() {
     }
   }
 
+  // Name fields: "write on the line", like a printed RSVP card — no box, no white fill.
   const inputBase =
-    "w-full px-4 py-3 bg-white/80 border border-accent/25 rounded-sm font-sans text-lg md:text-base text-cream " +
-    "placeholder:text-cream/50 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/10 " +
+    "w-full px-1 py-2 bg-transparent border-0 border-b border-gold rounded-none font-sans text-xl md:text-lg text-cream " +
+    "placeholder:italic placeholder:text-cream/45 focus:outline-none focus:border-ink focus:border-b-2 focus:pb-[7px] " +
     "transition-colors";
+
+  // Multi-line note: a faint gold outline on the paper, still no white fill.
+  const textareaBase =
+    "w-full px-3 py-2.5 bg-transparent border border-gold/60 rounded-sm font-sans text-xl md:text-lg text-cream " +
+    "placeholder:italic placeholder:text-cream/45 focus:outline-none focus:border-ink transition-colors";
 
   const buttonBase =
     "px-3 md:px-6 py-3 rounded-sm font-sans text-lg md:text-base font-medium tracking-wide whitespace-nowrap transition-all";
@@ -255,7 +261,7 @@ export function RSVPSection() {
                     <textarea
                       id="rsvp-message"
                       rows={3}
-                      className={`${inputBase} resize-none`}
+                      className={`${textareaBase} resize-none`}
                       placeholder="We'll miss you, but leave a note..."
                       value={form.message}
                       onChange={(e) => update("message", e.target.value)}
@@ -268,7 +274,7 @@ export function RSVPSection() {
               <button
                 type="submit"
                 disabled={!form.attending || submitting}
-                className={`${buttonBase} w-full flex items-center justify-center gap-2 bg-ink text-paper hover:bg-leaf disabled:opacity-40 disabled:cursor-not-allowed`}
+                className={`${buttonBase} w-full flex items-center justify-center gap-2 border border-ink bg-ink text-paper hover:bg-dark disabled:bg-transparent disabled:text-ink/45 disabled:border-ink/25 disabled:cursor-not-allowed`}
               >
                 <Send size={14} />
                 {submitting ? "Sending…" : "Send RSVP"}
