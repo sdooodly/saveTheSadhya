@@ -59,8 +59,8 @@ describe("the real wedding event", () => {
     expect(new Date(e.end) > new Date(e.start)).toBe(true);
   });
   it("calendar times match the muhurtham shown on the page", () => {
-    // e.g. "11:30 a.m. to 1:00 p.m." ↔ start/end in +05:30
-    const [from, to] = weddingConfig.event.muhurthamTime.split(" to ");
+    // e.g. "11:30 a.m. – 1:00 p.m." ↔ start/end in +05:30
+    const [from, to] = weddingConfig.event.muhurthamTime.split(/\s+(?:to|–|-)\s+/);
     const toClock = (t: string) => {
       const [hm, ap] = t.split(" ");
       const [h, m] = hm.split(":").map(Number);

@@ -21,7 +21,7 @@ describe("validateRsvp", () => {
     expect(validateRsvp(form({ name: "   ", attending: "yes" }))).toMatch(/name/i);
   });
   it("needs an answer", () => {
-    expect(validateRsvp(form({ name: "Asha" }))).toMatch(/attend/i);
+    expect(validateRsvp(form({ name: "Asha" }))).toMatch(/join us/i);
   });
   it("accepts a complete form", () => {
     expect(validateRsvp(form({ name: "Asha", attending: "no" }))).toBeNull();
@@ -70,6 +70,9 @@ describe("text helpers", () => {
   it("firstName", () => {
     expect(firstName("  Asha   Nair ")).toBe("Asha");
     expect(firstName("Asha")).toBe("Asha");
+    expect(firstName("priya menon")).toBe("Priya");
+    expect(firstName("PRIYA")).toBe("Priya");
+    expect(firstName("McKenzie")).toBe("McKenzie");
   });
   it("cleanText", () => {
     expect(cleanText(" a \n b ")).toBe("a b");

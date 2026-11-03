@@ -26,7 +26,7 @@ export const weddingConfig = {
     // Muhurtham, in Indian time. Used for the calendar invite; keep in sync with muhurthamTime.
     start: "2027-01-31T11:30:00+05:30",
     end: "2027-01-31T13:00:00+05:30",
-    muhurthamTime: "11:30 a.m. to 1:00 p.m.",
+    muhurthamTime: "11:30 a.m. – 1:00 p.m.",
     venue: "RDR Auditorium",
     address: "Thiruvananthapuram",
     fullAddress: "RDR Auditorium, Edapazhanji, Thiruvananthapuram, Kerala, India",
@@ -41,7 +41,7 @@ export const weddingConfig = {
   meta: {
     title: "Gayathri & Anand’s wedding", // browser tab + WhatsApp preview title
     description:
-      "You are cordially invited to celebrate the wedding of Gayathri & Anand.",
+      "Sunday, 31 January 2027 · Thiruvananthapuram. Kindly respond by 1 January.",
     ogImage: "og-invite.jpg", // link-preview card (WhatsApp etc.), 1200×630 in /public
   },
 } as const;

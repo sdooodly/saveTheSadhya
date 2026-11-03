@@ -75,7 +75,7 @@ export function RSVPSection() {
       setSubmitted(true);
       if (payload.attending === "yes") setShowConfetti(true);
     } else {
-      setError("We couldn’t send your RSVP. Please check your connection and try again.");
+      setError("Your reply didn’t go through. Please check your connection and try again.");
     }
   }
 
@@ -194,7 +194,7 @@ export function RSVPSection() {
               {/* Attendance */}
               <fieldset>
                 <legend className="block text-cream text-base md:text-sm tracking-[0.08em] font-sans mb-3">
-                  Will you attend?
+                  Will you be joining us?
                 </legend>
                 <div className="flex gap-3">
                   {(["yes", "no"] as const).map((option) => (
@@ -227,7 +227,7 @@ export function RSVPSection() {
                   >
                     <div>
                       <span className="block text-cream text-base md:text-sm tracking-[0.08em] font-sans mb-3">
-                        Additional guests
+                        Guests joining you
                       </span>
                       <div className="flex items-center gap-3 mb-3">
                         <button
@@ -262,7 +262,7 @@ export function RSVPSection() {
                           maxLength={80}
                           aria-label={`Guest ${i + 1} name`}
                           className={`${inputBase} mt-2`}
-                          placeholder={`Guest ${i + 1} name`}
+                          placeholder="Guest’s name"
                           value={name}
                           onChange={(e) => updatePlusOneName(i, e.target.value)}
                         />
@@ -286,14 +286,14 @@ export function RSVPSection() {
                       htmlFor="rsvp-message"
                       className="block text-cream text-base md:text-sm tracking-[0.08em] font-sans mb-2"
                     >
-                      A note for the couple
+                      A note for us
                     </label>
                     <textarea
                       id="rsvp-message"
                       rows={3}
                       maxLength={1000}
                       className={`${textareaBase} resize-none`}
-                      placeholder="Leave a note for us…"
+                      placeholder="Optional"
                       value={form.message}
                       onChange={(e) => update("message", e.target.value)}
                     />
@@ -315,7 +315,7 @@ export function RSVPSection() {
                 className={`${buttonBase} w-full flex items-center justify-center gap-2 border border-ink bg-ink text-paper hover:bg-dark disabled:bg-transparent disabled:text-ink/45 disabled:border-ink/25 disabled:cursor-not-allowed`}
               >
                 <Send size={14} />
-                {submitting ? "Sending…" : "Send RSVP"}
+                {submitting ? "Sending…" : "Send reply"}
               </button>
             </motion.form>
           )}

@@ -42,7 +42,7 @@ export function setGuestCount(form: RSVPFormData, count: number, max: number): R
 /** First error to show, or null when the form can be sent. */
 export function validateRsvp(form: RSVPFormData): string | null {
   if (!cleanText(form.name)) return "Please enter your name.";
-  if (form.attending !== "yes" && form.attending !== "no") return "Please choose whether you can attend.";
+  if (form.attending !== "yes" && form.attending !== "no") return "Please let us know if you can join us.";
   return null;
 }
 
@@ -63,9 +63,16 @@ export function buildPayload(form: RSVPFormData): RSVPPayload {
   };
 }
 
-/** "Gayathri" from "  gayathri   anil " → keeps the guest's own capitalisation. */
+/**
+ * First name for "Thank you, …". Fixes all-lowercase or all-caps typing
+ * ("priya", "PRIYA" → "Priya") but keeps deliberate capitalisation ("McKenzie").
+ */
 export function firstName(name: string): string {
-  return cleanText(name).split(" ")[0] ?? "";
+  const word = cleanText(name).split(" ")[0] ?? "";
+  if (word === word.toLowerCase() || word === word.toUpperCase()) {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }
+  return word;
 }
 
 /** People need a few seconds to read, type and tap; a filled hidden field means a bot. */

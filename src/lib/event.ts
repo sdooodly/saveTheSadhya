@@ -5,7 +5,7 @@ import type { CalendarEvent } from "./calendar";
 export function weddingCalendarEvent(): CalendarEvent {
   const { couple, event, siteUrl } = weddingConfig;
   return {
-    title: `${couple.partner1} & ${couple.partner2}'s wedding`,
+    title: `${couple.partner1} & ${couple.partner2}’s wedding`,
     start: event.start,
     end: event.end,
     location: event.fullAddress,

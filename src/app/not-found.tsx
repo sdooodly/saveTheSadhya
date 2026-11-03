@@ -9,7 +9,7 @@ export default function NotFound() {
       <p className="script-name text-6xl">
         {couple.partner1} &amp; {couple.partner2}
       </p>
-      <p className="mt-4 text-cream text-xl">This page doesn’t exist.</p>
+      <p className="mt-4 text-cream text-xl">This page could not be found.</p>
       <Link
         href="/"
         className="mt-6 text-ink text-xl underline decoration-gold underline-offset-[6px] hover:decoration-ink"

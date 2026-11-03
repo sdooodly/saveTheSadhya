@@ -289,7 +289,7 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative script-line text-[1.9rem] md:text-4xl"
+              className="relative script-line text-[1.5rem] md:text-[1.75rem]"
             >
               Together with their families
             </motion.p>
@@ -315,7 +315,7 @@ export function InvitationIntro({
               transition={{ delay: 1.0, duration: 0.5 }}
               className="relative script-line text-[1.9rem] md:text-4xl mt-2"
             >
-              Invite you to their wedding
+              invite you to celebrate their wedding
             </motion.p>
 
             {/* Childhood photos */}

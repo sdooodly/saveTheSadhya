@@ -43,7 +43,7 @@ def accept_rsvp(pg, name="Cal Guest"):
     pg.evaluate("document.getElementById('rsvp').scrollIntoView()"); pg.wait_for_timeout(1200)
     pg.get_by_placeholder("Full name").fill(name)
     pg.get_by_role("button", name="Joyfully accept").click(); pg.wait_for_timeout(300)
-    pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(1800)
+    pg.get_by_role("button", name="Send reply").click(); pg.wait_for_timeout(1800)
 
 def no_overflow(pg):
     return pg.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1")
@@ -57,7 +57,7 @@ with sync_playwright() as p:
     imgs = pg.evaluate("[...document.images].filter(i=>i.complete&&i.naturalWidth===0).map(i=>i.src)")
     check("intro: every image loads", not imgs, imgs)
     check("intro: no horizontal scroll", no_overflow(pg))
-    check("intro: names and phrases present", all(t in pg.inner_text("body") for t in ["Together with their families", "Gayathri", "Anand", "Invite you to their wedding", "Open invitation"]))
+    check("intro: names and phrases present", all(t in pg.inner_text("body") for t in ["Together with their families", "Gayathri", "Anand", "invite you to celebrate their wedding", "Open invitation"]))
     check("intro: no external-link arrow", "↗" not in pg.inner_text("body"))
     audio_src = pg.evaluate("document.getElementById('bg-music')?.getAttribute('preload')")
     check("music does not download before opening", audio_src == "none", audio_src)
@@ -78,7 +78,7 @@ with sync_playwright() as p:
     body = pg.inner_text("#invitation")
     check("main: names lead (no welcome lines)", "Request the pleasure" not in body and "Gayathri" in body)
     check("main: date", "Sunday, 31 January 2027" in body)
-    check("main: muhurtham", "Muhurtham: 11:30 a.m. to 1:00 p.m." in body)
+    check("main: muhurtham", "Muhurtham: 11:30 a.m. – 1:00 p.m." in body)
     check("main: venue + city", "RDR Auditorium" in body and "Thiruvananthapuram" in body)
     check("main: no 'View map', no dress code", "View map" not in body and "Dress code" not in pg.inner_text("body"))
     check("main: fits one screen", pg.evaluate("(()=>{const s=document.querySelector('#invitation > div');return s.scrollHeight<=s.clientHeight})()"))
@@ -95,7 +95,7 @@ with sync_playwright() as p:
     pg.get_by_role("button", name="Scroll to RSVP section").click(); pg.wait_for_timeout(1500)
     check("scroll arrow takes you to RSVP", pg.evaluate("document.getElementById('rsvp').getBoundingClientRect().top") < 50)
     check("rsvp: deadline shown", "Kindly respond by 1 January 2027" in pg.inner_text("#rsvp"))
-    send = pg.get_by_role("button", name="Send RSVP")
+    send = pg.get_by_role("button", name="Send reply")
     check("rsvp: Send disabled until an answer is chosen", send.is_disabled())
 
     # 5. Validation: spaces-only name
@@ -111,12 +111,12 @@ with sync_playwright() as p:
     add = pg.get_by_role("button", name="Add guest")
     for _ in range(5):
         if add.is_enabled(): add.click()
-    check("rsvp: guests capped at 3", pg.locator("input[placeholder^='Guest ']").count() == 3 and add.is_disabled())
-    pg.locator("input[placeholder='Guest 1 name']").fill(" Ravi ")
+    check("rsvp: guests capped at 3", pg.locator("input[aria-label^='Guest ']").count() == 3 and add.is_disabled())
+    pg.locator("input[aria-label='Guest 1 name']").fill(" Ravi ")
     pg.get_by_role("button", name="Remove guest").click()
-    check("rsvp: removing a guest keeps earlier names", pg.locator("input[placeholder='Guest 1 name']").input_value() == " Ravi " and pg.locator("input[placeholder^='Guest ']").count() == 2)
+    check("rsvp: removing a guest keeps earlier names", pg.locator("input[aria-label='Guest 1 name']").input_value() == " Ravi " and pg.locator("input[aria-label^='Guest ']").count() == 2)
     pg.get_by_role("button", name="Regretfully decline").click(); pg.wait_for_timeout(400)
-    pg.get_by_placeholder("Leave a note for us…").fill("So sorry to miss it")
+    pg.get_by_label("A note for us").fill("So sorry to miss it")
     pg.get_by_role("button", name="Joyfully accept").click(); pg.wait_for_timeout(400)
 
     # 7. Submit (accept) — payload + thank-you
@@ -151,8 +151,8 @@ with sync_playwright() as p:
     pg.get_by_placeholder("Full name").fill("Arun")
     pg.get_by_role("button", name="Joyfully accept").click(); pg.get_by_role("button", name="Add guest").click()
     pg.get_by_role("button", name="Regretfully decline").click(); pg.wait_for_timeout(400)
-    pg.get_by_placeholder("Leave a note for us…").fill("Congratulations!")
-    pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(2000)
+    pg.get_by_label("A note for us").fill("Congratulations!")
+    pg.get_by_role("button", name="Send reply").click(); pg.wait_for_timeout(2000)
     payload = json.loads(pg.posts[-1]) if pg.posts else {}
     check("decline: guests dropped, note kept", payload == {"name": "Arun", "attending": "no", "plusOnes": 0, "plusOneNames": [], "message": "Congratulations!"}, payload)
     check("decline: no 'Add to calendar'", pg.get_by_role("button", name="Add to calendar").count() == 0)
@@ -165,7 +165,7 @@ with sync_playwright() as p:
     check("bot trap: hidden field invisible to people", pg.evaluate("(()=>{const r=document.getElementById('rsvp-extra').getBoundingClientRect();return r.right<0||r.width<=1})()"))
     pg.evaluate("document.getElementById('rsvp-extra').value='http://spam.example'")
     pg.get_by_placeholder("Full name").fill("Spam Bot"); pg.get_by_role("button", name="Joyfully accept").click()
-    pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(1500)
+    pg.get_by_role("button", name="Send reply").click(); pg.wait_for_timeout(1500)
     check("bot trap: nothing sent when hidden field is filled", not pg.posts and "Thank you" in pg.inner_text("#rsvp"))
     ctx.close()
 
@@ -173,9 +173,9 @@ with sync_playwright() as p:
     ctx, pg = new_page(b, sheet="offline")
     open_invite(pg); pg.evaluate("document.getElementById('rsvp').scrollIntoView()"); pg.wait_for_timeout(1200)
     pg.get_by_placeholder("Full name").fill("Offline Guest"); pg.get_by_role("button", name="Joyfully accept").click()
-    pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(2000)
+    pg.get_by_role("button", name="Send reply").click(); pg.wait_for_timeout(2000)
     check("offline: shows an error and keeps the form", pg.locator("#rsvp [role=alert]").count() == 1 and pg.get_by_placeholder("Full name").input_value() == "Offline Guest" and "Thank you" not in pg.inner_text("#rsvp"))
-    check("offline: can retry", pg.get_by_role("button", name="Send RSVP").is_enabled())
+    check("offline: can retry", pg.get_by_role("button", name="Send reply").is_enabled())
     ctx.close()
 
     # 10. Time zones
