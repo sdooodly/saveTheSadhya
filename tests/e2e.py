@@ -72,7 +72,7 @@ with sync_playwright() as p:
     body = pg.inner_text("#invitation")
     check("main: names lead (no welcome lines)", "Request the pleasure" not in body and "Gayathri" in body)
     check("main: date", "Sunday, 31 January 2027" in body)
-    check("main: muhurtham", "Muhurtham: 12:12 p.m. to 12:33 p.m." in body)
+    check("main: muhurtham", "Muhurtham: 11:30 a.m. to 1:00 p.m." in body)
     check("main: venue + city", "RDR Auditorium" in body and "Thiruvananthapuram" in body)
     check("main: no 'View map', no dress code", "View map" not in body and "Dress code" not in pg.inner_text("body"))
     check("main: fits one screen", pg.evaluate("(()=>{const s=document.querySelector('#invitation > div');return s.scrollHeight<=s.clientHeight})()"))
@@ -82,21 +82,22 @@ with sync_playwright() as p:
     check("venue opens Google Maps in a new tab", href.startswith("https://www.google.com/maps/") and "RDR+Auditorium" in href and target == "_blank", href)
 
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
-    check("calendar: menu offers Google, Apple, Outlook", all(pg.get_by_role("link", name=n).count() == 1 for n in ["Google Calendar", "Apple Calendar"]) and pg.get_by_role("link").filter(has_text="Outlook / other").count() == 1)
-    cal = pg.get_by_role("link", name="Google Calendar")
+    check("calendar: line turns into Google · Apple · Outlook", all(pg.get_by_role("link", name=n, exact=True).count() == 1 for n in ["Google", "Apple", "Outlook"]))
+    check("calendar: no 'Downloads a calendar file' line", "Downloads a calendar file" not in pg.inner_text("body"))
+    cal = pg.get_by_role("link", name="Google", exact=True)
     q = urllib.parse.parse_qs(urllib.parse.urlparse(cal.get_attribute("href")).query)
     check("calendar: Google template link", cal.get_attribute("href").startswith("https://calendar.google.com/calendar/render?"))
-    check("calendar: muhurtham in UTC", q["dates"][0] == "20270131T064200Z/20270131T070300Z", q.get("dates"))
+    check("calendar: muhurtham in UTC", q["dates"][0] == "20270131T060000Z/20270131T073000Z", q.get("dates"))
     check("calendar: links to the invitation, not the profile", SITE in q["details"][0] and "savethesadhya.com" not in q["details"][0], q["details"][0])
     check("calendar: precise location", q["location"][0].startswith("RDR Auditorium, Edapazhanji, Thiruvananthapuram"), q["location"][0])
     pg.keyboard.press("Escape"); pg.wait_for_timeout(300)
-    check("calendar: menu closes with Escape", pg.get_by_role("link", name="Google Calendar").count() == 0)
+    check("calendar: menu closes with Escape", pg.get_by_role("link", name="Google", exact=True).count() == 0)
     check("main: no console errors (incl. hydration)", not pg.errors, pg.errors[:3])
     check("main: no missing files", not pg.bad, pg.bad[:5])
 
     # 4. Scroll to RSVP via the chevron
-    pg.get_by_role("button", name="Scroll to RSVP section").click(force=True); pg.wait_for_timeout(1500)
-    check("chevron scrolls to RSVP", pg.evaluate("document.getElementById('rsvp').getBoundingClientRect().top") < 50)
+    pg.get_by_role("button", name="Scroll to RSVP section").click(); pg.wait_for_timeout(1500)
+    check("'Please RSVP' prompt scrolls to RSVP", pg.evaluate("document.getElementById('rsvp').getBoundingClientRect().top") < 50)
     check("rsvp: deadline shown", "Kindly respond by 1 January 2027" in pg.inner_text("#rsvp"))
     send = pg.get_by_role("button", name="Send RSVP")
     check("rsvp: Send disabled until an answer is chosen", send.is_disabled())
@@ -180,16 +181,16 @@ with sync_playwright() as p:
     open_invite(pg)
     pages_before = len(ctx.pages)
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
-    pg.get_by_role("link", name="Google Calendar").click(); pg.wait_for_timeout(1200)
+    pg.get_by_role("link", name="Google", exact=True).click(); pg.wait_for_timeout(1200)
     check("phone: Google Calendar opens in the same tab (no blank tab)", pg.url.startswith("https://calendar.google.com/calendar/render?") and len(ctx.pages) == pages_before, f"{pg.url[:60]} pages={len(ctx.pages)}")
     ctx.close()
 
     # iPhone: Apple Calendar gets the .ics
     ctx, pg = new_page(b, ua=IPHONE); open_invite(pg)
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
-    check("iPhone: tapping 'Add to calendar' only opens the menu", "/saveTheSadhya/" in pg.url and pg.get_by_role("link", name="Apple Calendar").count() == 1)
+    check("iPhone: tapping 'Add to calendar' only opens the menu", "/saveTheSadhya/" in pg.url and pg.get_by_role("link", name="Apple", exact=True).count() == 1)
     with pg.expect_download() as dl:
-        pg.get_by_role("link", name="Apple Calendar").click()
+        pg.get_by_role("link", name="Apple", exact=True).click()
     check("Apple Calendar: gets the .ics file", dl.value.url.endswith("/saveTheSadhya/wedding.ics") and dl.value.suggested_filename.endswith(".ics"), dl.value.url)
     ctx.close()
 
@@ -202,7 +203,7 @@ with sync_playwright() as p:
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(800)
     check("laptop: 'Add to calendar' does not download anything by itself", not downloads, downloads)
     with ctx.expect_page() as newp:
-        pg.get_by_role("link", name="Google Calendar").click()
+        pg.get_by_role("link", name="Google", exact=True).click()
     newp.value.wait_for_load_state()
     check("laptop: Google Calendar opens in a new tab, invite stays open", newp.value.url.startswith("https://calendar.google.com/calendar/render?") and "/saveTheSadhya/" in pg.url, newp.value.url[:60])
     ctx.close()
@@ -211,7 +212,7 @@ with sync_playwright() as p:
     ctx, pg = new_page(b, mobile=False)
     r = pg.request.get(BASE + "wedding.ics")
     ics = r.text()
-    check(".ics served, valid and complete", r.status == 200 and ics.startswith("BEGIN:VCALENDAR\r\n") and "DTSTART:20270131T064200Z" in ics and "END:VCALENDAR" in ics)
+    check(".ics served, valid and complete", r.status == 200 and ics.startswith("BEGIN:VCALENDAR\r\n") and "DTSTART:20270131T060000Z" in ics and "END:VCALENDAR" in ics)
     for path in ["og-invite.jpg", "ganesha.png", "monstera-leaf.png", "monstera-vine.webp", "mint-wash.webp", "leaves/corner-pair.webp", "AlexTurner.mp3", "gaya-child.png", "anand-child.png", ".nojekyll", "404.html"]:
         check(f"file exists: {path}", pg.request.get(BASE + path).status == 200)
     for gone in ["couple.jpg", "heroPic.jpg", "gaya.png", "ana.png"]:

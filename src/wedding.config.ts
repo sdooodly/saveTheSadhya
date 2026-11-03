@@ -24,9 +24,9 @@ export const weddingConfig = {
     title: "The Wedding & Sadhya",
     date: "2027-01-31",
     // Muhurtham, in Indian time. Used for the calendar invite; keep in sync with muhurthamTime.
-    start: "2027-01-31T12:12:00+05:30",
-    end: "2027-01-31T12:33:00+05:30",
-    muhurthamTime: "12:12 p.m. to 12:33 p.m.",
+    start: "2027-01-31T11:30:00+05:30",
+    end: "2027-01-31T13:00:00+05:30",
+    muhurthamTime: "11:30 a.m. to 1:00 p.m.",
     venue: "RDR Auditorium",
     address: "Thiruvananthapuram",
     fullAddress: "RDR Auditorium, Edapazhanji, Thiruvananthapuram, Kerala, India",

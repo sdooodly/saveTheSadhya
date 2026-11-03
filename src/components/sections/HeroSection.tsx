@@ -110,19 +110,28 @@ export function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div variants={fadeUp} className="mt-6 flex flex-col items-center">
-          <motion.button
+        {/* Call to action: a clear, bouncing prompt to RSVP */}
+        <motion.div variants={fadeUp} className="mt-5 flex flex-col items-center">
+          <button
+            type="button"
             onClick={() => document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" })}
-            className="flex flex-col items-center group cursor-pointer focus:outline-none p-1"
+            className="group flex flex-col items-center gap-1.5 focus:outline-none"
             aria-label="Scroll to RSVP section"
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <svg width="20" height="12" viewBox="0 0 20 12" fill="none" className="text-accent/50 group-hover:text-accent transition-colors">
-              <path d="M2 2 L10 9 L18 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </motion.button>
+            <span className="script-line text-[2.2rem] md:text-4xl leading-none">Please RSVP</span>
+            <motion.span
+              aria-hidden="true"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-ink text-paper
+                         shadow-[0_4px_14px_rgba(122,16,6,0.30)] group-hover:bg-dark
+                         group-focus-visible:ring-2 group-focus-visible:ring-gold group-focus-visible:ring-offset-2"
+              animate={{ y: [0, 9, 0] }}
+              transition={{ duration: 1.3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 7.5 L10 12.5 L15 7.5" />
+              </svg>
+            </motion.span>
+          </button>
         </motion.div>
       </motion.div>
     </section>

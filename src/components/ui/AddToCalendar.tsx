@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
 import { googleCalendarUrl } from "@/lib/calendar";
@@ -8,9 +8,11 @@ import { ICS_PATH, weddingCalendarEvent } from "@/lib/event";
 
 const GOOGLE_URL = googleCalendarUrl(weddingCalendarEvent());
 const ICS_URL = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${ICS_PATH}`;
+const ICS_NAME = "gayathri-anand-wedding.ics";
 
 /**
- * "Add to calendar" → the guest picks their calendar. No device guessing.
+ * "Add to calendar" → the same line turns into "Google · Apple · Outlook",
+ * like a line printed on the card. No box, no layout jump. No device guessing.
  *
  * Google Calendar opens in the same tab on phones: phones hand the event to the
  * Calendar app, and a new tab would be left behind empty. On computers it opens
@@ -19,21 +21,11 @@ const ICS_URL = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${ICS_PATH}`;
 export function AddToCalendar({ className = "" }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const wrapper = useRef<HTMLDivElement>(null);
-  const menuId = useId();
-  // Open upwards when there isn't room below (small phones).
-  const [above, setAbove] = useState(false);
-  const MENU_HEIGHT = 210;
-
-  function toggle() {
-    if (!open && wrapper.current) {
-      const r = wrapper.current.getBoundingClientRect();
-      setAbove(window.innerHeight - r.bottom < MENU_HEIGHT + 16 && r.top > MENU_HEIGHT + 16);
-    }
-    setOpen((o) => !o);
-  }
+  const firstChoice = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     if (!open) return;
+    firstChoice.current?.focus({ preventScroll: true });
     const onDown = (e: PointerEvent) => {
       if (!wrapper.current?.contains(e.target as Node)) setOpen(false);
     };
@@ -56,44 +48,61 @@ export function AddToCalendar({ className = "" }: { className?: string }) {
     }
   }
 
-  const item =
-    "block w-full px-4 py-3 text-left text-lg md:text-base text-cream hover:bg-paper-alt focus:bg-paper-alt focus:outline-none transition-colors";
+  const choice =
+    "px-1 py-1 text-ink underline decoration-gold decoration-1 underline-offset-[5px] hover:decoration-ink focus:outline-none focus-visible:decoration-ink focus-visible:decoration-2 transition-colors";
+  const dot = (
+    <span className="text-gold select-none" aria-hidden="true">
+      ·
+    </span>
+  );
 
   return (
-    <div ref={wrapper} className={`relative inline-flex flex-col items-center ${className}`}>
-      <button
-        type="button"
-        onClick={toggle}
-        aria-expanded={open}
-        aria-controls={menuId}
-        className="inline-flex items-center gap-1.5 text-accent hover:text-gold-light transition-colors"
-      >
-        <CalendarPlus size={15} className="shrink-0" aria-hidden="true" />
-        Add to calendar
-      </button>
-
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id={menuId}
-            initial={{ opacity: 0, y: above ? 4 : -4 }}
+    <div ref={wrapper} className={`relative h-8 flex items-center justify-center ${className}`}>
+      <AnimatePresence mode="wait" initial={false}>
+        {!open ? (
+          <motion.button
+            key="trigger"
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-expanded={false}
+            initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: above ? 4 : -4 }}
+            exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.15 }}
-            className={`absolute ${above ? "bottom-full mb-2" : "top-full mt-2"} z-30 w-60 overflow-hidden rounded-sm border border-gold/60
-                       bg-paper shadow-[0_8px_24px_rgba(74,40,10,0.16)] divide-y divide-gold/30`}
+            className="inline-flex items-center gap-1.5 text-accent hover:text-gold-light transition-colors"
           >
-            <a href={GOOGLE_URL} target="_blank" rel="noopener noreferrer" onClick={openGoogle} className={item}>
-              Google Calendar
+            <CalendarPlus size={15} className="shrink-0" aria-hidden="true" />
+            Add to calendar
+          </motion.button>
+        ) : (
+          <motion.nav
+            key="choices"
+            aria-label="Add to calendar"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+            className="inline-flex items-center gap-2.5 whitespace-nowrap"
+          >
+            <a
+              ref={firstChoice}
+              href={GOOGLE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={openGoogle}
+              className={choice}
+            >
+              Google
             </a>
-            <a href={ICS_URL} download="gayathri-anand-wedding.ics" onClick={() => setOpen(false)} className={item}>
-              Apple Calendar
+            {dot}
+            <a href={ICS_URL} download={ICS_NAME} onClick={() => setOpen(false)} className={choice}>
+              Apple
             </a>
-            <a href={ICS_URL} download="gayathri-anand-wedding.ics" onClick={() => setOpen(false)} className={item}>
-              Outlook / other
-              <span className="block text-base md:text-sm text-cream/70">Downloads a calendar file</span>
+            {dot}
+            <a href={ICS_URL} download={ICS_NAME} onClick={() => setOpen(false)} className={choice}>
+              Outlook
             </a>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </div>
