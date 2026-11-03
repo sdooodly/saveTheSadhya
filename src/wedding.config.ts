@@ -31,7 +31,7 @@ export const weddingConfig = {
 
   rsvp: {
     maxPlusOnes: 3,
-    deadline: "2027-01-15",
+    deadline: "2027-01-01",
   },
 
   meta: {
