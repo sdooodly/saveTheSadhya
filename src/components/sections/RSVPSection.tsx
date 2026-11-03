@@ -139,7 +139,7 @@ export function RSVPSection() {
               <p className="text-cream text-xl">
                 {form.attending === "yes"
                   ? "We can’t wait to celebrate with you."
-                  : "We’ll miss you. Thank you for letting us know."}
+                  : "We’ll miss you."}
               </p>
             </motion.div>
           ) : (
