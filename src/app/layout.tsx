@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { weddingConfig } from "@/wedding.config";
 import "./globals.css";
 
-// Trailing slash so relative paths (like the preview image) resolve under the site's sub-path.
-const siteUrl = `${(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "")}/`;
+// The public address (with trailing slash), so link previews always point at the live site.
+const siteUrl = weddingConfig.siteUrl;
 
 // Same typefaces as the printed invite, self-hosted (SIL Open Font License).
 const garamond = localFont({
@@ -23,6 +23,11 @@ const italianno = localFont({
   display: "swap",
   src: [{ path: "../fonts/italianno-latin-400-normal.woff2", weight: "400", style: "normal" }],
 });
+
+// Colours the phone's browser bar to match the paper.
+export const viewport: Viewport = {
+  themeColor: "#F2E6CF",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -5,79 +5,67 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Send, Plus, Minus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
 import { Confetti } from "@/components/ui";
+import { formatDate } from "@/lib/dates";
+import {
+  buildPayload,
+  emptyForm,
+  firstName,
+  setGuestCount,
+  submitRsvp,
+  validateRsvp,
+  type RSVPFormData,
+} from "@/lib/rsvp";
 
-interface RSVPFormData {
-  name: string;
-  attending: "yes" | "no" | "";
-  plusOnes: number;
-  plusOneNames: string[];
-  message: string;
-}
-
-const initialForm: RSVPFormData = {
-  name: "",
-  attending: "",
-  plusOnes: 0,
-  plusOneNames: [],
-  message: "",
-};
+const SHEET_URL =
+  "https://script.google.com/macros/s/AKfycbyzbld9quSdcCkS1Wph_Ju8bpGz_A1XnTQ5vu43RhDKr7f2xxMG95ncii0aJLWBp8ZY/exec";
 
 export function RSVPSection() {
-  const [form, setForm] = useState<RSVPFormData>(initialForm);
+  const [form, setForm] = useState<RSVPFormData>(emptyForm);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const { rsvp } = weddingConfig;
 
   function update<K extends keyof RSVPFormData>(key: K, value: RSVPFormData[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
+    setError(null);
   }
 
   function handlePlusOneChange(count: number) {
-    const clamped = Math.max(0, Math.min(count, rsvp.maxPlusOnes));
-    const names = [...form.plusOneNames];
-    while (names.length < clamped) names.push("");
-    update("plusOnes", clamped);
-    update("plusOneNames", names.slice(0, clamped));
+    setForm((prev) => setGuestCount(prev, count, rsvp.maxPlusOnes));
   }
 
   function updatePlusOneName(index: number, value: string) {
-    const names = [...form.plusOneNames];
-    names[index] = value;
-    update("plusOneNames", names);
+    setForm((prev) => {
+      const names = [...prev.plusOneNames];
+      names[index] = value;
+      return { ...prev, plusOneNames: names };
+    });
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (submitting) return;
+
+    const problem = validateRsvp(form);
+    if (problem) {
+      setError(problem);
+      return;
+    }
+
     setSubmitting(true);
+    setError(null);
+    const payload = buildPayload(form);
+    const result = await submitRsvp(SHEET_URL, payload);
+    setSubmitting(false);
 
-    try {
-      const SHEET_URL =
-        "https://script.google.com/macros/s/AKfycbyzbld9quSdcCkS1Wph_Ju8bpGz_A1XnTQ5vu43RhDKr7f2xxMG95ncii0aJLWBp8ZY/exec";
-
-      const res = await fetch(SHEET_URL, {
-        method: "POST",
-        body: JSON.stringify({
-          name: form.name,
-          attending: form.attending,
-          plusOnes: form.plusOnes,
-          plusOneNames: form.plusOneNames,
-          message: form.message,
-        }),
-      });
-
-      if (res.ok) {
-        setSubmitted(true);
-        if (form.attending === "yes") {
-          setShowConfetti(true);
-        }
-      }
-    } catch {
+    if (result === "sent") {
       setSubmitted(true);
-      if (form.attending === "yes") setShowConfetti(true);
-    } finally {
-      setSubmitting(false);
+      if (payload.attending === "yes") setShowConfetti(true);
+    } else {
+      setError("We couldn’t send your RSVP. Please check your connection and try again.");
     }
   }
 
@@ -114,13 +102,7 @@ export function RSVPSection() {
           </h2>
           {!submitted && (
             <p className="mt-2 font-serif italic text-lg text-cream">
-              Kindly respond by{" "}
-              {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
-                timeZone: "Asia/Kolkata",
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
+              Kindly respond by {formatDate(rsvp.deadline)}
             </p>
           )}
         </motion.div>
@@ -142,12 +124,12 @@ export function RSVPSection() {
                 className="mx-auto w-8 h-auto mb-3"
               />
               <h3 className="script-name text-6xl md:text-7xl mb-3">
-                Thank you, {form.name.trim().split(/\s+/)[0]}
+                Thank you, {firstName(form.name)}
               </h3>
               <p className="text-cream text-xl">
                 {form.attending === "yes"
-                  ? "We can't wait to celebrate with you."
-                  : "We'll miss you. Thank you for letting us know."}
+                  ? "We can’t wait to celebrate with you."
+                  : "We’ll miss you. Thank you for letting us know."}
               </p>
             </motion.div>
           ) : (
@@ -171,6 +153,8 @@ export function RSVPSection() {
                   id="rsvp-name"
                   type="text"
                   required
+                  autoComplete="name"
+                  maxLength={80}
                   className={inputBase}
                   placeholder="Full name"
                   value={form.name}
@@ -189,6 +173,7 @@ export function RSVPSection() {
                       key={option}
                       type="button"
                       onClick={() => update("attending", option)}
+                      aria-pressed={form.attending === option}
                       className={`${buttonBase} flex-1 border ${
                         form.attending === option
                           ? "bg-ink text-paper border-ink"
@@ -219,18 +204,23 @@ export function RSVPSection() {
                         <button
                           type="button"
                           onClick={() => handlePlusOneChange(form.plusOnes - 1)}
-                          className="w-11 h-11 flex items-center justify-center border border-accent/20 rounded-sm text-accent hover:bg-accent/10 transition-colors"
+                          disabled={form.plusOnes === 0}
+                          className="w-11 h-11 flex items-center justify-center border border-accent/20 rounded-sm text-accent hover:bg-accent/10 transition-colors disabled:opacity-35 disabled:cursor-not-allowed"
                           aria-label="Remove guest"
                         >
                           <Minus size={14} />
                         </button>
-                        <span className="font-serif text-lg text-cream w-6 text-center">
+                        <span className="font-serif text-lg text-cream w-6 text-center" aria-live="polite">
                           {form.plusOnes}
                         </span>
+                        {form.plusOnes >= rsvp.maxPlusOnes && (
+                          <span className="text-cream text-base italic">Up to {rsvp.maxPlusOnes}</span>
+                        )}
                         <button
                           type="button"
                           onClick={() => handlePlusOneChange(form.plusOnes + 1)}
-                          className="w-11 h-11 flex items-center justify-center border border-accent/20 rounded-sm text-accent hover:bg-accent/10 transition-colors"
+                          disabled={form.plusOnes >= rsvp.maxPlusOnes}
+                          className="w-11 h-11 flex items-center justify-center border border-accent/20 rounded-sm text-accent hover:bg-accent/10 transition-colors disabled:opacity-35 disabled:cursor-not-allowed"
                           aria-label="Add guest"
                         >
                           <Plus size={14} />
@@ -240,6 +230,8 @@ export function RSVPSection() {
                         <input
                           key={i}
                           type="text"
+                          maxLength={80}
+                          aria-label={`Guest ${i + 1} name`}
                           className={`${inputBase} mt-2`}
                           placeholder={`Guest ${i + 1} name`}
                           value={name}
@@ -270,6 +262,7 @@ export function RSVPSection() {
                     <textarea
                       id="rsvp-message"
                       rows={3}
+                      maxLength={1000}
                       className={`${textareaBase} resize-none`}
                       placeholder="Leave a note for us…"
                       value={form.message}
@@ -278,6 +271,13 @@ export function RSVPSection() {
                   </motion.div>
                 )}
               </AnimatePresence>
+
+              {/* Error (validation or network) */}
+              {error && (
+                <p role="alert" className="text-ink text-lg text-center">
+                  {error}
+                </p>
+              )}
 
               {/* Submit */}
               <button

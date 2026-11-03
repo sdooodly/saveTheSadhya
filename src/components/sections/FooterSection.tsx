@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { weddingConfig } from "@/wedding.config";
+import { formatDate } from "@/lib/dates";
 
 export function FooterSection() {
   const { couple, event } = weddingConfig;
@@ -14,15 +15,10 @@ export function FooterSection() {
       className="py-10 px-4 text-center"
     >
       <p className="script-name text-[1.9rem] md:text-4xl">
-        {couple.partner1} & {couple.partner2}
+        {couple.partner1} &amp; {couple.partner2}
       </p>
       <p className="text-cream text-base md:text-sm font-sans tracking-[0.12em] mt-2">
-        {new Date(event.date).toLocaleDateString("en-IN", {
-    timeZone: "Asia/Kolkata",
-          month: "long",
-          day: "numeric",
-          year: "numeric",
-        })}
+        {formatDate(event.date)}
       </p>
     </motion.footer>
   );

@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
+import { formatShortDate } from "@/lib/dates";
 
 /*
  * Soft green-ivory grade so any photo sits with the watercolours.
@@ -119,12 +120,7 @@ function BoothStrip({
   const closeRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
 
-  const stripDate = new Date(event.date).toLocaleDateString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-  });
+  const stripDate = formatShortDate(event.date);
 
   const onKey = useCallback(
     (e: KeyboardEvent) => {

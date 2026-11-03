@@ -5,6 +5,9 @@ import { motion } from "framer-motion";
 import { MapPin, CalendarPlus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
 import { PhotoBooth } from "@/components/ui";
+import { googleCalendarUrl, isAppleMobile } from "@/lib/calendar";
+import { formatLongDate } from "@/lib/dates";
+import { ICS_PATH, weddingCalendarEvent } from "@/lib/event";
 
 const stagger = {
   hidden: { opacity: 0 },
@@ -23,37 +26,22 @@ const fadeUp = {
   },
 };
 
-function buildCalendarUrl() {
-  const { event, couple } = weddingConfig;
-  // Muhurtham 12:12–12:33 IST
-  const startUtc = "20270131T064200Z";
-  const endUtc = "20270131T070300Z";
-  const title = encodeURIComponent(
-    `${couple.partner1} & ${couple.partner2}'s wedding`
-  );
-  const siteUrl =
-    typeof window !== "undefined"
-      ? window.location.origin
-      : "https://savethesadhya.com";
-  const details = encodeURIComponent(
-    `Muhurtham: ${event.muhurthamTime}\n\nRSVP & Details: ${siteUrl}`
-  );
-  const location = encodeURIComponent(`${event.venue}, ${event.address}`);
-  return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startUtc}/${endUtc}&details=${details}&location=${location}&sf=true`;
+const CALENDAR_EVENT = weddingCalendarEvent();
+const GOOGLE_CALENDAR_URL = googleCalendarUrl(CALENDAR_EVENT);
+
+/** iPhone/iPad guests get the .ics file (opens Apple Calendar); everyone else, Google Calendar. */
+function openCalendar(e: React.MouseEvent<HTMLAnchorElement>) {
+  if (isAppleMobile(navigator.userAgent, navigator.maxTouchPoints)) {
+    e.preventDefault();
+    // A file download (Apple Calendar opens it), not a Next.js page — hence a full URL.
+    const ics = new URL(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${ICS_PATH}`, window.location.origin);
+    window.location.assign(ics.toString());
+  }
 }
 
 export function HeroSection() {
   const { couple, event } = weddingConfig;
-  const calendarUrl = buildCalendarUrl();
-
-  const weddingDate = new Date(event.date);
-  const formattedDate = weddingDate.toLocaleDateString("en-IN", {
-    timeZone: "Asia/Kolkata",
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const formattedDate = formatLongDate(event.date);
 
   return (
     <section className="w-full px-5 py-6 md:px-8 md:py-8 flex justify-center">
@@ -134,7 +122,8 @@ export function HeroSection() {
           <p className="mt-1 text-cream text-lg leading-tight">{event.address}</p>
           <div className="mt-2 flex items-center justify-center text-lg md:text-base">
             <a
-              href={calendarUrl}
+              href={GOOGLE_CALENDAR_URL}
+              onClick={openCalendar}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-accent hover:text-gold-light transition-colors"

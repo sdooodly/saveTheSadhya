@@ -11,6 +11,7 @@ import {
   InvitationIntro,
   BackgroundMusic,
 } from "@/components/ui";
+import { startMusic } from "@/components/ui/BackgroundMusic";
 
 function SnapSection({
   children,
@@ -38,13 +39,15 @@ export default function Home() {
   const [musicReady, setMusicReady] = useState(false);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+  // Runs inside the guest's tap on "Open invitation", so phones allow the music to start.
   const handleEnter = useCallback(() => {
+    startMusic();
     setMusicReady(true);
   }, []);
 
   return (
     <>
-      <BackgroundMusic src={`${basePath}/AlexTurner.mp3`} play={musicReady} />
+      <BackgroundMusic src={`${basePath}/AlexTurner.mp3`} show={musicReady} />
 
       {/* Monstera vine from the invite, behind all content */}
       {/* eslint-disable-next-line @next/next/no-img-element */}

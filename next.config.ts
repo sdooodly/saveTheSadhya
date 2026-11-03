@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
-const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === "true";
-const basePath = isGitHubPagesBuild ? "/saveTheSadhya" : "";
+// The site lives at https://sdooodly.github.io/saveTheSadhya/, so production
+// builds need the /saveTheSadhya prefix. `next build` always runs with
+// NODE_ENV=production, so no environment variables need remembering;
+// `next dev` runs at the root (http://localhost:3000/).
+const basePath = process.env.NODE_ENV === "production" ? "/saveTheSadhya" : "";
 
 const nextConfig: NextConfig = {
   output: "export",

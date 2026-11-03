@@ -1,6 +1,9 @@
 export const weddingConfig = {
   appName: "Save the Sadhya",
 
+  // The public address of the site — used in calendar invites and link previews.
+  siteUrl: "https://sdooodly.github.io/saveTheSadhya/",
+
   couple: {
     partner1: "Gayathri",
     partner2: "Anand",
@@ -21,9 +24,13 @@ export const weddingConfig = {
   event: {
     title: "The Wedding & Sadhya",
     date: "2027-01-31",
+    // Muhurtham, in Indian time. Used for the calendar invite; keep in sync with muhurthamTime.
+    start: "2027-01-31T12:12:00+05:30",
+    end: "2027-01-31T12:33:00+05:30",
     muhurthamTime: "12:12 p.m. to 12:33 p.m.",
     venue: "RDR Auditorium",
     address: "Thiruvananthapuram",
+    fullAddress: "RDR Auditorium, Edapazhanji, Thiruvananthapuram, Kerala, India",
     mapUrl: "https://www.google.com/maps/search/RDR+Auditorium+Edapazhanji+Thiruvananthapuram",
   },
 
