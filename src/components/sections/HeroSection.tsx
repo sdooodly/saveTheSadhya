@@ -110,27 +110,29 @@ export function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Call to action: a clear, bouncing prompt to RSVP */}
-        <motion.div variants={fadeUp} className="mt-5 flex flex-col items-center">
+        {/* Scroll prompt: a double chevron that ripples downwards */}
+        <motion.div variants={fadeUp} className="mt-6 flex flex-col items-center">
           <button
             type="button"
             onClick={() => document.getElementById("rsvp")?.scrollIntoView({ behavior: "smooth" })}
-            className="group flex flex-col items-center gap-1.5 focus:outline-none"
+            className="group flex flex-col items-center p-2 -m-2 focus:outline-none"
             aria-label="Scroll to RSVP section"
           >
-            <span className="script-line text-[2.2rem] md:text-4xl leading-none">Please RSVP</span>
-            <motion.span
-              aria-hidden="true"
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-ink text-paper
-                         shadow-[0_4px_14px_rgba(122,16,6,0.30)] group-hover:bg-dark
-                         group-focus-visible:ring-2 group-focus-visible:ring-gold group-focus-visible:ring-offset-2"
-              animate={{ y: [0, 9, 0] }}
-              transition={{ duration: 1.3, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 7.5 L10 12.5 L15 7.5" />
-              </svg>
-            </motion.span>
+            {[0, 1].map((i) => (
+              <motion.svg
+                key={i}
+                aria-hidden="true"
+                width="30"
+                height="16"
+                viewBox="0 0 30 16"
+                fill="none"
+                className={`text-gold group-hover:text-ink group-focus-visible:text-ink transition-colors ${i === 1 ? "-mt-1.5" : ""}`}
+                animate={{ y: [0, 7, 0], opacity: [i === 0 ? 0.55 : 1, 1, i === 0 ? 0.55 : 1] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
+              >
+                <path d="M3 3 L15 12 L27 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </motion.svg>
+            ))}
           </button>
         </motion.div>
       </motion.div>

@@ -97,7 +97,7 @@ with sync_playwright() as p:
 
     # 4. Scroll to RSVP via the chevron
     pg.get_by_role("button", name="Scroll to RSVP section").click(); pg.wait_for_timeout(1500)
-    check("'Please RSVP' prompt scrolls to RSVP", pg.evaluate("document.getElementById('rsvp').getBoundingClientRect().top") < 50)
+    check("scroll arrow takes you to RSVP", pg.evaluate("document.getElementById('rsvp').getBoundingClientRect().top") < 50)
     check("rsvp: deadline shown", "Kindly respond by 1 January 2027" in pg.inner_text("#rsvp"))
     send = pg.get_by_role("button", name="Send RSVP")
     check("rsvp: Send disabled until an answer is chosen", send.is_disabled())
