@@ -176,7 +176,7 @@ with sync_playwright() as p:
     r = pg.request.get(BASE + "wedding.ics")
     ics = r.text()
     check(".ics served, valid and complete", r.status == 200 and ics.startswith("BEGIN:VCALENDAR\r\n") and "DTSTART:20270131T064200Z" in ics and "END:VCALENDAR" in ics)
-    for path in ["og-invite.jpg", "ganesha.png", "monstera-leaf.png", "monstera-vine.webp", "mint-wash.webp", "leaves/corner-pair.webp", "AlexTurner.mp3", "gaya.png", "ana.png", ".nojekyll", "404.html"]:
+    for path in ["og-invite.jpg", "ganesha.png", "monstera-leaf.png", "monstera-vine.webp", "mint-wash.webp", "leaves/corner-pair.webp", "AlexTurner.mp3", "gaya-child.png", "anand-child.png", ".nojekyll", "404.html"]:
         check(f"file exists: {path}", pg.request.get(BASE + path).status == 200)
     pg.goto(BASE + "404.html"); pg.wait_for_timeout(800)
     link = pg.get_by_role("link", name="Open the invitation")

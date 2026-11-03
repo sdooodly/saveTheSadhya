@@ -9,8 +9,8 @@ export const weddingConfig = {
     partner2: "Anand",
     photo: "/heroPic.jpg",
     childhoodPhotos: {
-      bride: "/gaya.png",
-      groom: "/ana.png",
+      bride: "/gaya-child.png",
+      groom: "/anand-child.png",
     },
   },
 
