@@ -5,14 +5,14 @@ CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
 UID:wedding-2027-01-31@savethesadhya
-DTSTAMP:20261103T162632Z
-DTSTART:20270131T064200Z
-DTEND:20270131T070300Z
+DTSTAMP:20261103T163341Z
+DTSTART:20270131T060000Z
+DTEND:20270131T073000Z
 SUMMARY:Gayathri & Anand's wedding
 LOCATION:RDR Auditorium\, Edapazhanji\, Thiruvananthapuram\, Kerala\, India
-DESCRIPTION:Muhurtham: 12:12 p.m. to 12:33 p.m.\nVenue: RDR Auditorium\, Th
- iruvananthapuram\n\nRSVP and details: https://sdooodly.github.io/saveTheSa
- dhya/
+DESCRIPTION:Muhurtham: 11:30 a.m. to 1:00 p.m.\nVenue: RDR Auditorium\, Thi
+ ruvananthapuram\n\nRSVP and details: https://sdooodly.github.io/saveTheSad
+ hya/
 URL:https://sdooodly.github.io/saveTheSadhya/
 END:VEVENT
 END:VCALENDAR
