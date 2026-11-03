@@ -39,6 +39,12 @@ def open_invite(pg):
     pg.get_by_role("button", name="Enter invitation").click()
     pg.wait_for_timeout(3600)
 
+def accept_rsvp(pg, name="Cal Guest"):
+    pg.evaluate("document.getElementById('rsvp').scrollIntoView()"); pg.wait_for_timeout(1200)
+    pg.get_by_placeholder("Full name").fill(name)
+    pg.get_by_role("button", name="Joyfully accept").click(); pg.wait_for_timeout(300)
+    pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(1800)
+
 def no_overflow(pg):
     return pg.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1")
 
@@ -81,17 +87,7 @@ with sync_playwright() as p:
     href = venue.get_attribute("href"); target = venue.get_attribute("target")
     check("venue opens Google Maps in a new tab", href.startswith("https://www.google.com/maps/") and "RDR+Auditorium" in href and target == "_blank", href)
 
-    pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
-    check("calendar: line turns into Google · Apple · Outlook", all(pg.get_by_role("link", name=n, exact=True).count() == 1 for n in ["Google", "Apple", "Outlook"]))
-    check("calendar: no 'Downloads a calendar file' line", "Downloads a calendar file" not in pg.inner_text("body"))
-    cal = pg.get_by_role("link", name="Google", exact=True)
-    q = urllib.parse.parse_qs(urllib.parse.urlparse(cal.get_attribute("href")).query)
-    check("calendar: Google template link", cal.get_attribute("href").startswith("https://calendar.google.com/calendar/render?"))
-    check("calendar: muhurtham in UTC", q["dates"][0] == "20270131T060000Z/20270131T073000Z", q.get("dates"))
-    check("calendar: links to the invitation, not the profile", SITE in q["details"][0] and "savethesadhya.com" not in q["details"][0], q["details"][0])
-    check("calendar: precise location", q["location"][0].startswith("RDR Auditorium, Edapazhanji, Thiruvananthapuram"), q["location"][0])
-    pg.keyboard.press("Escape"); pg.wait_for_timeout(300)
-    check("calendar: menu closes with Escape", pg.get_by_role("link", name="Google", exact=True).count() == 0)
+    check("main: no 'Add to calendar' (it comes after accepting)", pg.get_by_role("button", name="Add to calendar").count() == 0)
     check("main: no console errors (incl. hydration)", not pg.errors, pg.errors[:3])
     check("main: no missing files", not pg.bad, pg.bad[:5])
 
@@ -133,6 +129,19 @@ with sync_playwright() as p:
     pass
     check("thank-you: first name, single visible heading", "Thank you, Priya" in t and rsvp_hidden and "Kindly respond" not in t, t[:120])
     check("thank-you: leaves fall", pg.locator("img[src*='/leaves/monstera-']").count() > 0)
+    pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
+    check("calendar: dropdown offers Google, Apple, Outlook", all(pg.get_by_role("link", name=n, exact=True).count() == 1 for n in ["Google Calendar", "Apple Calendar", "Outlook"]))
+    check("calendar: no 'Downloads a calendar file' line", "Downloads a calendar file" not in pg.inner_text("body"))
+    cal = pg.get_by_role("link", name="Google Calendar", exact=True)
+    q = urllib.parse.parse_qs(urllib.parse.urlparse(cal.get_attribute("href")).query)
+    check("calendar: Google template link", cal.get_attribute("href").startswith("https://calendar.google.com/calendar/render?"))
+    check("calendar: muhurtham in UTC", q["dates"][0] == "20270131T060000Z/20270131T073000Z", q.get("dates"))
+    check("calendar: links to the invitation, not the profile", SITE in q["details"][0] and "savethesadhya.com" not in q["details"][0], q["details"][0])
+    check("calendar: precise location", q["location"][0].startswith("RDR Auditorium, Edapazhanji, Thiruvananthapuram"), q["location"][0])
+    vis = pg.get_by_role("link", name="Outlook", exact=True).evaluate("e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight}")
+    check("calendar: dropdown fully on screen", vis)
+    pg.keyboard.press("Escape"); pg.wait_for_timeout(300)
+    check("calendar: dropdown closes with Escape", pg.get_by_role("link", name="Google Calendar", exact=True).count() == 0)
     check("thank-you: no console errors", not pg.errors, pg.errors[:3])
     ctx.close()
 
@@ -146,6 +155,7 @@ with sync_playwright() as p:
     pg.get_by_role("button", name="Send RSVP").click(); pg.wait_for_timeout(2000)
     payload = json.loads(pg.posts[-1]) if pg.posts else {}
     check("decline: guests dropped, note kept", payload == {"name": "Arun", "attending": "no", "plusOnes": 0, "plusOneNames": [], "message": "Congratulations!"}, payload)
+    check("decline: no 'Add to calendar'", pg.get_by_role("button", name="Add to calendar").count() == 0)
     check("decline: kind message, no leaves", "We’ll miss you." in pg.inner_text("#rsvp") and pg.locator("img[src*='/leaves/monstera-']").count() == 0)
     ctx.close()
 
@@ -174,23 +184,23 @@ with sync_playwright() as p:
         ok = "Sunday, 31 January 2027" in pg.inner_text("#invitation") and "1 January 2027" in pg.inner_text("#rsvp")
         check(f"dates correct in {tz}", ok); ctx.close()
 
-    # 11. iPhone → .ics, Android → Google
+    # 11. Calendar on different devices (after accepting)
     # Phone: Google opens in the SAME tab (no blank tab left behind when the Calendar app takes over)
     ctx, pg = new_page(b, ua=ANDROID)
     ctx.route("https://calendar.google.com/**", lambda r: r.fulfill(status=200, content_type="text/html", body="<p>google calendar stub</p>"))
-    open_invite(pg)
+    open_invite(pg); accept_rsvp(pg)
     pages_before = len(ctx.pages)
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
-    pg.get_by_role("link", name="Google", exact=True).click(); pg.wait_for_timeout(1200)
+    pg.get_by_role("link", name="Google Calendar", exact=True).click(); pg.wait_for_timeout(1200)
     check("phone: Google Calendar opens in the same tab (no blank tab)", pg.url.startswith("https://calendar.google.com/calendar/render?") and len(ctx.pages) == pages_before, f"{pg.url[:60]} pages={len(ctx.pages)}")
     ctx.close()
 
     # iPhone: Apple Calendar gets the .ics
-    ctx, pg = new_page(b, ua=IPHONE); open_invite(pg)
+    ctx, pg = new_page(b, ua=IPHONE); open_invite(pg); accept_rsvp(pg)
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(300)
-    check("iPhone: tapping 'Add to calendar' only opens the menu", "/saveTheSadhya/" in pg.url and pg.get_by_role("link", name="Apple", exact=True).count() == 1)
+    check("iPhone: tapping 'Add to calendar' only opens the menu", "/saveTheSadhya/" in pg.url and pg.get_by_role("link", name="Apple Calendar", exact=True).count() == 1)
     with pg.expect_download() as dl:
-        pg.get_by_role("link", name="Apple", exact=True).click()
+        pg.get_by_role("link", name="Apple Calendar", exact=True).click()
     check("Apple Calendar: gets the .ics file", dl.value.url.endswith("/saveTheSadhya/wedding.ics") and dl.value.suggested_filename.endswith(".ics"), dl.value.url)
     ctx.close()
 
@@ -199,11 +209,11 @@ with sync_playwright() as p:
     ctx.route("https://calendar.google.com/**", lambda r: r.fulfill(status=200, content_type="text/html", body="<p>stub</p>"))
     downloads = []
     pg.on("download", lambda d: downloads.append(d.url))
-    open_invite(pg)
+    open_invite(pg); accept_rsvp(pg)
     pg.get_by_role("button", name="Add to calendar").click(); pg.wait_for_timeout(800)
     check("laptop: 'Add to calendar' does not download anything by itself", not downloads, downloads)
     with ctx.expect_page() as newp:
-        pg.get_by_role("link", name="Google", exact=True).click()
+        pg.get_by_role("link", name="Google Calendar", exact=True).click()
     newp.value.wait_for_load_state()
     check("laptop: Google Calendar opens in a new tab, invite stays open", newp.value.url.startswith("https://calendar.google.com/calendar/render?") and "/saveTheSadhya/" in pg.url, newp.value.url[:60])
     ctx.close()

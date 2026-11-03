@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { AddToCalendar, PhotoBooth } from "@/components/ui";
+import { PhotoBooth } from "@/components/ui";
 import { formatLongDate } from "@/lib/dates";
 
 const stagger = {
@@ -105,9 +105,6 @@ export function HeroSection() {
             {event.venue}
           </a>
           <p className="mt-1 text-cream text-lg leading-tight">{event.address}</p>
-          <div className="mt-2 flex items-center justify-center text-lg md:text-base">
-            <AddToCalendar />
-          </div>
         </motion.div>
 
         {/* Scroll prompt: chevrons that ripple downwards */}

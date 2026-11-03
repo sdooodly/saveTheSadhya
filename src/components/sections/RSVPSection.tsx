@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Plus, Minus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
-import { Confetti } from "@/components/ui";
+import { AddToCalendar, Confetti } from "@/components/ui";
 import { formatDate } from "@/lib/dates";
 import {
   buildPayload,
@@ -141,6 +141,11 @@ export function RSVPSection() {
                   ? "We can’t wait to celebrate with you."
                   : "We’ll miss you."}
               </p>
+              {form.attending === "yes" && (
+                <div className="mt-6 flex justify-center text-lg md:text-base">
+                  <AddToCalendar />
+                </div>
+              )}
             </motion.div>
           ) : (
             <motion.form
