@@ -110,7 +110,7 @@ export function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Scroll prompt: a double chevron that ripples downwards */}
+        {/* Scroll prompt: chevrons that ripple downwards */}
         <motion.div variants={fadeUp} className="mt-6 flex flex-col items-center">
           <button
             type="button"
@@ -118,7 +118,8 @@ export function HeroSection() {
             className="group flex flex-col items-center p-2 -m-2 focus:outline-none"
             aria-label="Scroll to RSVP section"
           >
-            {[0, 1].map((i) => (
+            {/* three chevrons: solid, a faint one in between, solid */}
+            {[1, 0.35, 1].map((strength, i) => (
               <motion.svg
                 key={i}
                 aria-hidden="true"
@@ -126,9 +127,9 @@ export function HeroSection() {
                 height="16"
                 viewBox="0 0 30 16"
                 fill="none"
-                className={`text-gold group-hover:text-ink group-focus-visible:text-ink transition-colors ${i === 1 ? "-mt-1.5" : ""}`}
-                animate={{ y: [0, 7, 0], opacity: [i === 0 ? 0.55 : 1, 1, i === 0 ? 0.55 : 1] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.15 }}
+                className={`text-gold group-hover:text-ink group-focus-visible:text-ink transition-colors ${i > 0 ? "-mt-2" : ""}`}
+                animate={{ y: [0, 7, 0], opacity: [strength * 0.75, strength, strength * 0.75] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.12 }}
               >
                 <path d="M3 3 L15 12 L27 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </motion.svg>
