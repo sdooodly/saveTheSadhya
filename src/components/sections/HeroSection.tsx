@@ -63,27 +63,12 @@ export function HeroSection() {
         animate="show"
         className="max-w-lg w-full text-center"
       >
-        {/* Welcome */}
-        <motion.p
-          variants={fadeUp}
-          className="script-line text-[2.2rem] md:text-4xl"
-        >
-          Request the pleasure of your company
-        </motion.p>
-
         {/* Live photo booth (only when photos are set in wedding.config.ts) */}
         {weddingConfig.photoBooth.photos.length > 0 && (
           <motion.div variants={fadeUp} className="mt-3 flex justify-center">
             <PhotoBooth />
           </motion.div>
         )}
-
-        <motion.p
-          variants={fadeUp}
-          className="script-line text-[2.2rem] md:text-4xl mt-2"
-        >
-          at the wedding celebration of
-        </motion.p>
 
         {/* Couple names on a mint watercolour wash */}
         <div className="relative isolate">
@@ -94,18 +79,18 @@ export function HeroSection() {
             aria-hidden="true"
             className="mint-wash"
           />
-          <motion.h1 variants={fadeUp} className="script-name text-[4.4rem] md:text-7xl mt-1">
+          <motion.h1 variants={fadeUp} className="script-name text-[5rem] md:text-8xl">
             {couple.partner1}
           </motion.h1>
 
           <motion.span
             variants={fadeUp}
-            className="block font-serif text-xl md:text-2xl text-olive italic -my-1"
+            className="block font-serif text-[1.65rem] md:text-3xl text-olive italic -my-1.5"
           >
             &amp;
           </motion.span>
 
-          <motion.h1 variants={fadeUp} className="script-name text-[4.4rem] md:text-7xl">
+          <motion.h1 variants={fadeUp} className="script-name text-[5rem] md:text-8xl">
             {couple.partner2}
           </motion.h1>
         </div>
