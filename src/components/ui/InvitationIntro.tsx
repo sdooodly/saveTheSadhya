@@ -289,7 +289,7 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative script-line text-4xl md:text-5xl"
+              className="relative script-line text-[1.9rem] md:text-4xl"
             >
               Together with their families
             </motion.p>
@@ -299,7 +299,7 @@ export function InvitationIntro({
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="relative script-name text-6xl md:text-8xl mt-3 text-center"
+              className="relative script-name text-6xl md:text-7xl mt-2 text-center"
             >
               {couple.partner1}
               <span className="block font-serif text-2xl md:text-3xl text-olive italic -my-1">
@@ -313,7 +313,7 @@ export function InvitationIntro({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.5 }}
-              className="relative script-line text-4xl md:text-5xl mt-3"
+              className="relative script-line text-[1.9rem] md:text-4xl mt-2"
             >
               Invite you to their wedding
             </motion.p>
@@ -366,7 +366,7 @@ export function InvitationIntro({
                 />
               </svg>
               <span className="text-ink text-lg md:text-base font-sans group-hover:text-cream transition-colors tracking-wide">
-                Open invite ↗
+                Open invitation
               </span>
             </motion.button>
           </motion.div>

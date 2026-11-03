@@ -110,10 +110,10 @@ export function HeroSection() {
 
         {/* Date */}
         <motion.div variants={fadeUp}>
-          <p className="font-serif text-ink text-[1.75rem] leading-tight md:text-3xl">
+          <p className="font-serif text-ink text-[1.75rem] leading-tight md:text-[1.9rem]">
             {formattedDate}
           </p>
-          <p className="font-sans text-cream text-xl md:text-lg mt-0.5">
+          <p className="font-sans text-cream text-xl mt-1">
             Muhurtham: {event.muhurthamTime}
           </p>
         </motion.div>
@@ -125,13 +125,13 @@ export function HeroSection() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${event.venue}, ${event.address}: open in Google Maps`}
-            className="group inline-flex items-center gap-1.5 font-serif text-[1.45rem] leading-tight md:text-2xl text-ink
+            className="group inline-flex items-center gap-1.5 font-serif text-xl leading-tight text-ink
                        underline decoration-gold decoration-1 underline-offset-[6px] hover:decoration-ink transition-colors"
           >
             <MapPin size={17} className="shrink-0 text-gold" aria-hidden="true" />
             {event.venue}
           </a>
-          <p className="mt-1 text-cream text-lg md:text-lg leading-tight">{event.address}</p>
+          <p className="mt-1 text-cream text-lg leading-tight">{event.address}</p>
           <div className="mt-2 flex items-center justify-center text-lg md:text-base">
             <a
               href={calendarUrl}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Plus, Minus, CheckCircle } from "lucide-react";
+import { Send, Plus, Minus } from "lucide-react";
 import { weddingConfig } from "@/wedding.config";
 import { Confetti } from "@/components/ui";
 
@@ -106,20 +106,23 @@ export function RSVPSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-8"
+          className={submitted ? "sr-only" : "text-center mb-8"}
         >
+          {/* Once a guest has replied, "Thank you" becomes the heading */}
           <h2 className="script-name text-6xl md:text-7xl">
             RSVP
           </h2>
-          <p className="mt-1 script-line text-[2.2rem] md:text-4xl">
-            Kindly respond by{" "}
-            {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
-    timeZone: "Asia/Kolkata",
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </p>
+          {!submitted && (
+            <p className="mt-2 font-serif italic text-lg text-cream">
+              Kindly respond by{" "}
+              {new Date(rsvp.deadline).toLocaleDateString("en-IN", {
+                timeZone: "Asia/Kolkata",
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </p>
+          )}
         </motion.div>
 
         {/* Form / Success */}
@@ -131,14 +134,20 @@ export function RSVPSection() {
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-10"
             >
-              <CheckCircle className="mx-auto text-accent mb-4" size={40} />
-              <h3 className="font-serif italic text-2xl text-cream mb-2">
-                Thank You, {form.name}!
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/monstera-leaf.png`}
+                alt=""
+                aria-hidden="true"
+                className="mx-auto w-8 h-auto mb-3"
+              />
+              <h3 className="script-name text-6xl md:text-7xl mb-3">
+                Thank you, {form.name.trim().split(/\s+/)[0]}
               </h3>
-              <p className="text-cream text-lg">
+              <p className="text-cream text-xl">
                 {form.attending === "yes"
-                  ? "We can't wait to celebrate with you!"
-                  : "We'll miss you! Thank you for letting us know."}
+                  ? "We can't wait to celebrate with you."
+                  : "We'll miss you. Thank you for letting us know."}
               </p>
             </motion.div>
           ) : (
@@ -262,7 +271,7 @@ export function RSVPSection() {
                       id="rsvp-message"
                       rows={3}
                       className={`${textareaBase} resize-none`}
-                      placeholder="We'll miss you, but leave a note..."
+                      placeholder="Leave a note for us…"
                       value={form.message}
                       onChange={(e) => update("message", e.target.value)}
                     />
